@@ -14,14 +14,13 @@
        VARIABLES & DESIGN SYSTEM
        ========================================================================== */
     :root {
-      --bg-base: #FAFAFC; /* Blanc cassé très lumineux (Style Apple) */
+      --bg-base: #FAFAFC; 
       --text-main: #1D1D1F;
       --text-muted: #86868B;
       
       --gradient-ai: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%);
       --gradient-bio: linear-gradient(135deg, #11998E 0%, #38EF7D 100%);
       --gradient-mgt: linear-gradient(135deg, #F2994A 0%, #F2C94C 100%);
-      --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #FFDF73 100%);
       
       --glass-bg: rgba(255, 255, 255, 0.7);
       --glass-border: rgba(255, 255, 255, 0.5);
@@ -29,6 +28,10 @@
       
       --font-title: 'Playfair Display', serif;
       --font-text: 'Manrope', sans-serif;
+
+      --sage: #11998E;
+      --gold: #D4AF37;
+      --ice-blue: #0072FF;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -39,30 +42,50 @@
       background-color: var(--bg-base);
       color: var(--text-main);
       font-family: var(--font-text);
-      overflow-x: hidden; /* Empêche le défilement horizontal, mais permet le vertical ! */
+      overflow-x: hidden; 
     }
 
     /* ==========================================================================
-       FOND ANIMÉ (ORBES) - ACCÉLÉRÉ ET VISIBLE
+       FOND ANIMÉ (ORBES GÉANTES)
        ========================================================================== */
     .ambient-background {
       position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: -1; overflow: hidden; pointer-events: none;
+      z-index: -2; overflow: hidden; pointer-events: none;
     }
 
     .orb {
       position: absolute; border-radius: 50%; filter: blur(90px);
-      animation: float 12s infinite alternate ease-in-out;
+      animation: floatOrb 15s infinite alternate ease-in-out;
     }
 
-    .orb-1 { background: rgba(0, 198, 255, 0.15); width: 50vw; height: 50vw; top: -10%; left: -10%; }
-    .orb-2 { background: rgba(242, 153, 74, 0.12); width: 40vw; height: 40vw; top: 40%; right: -10%; animation-delay: -4s; }
-    .orb-3 { background: rgba(17, 153, 142, 0.15); width: 45vw; height: 45vw; bottom: -20%; left: 20%; animation-delay: -8s; }
+    .orb-1 { background: rgba(0, 198, 255, 0.12); width: 50vw; height: 50vw; top: -10%; left: -10%; }
+    .orb-2 { background: rgba(242, 153, 74, 0.10); width: 40vw; height: 40vw; top: 40%; right: -10%; animation-delay: -5s; }
+    .orb-3 { background: rgba(17, 153, 142, 0.12); width: 45vw; height: 45vw; bottom: -20%; left: 20%; animation-delay: -10s; }
 
-    @keyframes float {
+    @keyframes floatOrb {
       0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(10vw, 5vh) scale(1.1); }
-      100% { transform: translate(-5vw, -10vh) scale(0.9); }
+      50% { transform: translate(8vw, 5vh) scale(1.05); }
+      100% { transform: translate(-5vw, -8vh) scale(0.95); }
+    }
+
+    /* ==========================================================================
+       DESSINS FLOTTANTS (ADN, CHAMPIGNONS, IA) - LE CHOIX DU DA
+       ========================================================================== */
+    .section-visuals {
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      pointer-events: none; z-index: 0; overflow: hidden;
+    }
+
+    .floating-svg {
+      position: absolute;
+      opacity: 0.5; /* Très visible maintenant ! */
+      animation: svgFloat 12s infinite ease-in-out alternate;
+    }
+
+    @keyframes svgFloat {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-30px) rotate(4deg); }
+      100% { transform: translateY(15px) rotate(-4deg); }
     }
 
     /* ==========================================================================
@@ -79,22 +102,22 @@
     .logo { font-family: var(--font-title); font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; }
     .nav-links { display: flex; gap: 2.5rem; }
     .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.5; transition: 0.3s; }
-    .nav-links a:hover { opacity: 1; }
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
 
     /* ==========================================================================
        STRUCTURE DES SECTIONS
        ========================================================================== */
-    section { padding: 120px 5% 100px; min-height: 100vh; display: flex; align-items: center; }
+    section { padding: 120px 5% 100px; min-height: 100vh; display: flex; align-items: center; position: relative; }
     #hero { min-height: 100vh; }
     
-    .container { max-width: 1200px; width: 100%; margin: 0 auto; }
+    .container { max-width: 1200px; width: 100%; margin: 0 auto; position: relative; z-index: 10; }
 
     .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
     .project-grid.reverse { direction: rtl; }
     .project-grid.reverse > * { direction: ltr; }
 
     /* ==========================================================================
-       TYPOGRAPHIE ET TEXTES
+       TYPOGRAPHIE
        ========================================================================== */
     .sur-titre {
       font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
@@ -103,7 +126,7 @@
     .sur-titre::before { content: ''; width: 40px; height: 1px; background: var(--text-muted); }
 
     h1 { font-family: var(--font-title); font-size: clamp(3.5rem, 8vw, 7rem); line-height: 1.05; margin-bottom: 1.5rem; color: var(--text-main); }
-    h1 em { font-style: italic; font-weight: 400; color: #666; }
+    h1 em { font-style: italic; font-weight: 400; color: var(--gold); }
 
     h2 { font-family: var(--font-title); font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.5rem; }
     
@@ -112,8 +135,8 @@
 
     .tags { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2rem; }
     .tag {
-      padding: 0.5rem 1.2rem; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05);
-      border-radius: 50px; font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
+      padding: 0.5rem 1.2rem; background: rgba(255,255,255,0.5); border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 50px; font-size: 0.7rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase;
     }
 
     /* ==========================================================================
@@ -123,14 +146,12 @@
       background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
       border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow);
       border-radius: 24px; padding: 3rem; transition: transform 0.4s ease, box-shadow 0.4s ease;
-      position: relative; overflow: hidden;
     }
     .glass-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); }
 
     /* ==========================================================================
-       DASHBOARDS INTERACTIFS (ANIMÉS EN CSS)
+       DASHBOARDS INTERACTIFS (ANIMÉS)
        ========================================================================== */
-    
     /* 1. Interface IA (Capgemini) */
     .ui-dashboard { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
     .ui-node {
@@ -168,7 +189,7 @@
     .data-fill { height: 100%; background: var(--gradient-bio); width: 0; transition: width 2s cubic-bezier(0.25, 1, 0.5, 1); }
 
     /* ==========================================================================
-       GRILLE DES ARCHIVES (UNIBIO, HACKATHON, ETC)
+       GRILLE DES ARCHIVES
        ========================================================================== */
     .archives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
     .archive-card { padding: 3rem 2.5rem; text-decoration: none; color: inherit; display: block;}
@@ -185,7 +206,6 @@
     .btn {
       padding: 1.2rem 3rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700;
       text-transform: uppercase; letter-spacing: 1px; text-decoration: none; transition: 0.4s;
-      display: inline-flex; align-items: center; justify-content: center;
     }
     .btn-primary { background: var(--text-main); color: #fff; border: 1px solid var(--text-main); }
     .btn-primary:hover { background: transparent; color: var(--text-main); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1);}
@@ -197,7 +217,6 @@
        ========================================================================== */
     .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
     .reveal.active { opacity: 1; transform: translateY(0); }
-    
     .delay-1 { transition-delay: 0.1s; }
     .delay-2 { transition-delay: 0.2s; }
     .delay-3 { transition-delay: 0.3s; }
@@ -213,7 +232,8 @@
       section { padding: 120px 5% 80px; }
       h1 { font-size: 3.5rem; }
       .btn-group { flex-direction: column; width: 100%; }
-      .btn { width: 100%; }
+      .btn { width: 100%; text-align: center; }
+      .section-visuals { opacity: 0.3; } /* On baisse l'opacité des dessins sur mobile */
     }
   </style>
 </head>
@@ -229,14 +249,20 @@
     <a href="#hero" class="logo">Thalia.B</a>
     <div class="nav-links">
       <a href="#hero">Vision</a>
-      <a href="#capgemini">Projets IA & Mgt</a>
-      <a href="#bioscience">Bio-Tech</a>
+      <a href="#capgemini">Projets</a>
+      <a href="#bioscience">Recherche</a>
       <a href="#archives">Parcours</a>
       <a href="#contact">Contact</a>
     </div>
   </nav>
 
   <section id="hero">
+    <div class="section-visuals">
+      <svg class="floating-svg" style="top: 20%; left: 10%; width: 40px;" viewBox="0 0 20 20"><circle cx="10" cy="10" r="4" fill="var(--gold)" opacity="0.4"/></svg>
+      <svg class="floating-svg" style="top: 70%; left: 85%; width: 25px; animation-delay: -5s;" viewBox="0 0 20 20"><circle cx="10" cy="10" r="3" fill="var(--gold)" opacity="0.6"/></svg>
+      <svg class="floating-svg" style="top: 40%; left: 80%; width: 80px; animation-delay: -2s;" viewBox="0 0 50 50"><circle cx="25" cy="25" r="23" stroke="var(--gold)" fill="none" stroke-width="1" stroke-dasharray="4 6" opacity="0.3"/></svg>
+    </div>
+
     <div class="container">
       <div class="sur-titre reveal">Portfolio 2026</div>
       <h1 class="reveal delay-1">Thalia<br><em>Barrahi</em></h1>
@@ -255,6 +281,18 @@
   </section>
 
   <section id="capgemini">
+    <div class="section-visuals">
+      <svg class="floating-svg" style="top: 15%; right: 10%; width: 150px; opacity: 0.3;" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="30" stroke="var(--ice-blue)" fill="none" stroke-width="1.5"/>
+        <line x1="50" y1="20" x2="50" y2="0" stroke="var(--ice-blue)" stroke-width="1.5"/>
+        <circle cx="50" cy="5" r="4" fill="var(--ice-blue)"/>
+        <line x1="80" y1="50" x2="100" y2="50" stroke="var(--ice-blue)" stroke-width="1.5"/>
+      </svg>
+      <svg class="floating-svg" style="top: 70%; left: 15%; width: 60px; animation-delay: -4s;" viewBox="0 0 40 40">
+        <rect x="10" y="10" width="20" height="20" stroke="var(--ice-blue)" stroke-width="2" fill="none" rx="3" opacity="0.4"/>
+      </svg>
+    </div>
+
     <div class="container project-grid">
       <div class="project-text">
         <div class="sur-titre reveal">Digital Student Challenge</div>
@@ -272,36 +310,25 @@
       <div class="glass-card reveal delay-2 dashboard-card">
         <h3 style="font-family: var(--font-text); font-size:1rem; margin-bottom: 2rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Écosystème Agents IA</h3>
         <div class="ui-dashboard">
-          <div class="ui-node">
-            <div class="ui-node-content">
-              <div class="icon">🤖</div>
-              <h4>Matchmaker</h4>
-            </div>
-          </div>
-          <div class="ui-node">
-            <div class="ui-node-content">
-              <div class="icon">⚡</div>
-              <h4>Orchestrateur</h4>
-            </div>
-          </div>
-          <div class="ui-node">
-            <div class="ui-node-content">
-              <div class="icon">📊</div>
-              <h4>Scoring</h4>
-            </div>
-          </div>
-          <div class="ui-node">
-            <div class="ui-node-content">
-              <div class="icon">🎯</div>
-              <h4>Nurturing</h4>
-            </div>
-          </div>
+          <div class="ui-node"><div class="ui-node-content"><div class="icon">🤖</div><h4>Matchmaker</h4></div></div>
+          <div class="ui-node"><div class="ui-node-content"><div class="icon">⚡</div><h4>Orchestrateur</h4></div></div>
+          <div class="ui-node"><div class="ui-node-content"><div class="icon">📊</div><h4>Scoring</h4></div></div>
+          <div class="ui-node"><div class="ui-node-content"><div class="icon">🎯</div><h4>Nurturing</h4></div></div>
         </div>
       </div>
     </div>
   </section>
 
   <section id="cpam">
+    <div class="section-visuals">
+      <svg class="floating-svg" style="top: 25%; left: 10%; width: 100px; opacity: 0.2;" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="40" stroke="#F2994A" fill="none" stroke-width="1.5" stroke-dasharray="6 6"/>
+      </svg>
+      <svg class="floating-svg" style="top: 60%; right: 15%; width: 80px; animation-delay: -7s; opacity: 0.3;" viewBox="0 0 100 100">
+        <path d="M20 50 L80 50 M50 20 L50 80" stroke="#F2994A" stroke-width="2"/>
+      </svg>
+    </div>
+
     <div class="container project-grid reverse">
       <div class="project-text">
         <div class="sur-titre reveal">Innovation Publique</div>
@@ -319,7 +346,6 @@
       <div class="glass-card reveal delay-2 dashboard-card">
         <h3 style="font-family: var(--font-text); font-size:1rem; margin-bottom: 2.5rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Performance & Impact</h3>
         <div class="kpi-container">
-          
           <div class="kpi-item">
             <svg viewBox="0 0 36 36" class="circular-chart">
               <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -328,7 +354,6 @@
             </svg>
             <div class="kpi-label">Engagement</div>
           </div>
-
           <div class="kpi-item">
             <svg viewBox="0 0 36 36" class="circular-chart">
               <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -337,7 +362,6 @@
             </svg>
             <div class="kpi-label">Idéation</div>
           </div>
-
           <div class="kpi-item">
             <svg viewBox="0 0 36 36" class="circular-chart">
               <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
@@ -346,13 +370,36 @@
             </svg>
             <div class="kpi-label">Réussite</div>
           </div>
-
         </div>
       </div>
     </div>
   </section>
 
   <section id="bioscience">
+    
+    <div class="section-visuals">
+      <svg class="floating-svg" style="top: 15%; left: 8%; width: 90px;" viewBox="0 0 50 100">
+        <path d="M10 10 Q40 50 10 90 M40 10 Q10 50 40 90" stroke="var(--sage)" fill="none" stroke-width="2.5"/>
+        <line x1="12" y1="30" x2="38" y2="30" stroke="var(--sage)" stroke-width="1.5"/>
+        <line x1="15" y1="50" x2="35" y2="50" stroke="var(--sage)" stroke-width="1.5"/>
+        <line x1="12" y1="70" x2="38" y2="70" stroke="var(--sage)" stroke-width="1.5"/>
+      </svg>
+      
+      <svg class="floating-svg" style="top: 65%; right: 12%; width: 80px; animation-delay: -3s;" viewBox="0 0 100 100">
+        <path d="M20 60 Q50 10 80 60 L20 60" stroke="var(--sage)" fill="rgba(17, 153, 142, 0.1)" stroke-width="2.5"/>
+        <rect x="45" y="60" width="10" height="25" fill="none" stroke="var(--sage)" stroke-width="2.5"/>
+      </svg>
+
+      <svg class="floating-svg" style="top: 25%; right: 25%; width: 70px; animation-delay: -7s;" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="20" stroke="var(--sage)" fill="rgba(17, 153, 142, 0.1)" stroke-width="2"/>
+        <path d="M50 20 L50 10 M80 50 L90 50 M50 80 L50 90 M20 50 L10 50 M71 29 L78 22 M29 71 L22 78 M71 71 L78 78 M29 29 L22 22" stroke="var(--sage)" stroke-width="2"/>
+      </svg>
+
+      <svg class="floating-svg" style="top: 75%; left: 20%; width: 60px; animation-delay: -5s;" viewBox="0 0 40 20">
+        <rect x="5" y="5" width="30" height="10" rx="5" stroke="var(--sage)" fill="rgba(17, 153, 142, 0.1)" stroke-width="1.5"/>
+      </svg>
+    </div>
+
     <div class="container project-grid">
       <div class="project-text">
         <div class="sur-titre reveal">Recherche & Data</div>
@@ -370,22 +417,18 @@
       <div class="glass-card reveal delay-2 dashboard-card">
         <h3 style="font-family: var(--font-text); font-size:1rem; margin-bottom: 2rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Analyse Data : Souches isolées</h3>
         <div class="bio-data">
-          
           <div class="data-bar-wrap">
             <div class="data-label"><span>Bactéries (Rhizome)</span> <span>85%</span></div>
             <div class="data-track"><div class="data-fill bar-anim" data-width="85%"></div></div>
           </div>
-          
           <div class="data-bar-wrap">
             <div class="data-label"><span>Champignons Antagonistes</span> <span>62%</span></div>
             <div class="data-track"><div class="data-fill bar-anim" data-width="62%"></div></div>
           </div>
-
           <div class="data-bar-wrap">
             <div class="data-label"><span>Actinomycètes</span> <span>45%</span></div>
             <div class="data-track"><div class="data-fill bar-anim" data-width="45%"></div></div>
           </div>
-
         </div>
       </div>
     </div>
@@ -397,7 +440,6 @@
       <h2 class="reveal delay-1" style="margin-bottom: 4rem;">Expériences & <em>Empreintes</em>.</h2>
       
       <div class="archives-grid">
-        
         <a href="#" class="glass-card archive-card reveal delay-1">
           <div class="archive-icon">🔬</div>
           <span class="archive-tag">18 MOIS · Alternance</span>
@@ -425,7 +467,6 @@
           <h3 class="archive-title">Palmarès</h3>
           <p class="archive-desc">Prix Coup de Pouce au Créa'thlon (Projet Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min". L'éloquence au service de l'idée.</p>
         </a>
-
       </div>
     </div>
   </section>
@@ -438,11 +479,11 @@
       <div class="btn-group reveal delay-2" style="justify-content: center;">
         <a href="mailto:thaliapro26@gmail.com" class="btn btn-primary">Envoyer un email</a>
         <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn btn-outline">LinkedIn</a>
-        <a href="CV.pdf" download target="_blank" class="btn btn-outline">Télécharger CV</a>
+        <a href="CV Thalia Barrahi .pdf" download target="_blank" class="btn btn-outline">Télécharger CV</a>
       </div>
       
       <p class="reveal delay-3" style="margin-top: 8rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase;">
-        © 2026 Thalia Barrahi — Portfolio
+        © 2026 Thalia Barrahi — Montpellier
       </p>
     </div>
   </section>
@@ -453,17 +494,15 @@
       // 1. ANIMATION D'APPARITION DES ÉLÉMENTS AU DÉFILEMENT (REVEAL)
       const reveals = document.querySelectorAll('.reveal');
       
-      // On utilise l'observateur standard attaché à la fenêtre entière (infaillible)
       const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('active');
-            // On désactive l'observation une fois révélé pour que l'élément reste visible
             revealObserver.unobserve(entry.target);
           }
         });
       }, {
-        threshold: 0.1, // Se déclenche quand 10% de l'élément est visible
+        threshold: 0.1, 
         rootMargin: "0px 0px -50px 0px"
       });
 
@@ -481,14 +520,12 @@
       const dashboardObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
-            // Animer les cercles KPI
             const circles = entry.target.querySelectorAll('.circle-anim');
             circles.forEach(circle => {
               const target = circle.getAttribute('data-target');
               circle.style.strokeDasharray = `${target}, 100`;
             });
             
-            // Animer les barres de données
             const bars = entry.target.querySelectorAll('.bar-anim');
             bars.forEach(bar => {
               const width = bar.getAttribute('data-width');
@@ -521,9 +558,7 @@
           link.style.color = 'var(--text-main)';
           
           const href = link.getAttribute('href').substring(1);
-          // Gestion des cas multiples (Projets IA & Mgt cible capgemini ET cpam)
-          if (href === current || 
-             (href === 'capgemini' && current === 'cpam')) {
+          if (href === current || (href === 'capgemini' && current === 'cpam')) {
             link.style.opacity = '1';
             link.style.color = 'var(--gold)';
           }
