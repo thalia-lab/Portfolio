@@ -15,12 +15,12 @@
       --anthracite:  #2D2D2D;
       --gold:        #D4AF37;
       --sage:        #A3B18A;
-      --ice-blue:    #8ABCE6;
+      --ice-blue:    #7AA6D4; /* Bleu légèrement assombri pour mieux ressortir */
       --font-serif:  'Cormorant Garamond', serif;
       --font-sans:   'Plus Jakarta Sans', sans-serif;
     }
 
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
     
     html { font-size: 16px; }
     
@@ -29,7 +29,7 @@
       color: var(--anthracite); 
       font-family: var(--font-sans); 
       font-weight: 300; 
-      overflow: hidden; /* Empêche le double défilement */
+      overflow: hidden; 
       cursor: default;
     }
 
@@ -43,82 +43,60 @@
 
     /* ════════════════ CONTENEUR DE DÉFILEMENT ════════════════ */
     .scroll-container { 
-      height: 100vh; 
-      overflow-y: scroll; 
-      scroll-snap-type: y mandatory; 
-      scroll-behavior: smooth;
+      height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth;
     }
     
     .scene { 
-      min-height: 100vh; 
-      scroll-snap-align: start; 
-      scroll-snap-stop: always;
-      position: relative; 
-      display: flex; 
-      align-items: center; 
-      justify-content: center; 
-      overflow: hidden; 
+      min-height: 100vh; scroll-snap-align: start; scroll-snap-stop: always;
+      position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; 
     }
 
     /* ════════════════ NAVIGATION FIXE ════════════════ */
     nav { 
       position: fixed; top: 0; left: 0; right: 0; z-index: 1000; 
-      padding: 2rem 5%; display: flex; justify-content: space-between; 
-      align-items: center; mix-blend-mode: multiply; 
+      padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; mix-blend-mode: multiply; 
     }
-    
-    .nav-logo { 
-      font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; 
-      text-decoration: none; color: var(--anthracite); 
-    }
-    
+    .nav-logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; text-decoration: none; color: var(--anthracite); }
     .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    
-    .nav-links a { 
-      text-decoration: none; color: var(--anthracite); text-transform: uppercase; 
-      font-size: 0.7rem; letter-spacing: 2px; opacity: 0.5; transition: 0.3s; 
-      position: relative;
-    }
-    
-    .nav-links a::after {
-      content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
-      background: var(--gold); transition: width 0.3s;
-    }
-    
+    .nav-links a { text-decoration: none; color: var(--anthracite); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; opacity: 0.5; transition: 0.3s; position: relative; }
+    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
     .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--gold); }
     .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
 
-    /* ════════════════ HALOS & VISUELS FLOTTANTS ════════════════ */
-    .halo { 
-      position: absolute; border-radius: 50%; filter: blur(90px); 
-      pointer-events: none; transition: opacity 1.2s ease; z-index: 0; 
-    }
+    /* ════════════════ HALOS LUMINEUX EN FOND ════════════════ */
+    .halo { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
     .halo-gold-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%); top: -10%; right: -5%; }
-    .halo-ice-1 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(140,185,235,0.15) 0%, transparent 70%); top: -15%; left: 20%; }
+    .halo-ice-1 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(122,166,212,0.15) 0%, transparent 70%); top: -15%; left: 20%; }
     .halo-amber-1 { width: 650px; height: 650px; background: radial-gradient(circle, rgba(230,175,80,0.15) 0%, transparent 70%); top: -5%; right: 10%; }
-    .halo-emerald-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(70,155,105,0.15) 0%, transparent 70%); top: 10%; left: 20%; }
+    .halo-emerald-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(163,177,138,0.15) 0%, transparent 70%); top: 10%; left: 20%; }
 
-    .floating-container { position: absolute; inset: 0; pointer-events: none; z-index: 1; }
+    /* ════════════════ DESSINS FLOTTANTS (RÉPARÉS) ════════════════ */
+    .floating-container { 
+      position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
+      pointer-events: none; 
+      z-index: 2; /* Juste au-dessus du fond, sous le texte */
+    }
     
     .float-item { 
       position: absolute; 
-      opacity: 0.25; /* Opacité rehaussée pour être bien visible */
-      animation: floatAnim 15s infinite ease-in-out; 
+      opacity: 0.7; /* Opacité forte pour qu'ils soient bien visibles */
+      animation: floatAnim 12s infinite ease-in-out; 
+      filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.06)); /* Ombre élégante */
     }
     
     @keyframes floatAnim {
       0%   { transform: translateY(0) rotate(0deg) translateX(0); }
-      33%  { transform: translateY(-25px) rotate(5deg) translateX(10px); }
-      66%  { transform: translateY(15px) rotate(-5deg) translateX(-10px); }
+      33%  { transform: translateY(-20px) rotate(4deg) translateX(15px); }
+      66%  { transform: translateY(15px) rotate(-4deg) translateX(-15px); }
       100% { transform: translateY(0) rotate(0deg) translateX(0); }
     }
 
-    /* ════════════════ STRUCTURE DU CONTENU ════════════════ */
+    /* ════════════════ TEXTES ET STRUCTURES ════════════════ */
     .content-wrapper { position: relative; z-index: 10; width: 100%; max-width: 1150px; padding: 0 5%; }
     
     .scene-label { 
-      color: var(--gold); font-size: 0.7rem; letter-spacing: 4px; 
-      text-transform: uppercase; margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; font-weight: 600; 
+      color: var(--gold); font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; 
+      margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; font-weight: 600; 
     }
     .scene-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); display: block; opacity: 0.5;}
     
@@ -138,26 +116,26 @@
       border-radius: 30px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; 
       margin: 0.2rem; font-weight: 500; transition: 0.3s;
     }
-    .accent-blue { border-color: var(--ice-blue); color: #5a8aae; background: rgba(138,188,230,0.05); }
-    .accent-sage { border-color: var(--sage); color: #697a56; background: rgba(163,177,138,0.05); }
-    .accent-gold { border-color: var(--gold); color: #a0852a; background: rgba(212,175,55,0.05); }
+    .accent-blue { border-color: var(--ice-blue); color: #4A7A9E; background: rgba(122,166,212,0.08); }
+    .accent-sage { border-color: var(--sage); color: #586B45; background: rgba(163,177,138,0.08); }
+    .accent-gold { border-color: var(--gold); color: #8C701E; background: rgba(212,175,55,0.08); }
 
-    /* ════════════════ KPI BARS & VISUALS ════════════════ */
+    /* ════════════════ BOÎTES VISUELLES (KPI) ════════════════ */
     .visual-box {
       border: 1px solid rgba(0,0,0,0.05); border-radius: 6px; padding: 2.5rem;
-      background: rgba(255,255,255,0.3); backdrop-filter: blur(10px);
+      background: rgba(255,255,255,0.4); backdrop-filter: blur(10px);
     }
     
     .metric-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
     .metric-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; width: 100px; opacity: 0.6; }
-    .metric-bar-wrap { flex: 1; height: 3px; background: rgba(0,0,0,0.05); overflow: hidden; border-radius: 2px;}
+    .metric-bar-wrap { flex: 1; height: 4px; background: rgba(0,0,0,0.06); overflow: hidden; border-radius: 2px;}
     .metric-bar { height: 100%; background: linear-gradient(90deg, var(--gold), transparent); transform-origin: left; transform: scaleX(0); transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
     .metric-val { font-family: var(--font-serif); font-size: 1.2rem; width: 40px; text-align: right; }
 
-    /* ════════════════ ARCHIVES ════════════════ */
+    /* ════════════════ GRILLE DES ARCHIVES ════════════════ */
     .archives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
     .card { 
-      background: rgba(255,255,255,0.4); backdrop-filter: blur(10px); 
+      background: rgba(255,255,255,0.5); backdrop-filter: blur(10px); 
       border: 1px solid rgba(0,0,0,0.05); padding: 2rem; border-radius: 8px; 
       transition: all 0.4s ease; position: relative; overflow: hidden;
     }
@@ -165,13 +143,13 @@
       content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
       background: linear-gradient(90deg, var(--gold), var(--sage)); transform: scaleX(0); transform-origin: left; transition: 0.5s;
     }
-    .card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.8); border-color: rgba(0,0,0,0.1); }
+    .card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.9); box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
     .card:hover::before { transform: scaleX(1); }
     .card-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
     .card-tag { font-size: 0.6rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; display: block;}
     .card-title { font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 1rem; }
 
-    /* ════════════════ ANIMATIONS JAVASCRIPT ════════════════ */
+    /* ════════════════ ANIMATIONS D'APPARITION ════════════════ */
     .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); }
     .reveal.visible { opacity: 1; transform: translateY(0); }
     .delay-1 { transition-delay: 0.1s; }
@@ -183,9 +161,9 @@
       .project-grid, .project-grid.reverse { grid-template-columns: 1fr; gap: 3rem; direction: ltr; }
       .project-grid.reverse > * { direction: ltr; }
       nav { padding: 1.5rem; }
-      .nav-links { display: none; /* Menu caché sur très petit écran pour la lisibilité */ }
+      .nav-links { display: none; }
       .hero-name { font-size: 4rem; }
-      .visual-box { display: none; /* On cache les boîtes décoratives sur mobile */ }
+      .visual-box { display: block; margin-top: 1rem; } /* Pour afficher les boîtes sur mobile */
     }
   </style>
 </head>
@@ -207,9 +185,9 @@
       <div class="halo halo-gold-1"></div>
       
       <div class="floating-container">
-        <svg class="float-item" style="top:20%; left:15%; width:25px;" viewBox="0 0 20 20"><circle cx="10" cy="10" r="2" fill="var(--gold)"/></svg>
-        <svg class="float-item" style="top:75%; left:85%; width:15px; animation-delay:-5s;" viewBox="0 0 20 20"><circle cx="10" cy="10" r="1.5" fill="var(--gold)"/></svg>
-        <svg class="float-item" style="top:35%; left:80%; width:40px; animation-delay:-2s;" viewBox="0 0 50 50"><circle cx="25" cy="25" r="24" stroke="var(--gold)" fill="none" stroke-width="0.5" stroke-dasharray="2 4"/></svg>
+        <svg class="float-item" style="top:25%; left:18%; width:30px;" viewBox="0 0 20 20"><circle cx="10" cy="10" r="3" fill="var(--gold)"/></svg>
+        <svg class="float-item" style="top:65%; left:80%; width:20px; animation-delay:-3s;" viewBox="0 0 20 20"><circle cx="10" cy="10" r="2" fill="var(--gold)"/></svg>
+        <svg class="float-item" style="top:35%; left:75%; width:60px; animation-delay:-6s;" viewBox="0 0 50 50"><circle cx="25" cy="25" r="23" stroke="var(--gold)" fill="none" stroke-width="1.5" stroke-dasharray="4 6"/></svg>
       </div>
 
       <div class="content-wrapper">
@@ -218,7 +196,7 @@
         <p class="project-sub reveal delay-2" style="font-size: 1.5rem; max-width: 600px;">
           Concevoir demain entre Science & Intelligence.
         </p>
-        <div class="reveal delay-3" style="display: flex; gap: 2rem; font-size: 0.75rem; letter-spacing: 1px; opacity: 0.6; text-transform: uppercase; margin-top: 2rem;">
+        <div class="reveal delay-3" style="display: flex; gap: 2rem; font-size: 0.75rem; letter-spacing: 1px; opacity: 0.8; text-transform: uppercase; margin-top: 2rem; color: var(--gold);">
           <span>◈ Management Innovation</span>
           <span>◈ Biotechnologie</span>
         </div>
@@ -229,12 +207,15 @@
       <div class="halo halo-ice-1"></div>
       
       <div class="floating-container">
-        <svg class="float-item" style="top:15%; right:15%; width:120px;" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="20" stroke="var(--ice-blue)" fill="none" stroke-width="1"/>
-          <line x1="50" y1="30" x2="50" y2="10" stroke="var(--ice-blue)" stroke-width="1"/>
-          <circle cx="50" cy="5" r="3" fill="var(--ice-blue)"/>
-          <line x1="70" y1="50" x2="90" y2="50" stroke="var(--ice-blue)" stroke-width="1"/>
-          <circle cx="95" cy="50" r="3" fill="var(--ice-blue)"/>
+        <svg class="float-item" style="top:20%; right:10%; width:160px;" viewBox="0 0 100 100">
+          <circle cx="50" cy="50" r="30" stroke="var(--ice-blue)" fill="none" stroke-width="2"/>
+          <line x1="50" y1="20" x2="50" y2="0" stroke="var(--ice-blue)" stroke-width="2"/>
+          <circle cx="50" cy="5" r="4" fill="var(--ice-blue)"/>
+          <line x1="80" y1="50" x2="100" y2="50" stroke="var(--ice-blue)" stroke-width="2"/>
+          <circle cx="95" cy="50" r="4" fill="var(--ice-blue)"/>
+        </svg>
+        <svg class="float-item" style="top:70%; left:15%; width:50px; animation-delay:-5s;" viewBox="0 0 40 40">
+          <rect x="10" y="10" width="20" height="20" stroke="var(--ice-blue)" stroke-width="2" fill="none" rx="2"/>
         </svg>
       </div>
 
@@ -256,12 +237,12 @@
             </div>
           </div>
           <div class="visual-box reveal delay-2">
-            <h4 style="font-family: var(--font-serif); font-style: italic; margin-bottom: 1.5rem; opacity: 0.7;">Écosystème Agents</h4>
+            <h4 style="font-family: var(--font-serif); font-style: italic; margin-bottom: 1.5rem; opacity: 0.9; color: var(--ice-blue); font-size: 1.3rem;">Écosystème Agents</h4>
             <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;">
-              <div style="padding: 10px; border: 1px solid rgba(138,188,230,0.4); border-radius: 4px; text-align: center;">🔍 Screening</div>
-              <div style="padding: 10px; border: 1px solid rgba(138,188,230,0.4); border-radius: 4px; text-align: center;">⚡ Orchestrateur</div>
-              <div style="padding: 10px; border: 1px solid rgba(138,188,230,0.4); border-radius: 4px; text-align: center;">🧠 Matching</div>
-              <div style="padding: 10px; border: 1px solid rgba(138,188,230,0.4); border-radius: 4px; text-align: center;">🎯 Onboarding</div>
+              <div style="padding: 12px; border: 1px solid rgba(122,166,212,0.6); border-radius: 6px; text-align: center; background: rgba(255,255,255,0.5);">🔍 Screening</div>
+              <div style="padding: 12px; border: 1px solid rgba(122,166,212,0.6); border-radius: 6px; text-align: center; background: rgba(255,255,255,0.5);">⚡ Orchestrateur</div>
+              <div style="padding: 12px; border: 1px solid rgba(122,166,212,0.6); border-radius: 6px; text-align: center; background: rgba(255,255,255,0.5);">🧠 Matching</div>
+              <div style="padding: 12px; border: 1px solid rgba(122,166,212,0.6); border-radius: 6px; text-align: center; background: rgba(255,255,255,0.5);">🎯 Onboarding</div>
             </div>
           </div>
         </div>
@@ -272,8 +253,8 @@
       <div class="halo halo-amber-1"></div>
       
       <div class="floating-container">
-        <svg class="float-item" style="top:25%; left:10%; width:60px;" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="var(--gold)" fill="none" stroke-width="1" stroke-dasharray="4 4"/></svg>
-        <svg class="float-item" style="top:60%; right:85%; width:40px; animation-delay:-7s;" viewBox="0 0 100 100"><path d="M20 50 L80 50 M50 20 L50 80" stroke="var(--gold)" stroke-width="1"/></svg>
+        <svg class="float-item" style="top:25%; left:12%; width:80px;" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="var(--gold)" fill="none" stroke-width="2" stroke-dasharray="6 6"/></svg>
+        <svg class="float-item" style="top:60%; right:15%; width:60px; animation-delay:-7s;" viewBox="0 0 100 100"><path d="M20 50 L80 50 M50 20 L50 80" stroke="var(--gold)" stroke-width="2"/></svg>
       </div>
 
       <div class="content-wrapper">
@@ -295,7 +276,7 @@
           </div>
           
           <div class="visual-box reveal delay-2">
-            <h4 style="font-family: var(--font-serif); font-style: italic; margin-bottom: 1.5rem; opacity: 0.7;">Indicateurs de Performance</h4>
+            <h4 style="font-family: var(--font-serif); font-style: italic; margin-bottom: 1.5rem; opacity: 0.9; color: var(--gold); font-size: 1.3rem;">Indicateurs de Performance</h4>
             <div class="metric-row">
               <span class="metric-label">Engagement</span>
               <div class="metric-bar-wrap"><div class="metric-bar" style="width:82%;"></div></div>
@@ -320,13 +301,14 @@
       <div class="halo halo-emerald-1"></div>
       
       <div class="floating-container">
-        <svg class="float-item" style="top:15%; left:12%; width:60px;" viewBox="0 0 50 100">
-          <path d="M10 10 Q40 50 10 90 M40 10 Q10 50 40 90" stroke="var(--sage)" fill="none" stroke-width="2"/>
-          <line x1="12" y1="30" x2="38" y2="30" stroke="var(--sage)" stroke-width="1"/>
-          <line x1="15" y1="50" x2="35" y2="50" stroke="var(--sage)" stroke-width="1"/>
+        <svg class="float-item" style="top:15%; left:12%; width:80px;" viewBox="0 0 50 100">
+          <path d="M10 10 Q40 50 10 90 M40 10 Q10 50 40 90" stroke="var(--sage)" fill="none" stroke-width="2.5"/>
+          <line x1="12" y1="30" x2="38" y2="30" stroke="var(--sage)" stroke-width="1.5"/>
+          <line x1="15" y1="50" x2="35" y2="50" stroke="var(--sage)" stroke-width="1.5"/>
+          <line x1="12" y1="70" x2="38" y2="70" stroke="var(--sage)" stroke-width="1.5"/>
         </svg>
-        <svg class="float-item" style="top:65%; right:15%; width:55px; animation-delay:-6s;" viewBox="0 0 40 40">
-          <path d="M10 25 Q20 5 30 25 Z M20 25 L20 35" stroke="var(--sage)" fill="none" stroke-width="2"/>
+        <svg class="float-item" style="top:70%; right:15%; width:70px; animation-delay:-6s;" viewBox="0 0 40 40">
+          <path d="M10 25 Q20 5 30 25 Z M20 25 L20 35" stroke="var(--sage)" fill="none" stroke-width="2.5"/>
         </svg>
       </div>
 
@@ -349,13 +331,13 @@
           </div>
           
           <div class="visual-box reveal delay-2" style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-            <div style="display: flex; gap: 1rem; align-items: flex-end;">
-              <div style="width: 80px; height: 80px; border-radius: 50%; border: 1px solid var(--sage); display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-style: italic; background: rgba(163,177,138,0.1);">Rhizome</div>
-              <div style="width: 50px; height: 50px; border-radius: 50%; border: 1px solid var(--sage); display: flex; align-items: center; justify-content: center; font-size: 0.7rem; background: rgba(163,177,138,0.05);">Bact.</div>
+            <div style="display: flex; gap: 1.5rem; align-items: flex-end;">
+              <div style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid var(--sage); display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-style: italic; background: rgba(255,255,255,0.6); font-size: 1.2rem; color: var(--sage); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">Rhizome</div>
+              <div style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid var(--sage); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; background: rgba(255,255,255,0.4); color: var(--sage);">Bact.</div>
             </div>
-            <div style="display: flex; gap: 1rem; align-items: flex-start;">
-              <div style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid var(--sage); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; background: rgba(163,177,138,0.05);">Mycor.</div>
-              <div style="width: 90px; height: 90px; border-radius: 50%; border: 1px solid var(--sage); display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-style: italic; background: rgba(163,177,138,0.1);">19 Var.</div>
+            <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
+              <div style="width: 70px; height: 70px; border-radius: 50%; border: 1px solid var(--sage); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; background: rgba(255,255,255,0.4); color: var(--sage);">Mycor.</div>
+              <div style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid var(--sage); display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-style: italic; background: rgba(255,255,255,0.6); font-size: 1.3rem; color: var(--sage); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">19 Var.</div>
             </div>
           </div>
         </div>
@@ -374,30 +356,35 @@
             <h3 class="card-title">Unibio Medical</h3>
             <p style="font-size:0.85rem; opacity:0.7; line-height: 1.6;">Technicienne de laboratoire (Crest). Expertise en hématologie, immunobiochimie et gestion de la qualité (maintenance, stocks, contrôles).</p>
           </div>
+          
           <div class="card reveal delay-2">
             <span class="card-icon">⚡</span>
             <span class="card-tag">SPRINT · INNOVATION</span>
             <h3 class="card-title">Hackathon MVP</h3>
             <p style="font-size:0.85rem; opacity:0.7; line-height: 1.6;">De l'idée au projet en 72h. Accompagnement d'une plateforme d'échange : calculs de viabilité, tests de faisabilité et prototypage Figma.</p>
           </div>
+          
           <div class="card reveal delay-3">
             <span class="card-icon">🏆</span>
             <span class="card-tag">DISTINCTIONS</span>
             <h3 class="card-title">Palmarès</h3>
             <p style="font-size:0.85rem; opacity:0.7; line-height: 1.6;"><strong>Prix Coup de Pouce</strong> au Créa'thlon (Sun-charge) et <strong>2e place nationale</strong> au concours "Mon Projet en 4 min". L'éloquence au service de l'idée.</p>
           </div>
+          
           <div class="card reveal delay-1">
             <span class="card-icon">🎓</span>
             <span class="card-tag">FORMATION</span>
             <h3 class="card-title">Background Hybride</h3>
             <p style="font-size:0.85rem; opacity:0.7; line-height: 1.6;">Master 1 Management de projets innovants (IAE Montpellier) fondé sur une rigueur scientifique acquise en BUT Génie Biologique.</p>
           </div>
+          
           <div class="card reveal delay-2">
             <span class="card-icon">🚀</span>
             <span class="card-tag">ASSOCIATIF</span>
             <h3 class="card-title">Start-up Lab</h3>
             <p style="font-size:0.85rem; opacity:0.7; line-height: 1.6;">Chargée de communication et marketing (2025). Développement de la visibilité et stratégie d'engagement étudiant.</p>
           </div>
+          
           <div class="card reveal delay-3" style="background: rgba(212,175,55,0.05); border-color: rgba(212,175,55,0.2);">
             <span class="card-icon">◈</span>
             <span class="card-tag">OUTILS & VISION</span>
@@ -413,12 +400,14 @@
       <div class="content-wrapper" style="text-align: center;">
         <h2 class="hero-name reveal" style="font-size: clamp(3rem, 8vw, 6rem);">Écrire la<br><em>prochaine scène.</em></h2>
         
-        <div class="reveal delay-1" style="margin-top: 4rem; display: flex; gap: 2rem; justify-content: center; flex-wrap: wrap;">
-          <a href="mailto:thaliapro26@gmail.com" style="color: var(--anthracite); text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid var(--gold); padding-bottom: 5px; transition: 0.3s;">Email</a>
-          <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" style="color: var(--anthracite); text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; border-bottom: 1px solid var(--gold); padding-bottom: 5px; transition: 0.3s;">LinkedIn</a>
+        <div class="reveal delay-1" style="margin-top: 4rem; display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;">
+          <a href="mailto:thaliapro26@gmail.com" style="color: var(--anthracite); text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid var(--gold); padding-bottom: 5px; transition: 0.3s; font-weight: 500;">Email</a>
+          <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" style="color: var(--anthracite); text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid var(--gold); padding-bottom: 5px; transition: 0.3s; font-weight: 500;">LinkedIn</a>
+          
+          <a href="CV.pdf" download target="_blank" style="color: var(--gold); text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid var(--gold); padding-bottom: 5px; transition: 0.3s; font-weight: 600;">Télécharger CV</a>
         </div>
         
-        <p class="reveal delay-2" style="margin-top: 6rem; font-size: 0.65rem; opacity: 0.4; letter-spacing: 3px; text-transform: uppercase;">
+        <p class="reveal delay-2" style="margin-top: 6rem; font-size: 0.65rem; opacity: 0.5; letter-spacing: 3px; text-transform: uppercase; color: var(--gold);">
           © 2026 Thalia Barrahi — Montpellier
         </p>
       </div>
@@ -429,11 +418,11 @@
   <script>
     const scrollContainer = document.getElementById('main-scroll');
     
-    // 1. REVEAL AU DÉFILEMENT (Sécurisé pour le conteneur interne)
+    // 1. REVEAL AU DÉFILEMENT
     const reveals = document.querySelectorAll('.reveal');
     const observerOptions = {
-      root: scrollContainer, // Très important : on écoute le défilement DANS la div
-      threshold: 0.15
+      root: scrollContainer,
+      threshold: 0.10
     };
 
     const observer = new IntersectionObserver((entries) => {
@@ -446,7 +435,7 @@
 
     reveals.forEach(el => observer.observe(el));
 
-    // Force l'apparition de la première scène au chargement (anti écran blanc)
+    // Force l'apparition de la première scène au chargement
     window.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible'));
@@ -461,7 +450,6 @@
       let current = '';
       sections.forEach(section => {
         const sectionTop = section.offsetTop;
-        // On vérifie si on a scrollé jusqu'à la section (avec une petite marge)
         if (scrollContainer.scrollTop >= sectionTop - 300) {
           current = section.getAttribute('id');
         }
@@ -472,7 +460,7 @@
         if (link.getAttribute('href').substring(1) === current || 
            (current === 'cpam' && link.getAttribute('href') === '#capgemini') ||
            (current === 'bioscience' && link.getAttribute('href') === '#capgemini') ) {
-          // Astuce : On garde "Projets" actif pour capgemini, cpam et bioscience
+          
           if(link.getAttribute('href') === '#capgemini' && (current === 'cpam' || current === 'bioscience' || current === 'capgemini')){
              link.classList.add('active');
           } else if (link.getAttribute('href').substring(1) === current) {
@@ -487,7 +475,6 @@
     const barObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          // Relance l'animation
           entry.target.style.transform = 'scaleX(0)';
           setTimeout(() => { entry.target.style.transform = ''; }, 50);
         }
@@ -500,8 +487,8 @@
     const cursor = document.createElement('div');
     cursor.style.cssText = `
       position: fixed; pointer-events: none; z-index: 10000;
-      width: 6px; height: 6px; border-radius: 50%;
-      background: var(--gold); opacity: 0.5;
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--gold); opacity: 0.8; /* Opacité augmentée */
       transform: translate(-50%, -50%);
       transition: transform 0.1s, opacity 0.3s;
       mix-blend-mode: multiply;
@@ -511,8 +498,8 @@
     const ring = document.createElement('div');
     ring.style.cssText = `
       position: fixed; pointer-events: none; z-index: 9998;
-      width: 32px; height: 32px; border-radius: 50%;
-      border: 1px solid rgba(212,175,55,0.4);
+      width: 36px; height: 36px; border-radius: 50%;
+      border: 2px solid rgba(212,175,55,0.6); /* Bordure épaissie */
       transform: translate(-50%, -50%);
       transition: left 0.15s ease-out, top 0.15s ease-out, transform 0.3s;
       mix-blend-mode: multiply;
@@ -529,13 +516,13 @@
     document.querySelectorAll('a, .card, .visual-box').forEach(el => {
       el.addEventListener('mouseenter', () => {
         ring.style.transform = 'translate(-50%, -50%) scale(1.5)';
-        ring.style.borderColor = 'rgba(212,175,55,0.8)';
+        ring.style.borderColor = 'rgba(212,175,55,1)';
         cursor.style.opacity = '1';
       });
       el.addEventListener('mouseleave', () => {
         ring.style.transform = 'translate(-50%, -50%) scale(1)';
-        ring.style.borderColor = 'rgba(212,175,55,0.4)';
-        cursor.style.opacity = '0.5';
+        ring.style.borderColor = 'rgba(212,175,55,0.6)';
+        cursor.style.opacity = '0.8';
       });
     });
   </script>
