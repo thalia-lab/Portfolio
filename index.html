@@ -21,6 +21,7 @@
       --gradient-ai: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%);
       --gradient-bio: linear-gradient(135deg, #11998E 0%, #38EF7D 100%);
       --gradient-mgt: linear-gradient(135deg, #F2994A 0%, #F2C94C 100%);
+      --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #FFDF73 100%);
       
       --glass-bg: rgba(255, 255, 255, 0.7);
       --glass-border: rgba(255, 255, 255, 0.5);
@@ -112,11 +113,13 @@
     .glass-card { background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); border-radius: 24px; padding: 3rem; transition: transform 0.4s ease, box-shadow 0.4s ease; }
     .glass-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); }
 
-    .image-frame { width: 100%; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.08); border: 4px solid rgba(255,255,255,0.6); margin-top: 2rem;}
-    .image-frame img { width: 100%; height: auto; display: block; transition: transform 0.5s; }
-    .image-frame:hover img { transform: scale(1.03); }
+    /* Photo Hero */
+    .profile-container { width: 100%; max-width: 450px; aspect-ratio: 4/5; border-radius: 24px; overflow: hidden; margin: 0 auto; border: 8px solid rgba(255,255,255,0.5); box-shadow: 0 20px 50px rgba(0,0,0,0.1); position: relative; background: rgba(0,0,0,0.05); }
+    .profile-container img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.7s ease; }
+    .profile-container:hover img { transform: scale(1.05); }
 
-    .archive-img-wrap { width: 100%; height: 180px; border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; background: rgba(0,0,0,0.03); position: relative;}
+    /* Images d'archives */
+    .archive-img-wrap { width: 100%; height: 180px; border-radius: 12px; overflow: hidden; margin-bottom: 1.5rem; background: rgba(0,0,0,0.03); position: relative; border: 1px solid rgba(0,0,0,0.05);}
     .archive-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
     .glass-card:hover .archive-img-wrap img { transform: scale(1.05); }
 
@@ -152,11 +155,20 @@
     .flow-arrow { flex: 0.5; text-align: center; color: var(--gold); font-size: 1.5rem; }
     .flow-box.active-box { background: var(--text-main); color: #fff; border-color: var(--text-main); transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.1);}
 
+    /* 4. Interface Bio-Data CONFIDENTIELLE (CRRHAB) */
+    .bio-data-nda { position: relative; padding: 1rem; }
+    .data-blur-layer { filter: blur(8px); opacity: 0.3; user-select: none; pointer-events: none; }
+    .data-bar-wrap { width: 100%; margin-bottom: 1.5rem;}
+    .data-label { display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.8rem; }
+    .data-track { width: 100%; height: 8px; background: rgba(0,0,0,0.1); border-radius: 10px; overflow: hidden; }
+    .data-fill { height: 100%; background: var(--sage); }
+    .nda-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; z-index: 10; }
+
     /* ==========================================================================
        GRILLE DES ARCHIVES
        ========================================================================== */
     .archives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; margin-top: 3rem; }
-    .archive-card { padding: 2.5rem; text-decoration: none; color: inherit; display: block;}
+    .archive-card { padding: 1.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column;}
     .archive-card:hover { border-color: rgba(212, 175, 55, 0.4); }
     .archive-tag { font-size: 0.65rem; font-weight: 700; color: #D4AF37; margin-bottom: 0.8rem; letter-spacing: 2px; text-transform: uppercase; display: block;}
     .archive-title { font-family: var(--font-title); font-size: 1.5rem; margin-bottom: 1rem; }
@@ -212,7 +224,7 @@
     <div class="nav-links">
       <a href="#hero">Vision</a>
       <a href="#capgemini">Projets IA & Mgt</a>
-      <a href="#bioscience">Bio-Tech</a>
+      <a href="#bioscience">Recherche</a>
       <a href="#archives">Parcours</a>
       <a href="#contact">Contact</a>
     </div>
@@ -225,24 +237,37 @@
       <svg class="floating-svg" style="top: 40%; left: 80%; width: 80px; animation-delay: -2s;" viewBox="0 0 50 50"><circle cx="25" cy="25" r="23" stroke="var(--gold)" fill="none" stroke-width="1" stroke-dasharray="4 6" opacity="0.3"/></svg>
     </div>
 
-    <div class="container">
-      <div class="sur-titre reveal">Portfolio 2026</div>
-      <h1 class="reveal delay-1">Thalia<br><em>Barrahi</em></h1>
-      <p class="lead reveal delay-2">Manager de projets innovants. L'hybridation parfaite entre la rigueur de la <strong>Science</strong> et la vision de l'<strong>Intelligence Artificielle</strong>.</p>
-      <div class="tags reveal delay-3">
-        <span class="tag">Master 1 Management de l'Innovation (IAE)</span>
-        <span class="tag">BUT Génie Biologique</span>
+    <div class="container project-grid">
+      <div>
+        <div class="sur-titre reveal">Portfolio 2026</div>
+        <h1 class="reveal delay-1">Thalia<br><em>Barrahi</em></h1>
+        <p class="lead reveal delay-2">Manager de projets innovants. L'hybridation parfaite entre la rigueur de la <strong>Science</strong> et la vision de l'<strong>Intelligence Artificielle</strong>.</p>
+        <div class="tags reveal delay-3">
+          <span class="tag">Master 1 Management de l'Innovation (IAE)</span>
+          <span class="tag">BUT Génie Biologique</span>
+        </div>
+        <div class="btn-group reveal delay-3">
+          <a href="#capgemini" class="btn btn-primary">Découvrir les projets</a>
+        </div>
       </div>
-      <div class="btn-group reveal delay-3">
-        <a href="#capgemini" class="btn btn-primary">Découvrir les projets</a>
+      
+      <div class="reveal delay-2">
+        <div class="profile-container">
+          <img src="https://via.placeholder.com/450x550/E2E2E2/86868B?text=Votre+Photo+Ici" alt="Portrait Thalia Barrahi">
+        </div>
       </div>
     </div>
   </section>
 
   <section id="capgemini">
     <div class="section-visuals">
-      <svg class="floating-svg icon-blue" style="top: 15%; right: 10%; width: 150px; opacity: 0.2;" viewBox="0 0 100 100">
-        <circle cx="50" cy="50" r="30" stroke-width="1.5"/><line x1="50" y1="20" x2="50" y2="0" stroke-width="1.5"/><circle cx="50" cy="5" r="4" fill="var(--ice-blue)"/><line x1="80" y1="50" x2="100" y2="50" stroke-width="1.5"/>
+      <svg class="floating-svg icon-blue" style="top: 15%; right: 10%; width: 150px; opacity: 0.3;" viewBox="0 0 100 100">
+        <circle cx="50" cy="50" r="30" stroke-width="1.5"/>
+        <line x1="50" y1="20" x2="50" y2="0" stroke-width="1.5"/>
+        <circle cx="50" cy="5" r="4" fill="var(--ice-blue)"/>
+        <line x1="80" y1="50" x2="100" y2="50" stroke-width="1.5"/>
+        <circle cx="10" cy="50" r="4" fill="var(--ice-blue)"/>
+        <line x1="20" y1="50" x2="0" y2="50" stroke-width="1.5"/>
       </svg>
     </div>
 
@@ -264,7 +289,7 @@
         <h3 style="font-family: var(--font-text); font-size:0.85rem; margin-bottom: 2rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Les 6 Agents Développés</h3>
         <div class="ui-dashboard">
           <div class="ui-node"><div class="ui-node-content">
-            <svg class="icon-svg icon-blue" viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+            <svg class="icon-svg icon-blue" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
             <h4>Orientation</h4>
           </div></div>
           <div class="ui-node"><div class="ui-node-content">
@@ -280,7 +305,7 @@
             <h4>Newsletters</h4>
           </div></div>
           <div class="ui-node"><div class="ui-node-content">
-            <svg class="icon-svg icon-blue" viewBox="0 0 24 24"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg>
+            <svg class="icon-svg icon-blue" viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
             <h4>Scoring</h4>
           </div></div>
           <div class="ui-node"><div class="ui-node-content">
@@ -294,8 +319,12 @@
 
   <section id="cpam">
     <div class="section-visuals">
-      <svg class="floating-svg icon-coral" style="top: 25%; left: 10%; width: 100px; opacity: 0.15;" viewBox="0 0 100 100">
+      <svg class="floating-svg icon-gold" style="top: 25%; left: 10%; width: 100px; opacity: 0.2;" viewBox="0 0 100 100">
         <circle cx="50" cy="50" r="40" stroke-width="1.5" stroke-dasharray="6 6"/>
+        <circle cx="50" cy="10" r="5" fill="var(--gold)"/>
+        <circle cx="15" cy="70" r="5" fill="var(--gold)"/>
+        <circle cx="85" cy="70" r="5" fill="var(--gold)"/>
+        <line x1="50" y1="15" x2="50" y2="50" stroke-width="1"/>
       </svg>
     </div>
 
@@ -304,7 +333,7 @@
         <div class="sur-titre reveal">Innovation Publique</div>
         <h2 class="reveal delay-1">CPAM Hérault :<br><em>Intelligence</em> Collective.</h2>
         <p class="body-text reveal delay-2">
-          Alternance (Sept. 2025 - Juil. 2026) en tant que Chef de projets innovants. La transformation d'une organisation ne se fait pas qu'avec des outils : elle nécessite un encadrement humain, assuré par le pilotage d'indicateurs clés et l'animation de l'idéation.
+          Alternance en tant que Chef de projets innovants. La transformation d'une organisation ne se fait pas qu'avec des outils technologiques : elle nécessite un encadrement humain, assuré par le pilotage d'indicateurs clés et l'animation de l'idéation.
         </p>
         <div class="tags reveal delay-3">
           <span class="tag">Gestion de Projets</span>
@@ -317,35 +346,35 @@
         <h3 style="font-family: var(--font-text); font-size:0.85rem; margin-bottom: 2.5rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Compétences Déployées</h3>
         <div class="kpi-container">
           
-          <div class="kpi-item">
+          <div class="kpi-item" style="position: relative;">
             <svg viewBox="0 0 36 36" class="circular-chart">
               <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
               <path class="circle circle-anim" data-target="100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
             </svg>
             <div class="kpi-icon-center">
-              <svg class="icon-svg icon-sm icon-coral" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+              <svg class="icon-svg icon-sm icon-gold" style="margin:0;" viewBox="0 0 24 24"><path d="M9 21h6"/><path d="M10 21v-3.4a9.9 9.9 0 0 1-2-5.6C8 7.6 11.6 4 15 4s6 3.6 6 8a9.9 9.9 0 0 1-2 5.6V21"/></svg>
             </div>
             <div class="kpi-label">Innovation<br>Participative</div>
           </div>
 
-          <div class="kpi-item">
+          <div class="kpi-item" style="position: relative;">
             <svg viewBox="0 0 36 36" class="circular-chart">
               <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
               <path class="circle circle-anim" data-target="100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
             </svg>
             <div class="kpi-icon-center">
-              <svg class="icon-svg icon-sm icon-coral" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+              <svg class="icon-svg icon-sm icon-gold" style="margin:0;" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
             </div>
             <div class="kpi-label">Facilitation<br>d'équipes</div>
           </div>
 
-          <div class="kpi-item">
+          <div class="kpi-item" style="position: relative;">
             <svg viewBox="0 0 36 36" class="circular-chart">
               <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
               <path class="circle circle-anim" data-target="100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
             </svg>
             <div class="kpi-icon-center">
-              <svg class="icon-svg icon-sm icon-coral" viewBox="0 0 24 24"><path d="M22 19a2 2 0 0 1-2 2H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h5l2 3h9a2 2 0 0 1 2 2z"></path></svg>
+              <svg class="icon-svg icon-sm icon-gold" style="margin:0;" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle></svg>
             </div>
             <div class="kpi-label">Gestion<br>de projets</div>
           </div>
@@ -357,17 +386,24 @@
 
   <section id="bioscience">
     <div class="section-visuals">
-      <svg class="floating-svg icon-sage" style="top: 15%; left: 8%; width: 90px; opacity: 0.2;" viewBox="0 0 50 100"><path d="M10 10 Q40 50 10 90 M40 10 Q10 50 40 90" fill="none" stroke-width="2.5"/><line x1="12" y1="30" x2="38" y2="30" stroke-width="1.5"/><line x1="15" y1="50" x2="35" y2="50" stroke-width="1.5"/><line x1="12" y1="70" x2="38" y2="70" stroke-width="1.5"/></svg>
-      <svg class="floating-svg icon-sage" style="top: 65%; right: 12%; width: 70px; animation-delay: -3s; opacity: 0.2;" viewBox="0 0 24 24"><path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0 0-14h-1"></path><path d="M9 14h2"></path><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"></path><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"></path></svg>
+      <svg class="floating-svg icon-sage" style="top: 15%; left: 8%; width: 90px; opacity: 0.2;" viewBox="0 0 50 100">
+        <path d="M10 10 Q40 50 10 90 M40 10 Q10 50 40 90" fill="none" stroke-width="2.5"/>
+        <line x1="12" y1="30" x2="38" y2="30" stroke-width="1.5"/>
+        <line x1="15" y1="50" x2="35" y2="50" stroke-width="1.5"/>
+        <line x1="12" y1="70" x2="38" y2="70" stroke-width="1.5"/>
+      </svg>
+      <svg class="floating-svg icon-sage" style="top: 65%; right: 12%; width: 70px; animation-delay: -3s; opacity: 0.2;" viewBox="0 0 24 24">
+        <path d="M6 18h8"></path><path d="M3 22h18"></path><path d="M14 22a7 7 0 1 0 0-14h-1"></path><path d="M9 14h2"></path><path d="M9 12a2 2 0 0 1-2-2V6h6v4a2 2 0 0 1-2 2Z"></path><path d="M12 6V3a1 1 0 0 0-1-1H9a1 1 0 0 0-1 1v3"></path>
+      </svg>
     </div>
 
     <div class="container project-grid">
       <div class="project-text">
-        <div class="sur-titre reveal">Recherche Laboratoire</div>
+        <div class="sur-titre reveal">Recherche, Soutenance & Rapport</div>
         <h2 class="reveal delay-1">CRRHAB :<br>La Science du <em>Vivant</em>.</h2>
         <p class="body-text reveal delay-2">
-          Laboratoire de Phytopathologie (Chott-Mariem, Tunisie), affilié à l'IRESA, sous la tutelle du Dr Hayfa Jabnoun-Khiareddine.<br><br>
-          <em>"Test du comportement de 19 variétés de pomme de terre basé sur leurs paramètres agronomiques et microbiomes associés"</em>. Isolement de souches d'intérêt (*Bacillus, Pseudomonas...*) et tests d'antagonisme contre les maladies fongiques. Une approche d'agroécologie et de biocontrôle pour réduire l'usage de pesticides.
+          Travail au Laboratoire de Phytopathologie de Chott-Mariem (Tunisie), sous la tutelle de Dr. Hayfa Jabnoun-Khiareddine.<br><br>
+          <em>"Test du comportement de 19 variétés de pomme de terre basé sur leurs paramètres agronomiques et microbiomes associés"</em>. Isolement de souches d'intérêt et tests d'antagonisme contre les maladies fongiques. Une approche fondamentale d'agroécologie pour le biocontrôle.
         </p>
         <div class="tags reveal delay-3">
           <span class="tag">Biocontrôle</span>
@@ -376,10 +412,30 @@
         </div>
       </div>
       
-      <div class="glass-card reveal delay-2" style="padding: 1.5rem;">
-        <h3 style="font-family: var(--font-text); font-size:0.85rem; margin: 1rem 0 1.5rem 1rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Aperçu de la recherche</h3>
-        <div class="image-frame">
-          <img src="Poster scientifique bleu et vert.jpg" alt="Poster Scientifique CRRHAB Thalia Barrahi">
+      <div class="glass-card reveal delay-2 dashboard-card" style="padding: 0; overflow: hidden;">
+        <div class="bio-data-nda">
+          <h3 style="font-family: var(--font-text); font-size:0.85rem; margin: 2rem 0 2rem 2rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Évaluation de la structure microbienne</h3>
+          
+          <div class="data-blur-layer" style="padding: 0 2rem 2rem;">
+            <div class="data-bar-wrap">
+              <div class="data-label"><span style="background:#ccc; color:transparent; border-radius:4px;">XXXXXXX</span></div>
+              <div class="data-track"><div class="data-fill" style="width: 85%;"></div></div>
+            </div>
+            <div class="data-bar-wrap">
+              <div class="data-label"><span style="background:#ccc; color:transparent; border-radius:4px;">XXXXXXXXXX</span></div>
+              <div class="data-track"><div class="data-fill" style="width: 45%;"></div></div>
+            </div>
+            <div class="data-bar-wrap">
+              <div class="data-label"><span style="background:#ccc; color:transparent; border-radius:4px;">XXXXX</span></div>
+              <div class="data-track"><div class="data-fill" style="width: 70%;"></div></div>
+            </div>
+          </div>
+
+          <div class="nda-overlay">
+            <svg class="icon-svg icon-sage" style="width: 48px; height: 48px; margin-bottom: 0.5rem;" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <div style="font-family: var(--font-title); font-size: 1.3rem; font-weight: 600; color: var(--text-main);">Données sous NDA</div>
+            <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 0.5rem; font-weight: 700;">Résultats confidentiels du Rapport</div>
+          </div>
         </div>
       </div>
     </div>
@@ -392,38 +448,47 @@
       
       <div class="archives-grid">
         
-        <div class="glass-card archive-card reveal delay-2" style="padding: 1.5rem;">
+        <div class="glass-card archive-card reveal delay-2">
           <div class="archive-img-wrap">
             <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Projet Heron Exchange SaaS">
           </div>
-          <div style="padding: 1rem;">
-            <span class="archive-tag">Entrepreneuriat · Accompagnement Pépite LR</span>
-            <h3 class="archive-title" style="font-size: 1.3rem;">Heron Exchange</h3>
-            <p class="archive-desc" style="font-size: 0.85rem;">Accompagnement de la porteuse de projet (C. Cantave). Stratégie sur une plateforme SaaS B2B sécurisant les instructions de paiement des PME (~7M cibles) contre la fraude financière (BEC).</p>
+          <div style="padding: 0 1rem 1rem;">
+            <span class="archive-tag">Business Plan · Pépite LR</span>
+            <h3 class="archive-title" style="font-size: 1.3rem;">Projet Heron Exchange</h3>
+            <p class="archive-desc" style="font-size: 0.85rem;">Accompagnement de la porteuse de projet (C. Cantave) dans la conception d'une plateforme SaaS B2B luttant contre la fraude BEC (~7M de PME cibles). Diagnostic terrain et modèle de revenus.</p>
             
             <div class="flow-schema">
-              <div class="flow-box">Facture / Demande</div>
+              <div class="flow-box">Facturation</div>
               <div class="flow-arrow">➔</div>
               <div class="flow-box active-box">Heron Exchange<br><span style="font-size:0.5rem; font-weight:normal;">Sécurisation</span></div>
               <div class="flow-arrow">➔</div>
-              <div class="flow-box">Paiement Vérifié</div>
+              <div class="flow-box">Paiement</div>
             </div>
           </div>
         </div>
 
         <div class="glass-card archive-card reveal delay-1">
-          <svg class="icon-svg icon-sage" viewBox="0 0 24 24" style="width: 40px; height: 40px; margin-bottom: 1rem;"><path d="M10 2v7.31"></path><path d="M14 9.3V1.99"></path><path d="M8.5 2h7"></path><path d="M14 9.3a6.5 6.5 0 1 1-4 0"></path><path d="M5.52 16h12.96"></path></svg>
-          <span class="archive-tag">18 MOIS · Alternance</span>
-          <h3 class="archive-title">Unibio Medical (Crest)</h3>
-          <p class="archive-desc">Technicienne de laboratoire. Hématologie, hémostase, immunobiochimie et gestion de la qualité. La rigueur analytique appliquée au diagnostic médical et technique.</p>
+          <div class="archive-img-wrap">
+            <img src="Poster scientifique bleu et vert.jpg" alt="Poster Scientifique Unibio">
+          </div>
+          <div style="padding: 0 1rem 1rem;">
+            <span class="archive-tag">18 MOIS · Alternance</span>
+            <h3 class="archive-title" style="font-size: 1.3rem;">Unibio Medical (Crest)</h3>
+            <p class="archive-desc" style="font-size: 0.85rem;">Technicienne de laboratoire. Hématologie, hémostase, immunobiochimie et gestion de la qualité. La rigueur analytique appliquée au diagnostic médical et technique. Synthèse via un poster scientifique.</p>
+          </div>
         </div>
 
         <div class="glass-card archive-card reveal delay-3">
-          <svg class="icon-svg icon-gold" viewBox="0 0 24 24" style="width: 40px; height: 40px; margin-bottom: 1rem;"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-          <span class="archive-tag">Distinctions Nationales</span>
-          <h3 class="archive-title">Palmarès & Concours</h3>
-          <p class="archive-desc">Prix Coup de Pouce au Créa'thlon (2025, Sun-charge) et 2e place nationale avec le projet "Antibiorésistance en laboratoire" au concours Mon Projet en 4 min (2021).</p>
+          <div class="archive-img-wrap" style="background: rgba(212,175,55,0.1); display:flex; align-items:center; justify-content:center;">
+             <svg class="icon-svg icon-gold" style="width: 60px; height: 60px; margin: 0;" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+          </div>
+          <div style="padding: 0 1rem 1rem;">
+            <span class="archive-tag">Distinctions Nationales</span>
+            <h3 class="archive-title" style="font-size: 1.3rem;">Palmarès & Concours</h3>
+            <p class="archive-desc" style="font-size: 0.85rem;">Prix Coup de Pouce au Créa'thlon (2025, Projet énergie solaire Sun-charge) et 2e place nationale avec le projet "Antibiorésistance en laboratoire" au concours Mon Projet en 4 min (2021).</p>
+          </div>
         </div>
+
       </div>
     </div>
   </section>
