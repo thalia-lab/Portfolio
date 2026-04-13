@@ -11,20 +11,21 @@
 
   <style>
     /* ==========================================================================
-       VARIABLES ET RESET
+       VARIABLES & DESIGN SYSTEM
        ========================================================================== */
     :root {
-      --bg-base: #F5F5F7; /* Gris très clair style Apple */
+      --bg-base: #FAFAFC; /* Blanc cassé très lumineux (Style Apple) */
       --text-main: #1D1D1F;
       --text-muted: #86868B;
       
       --gradient-ai: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%);
       --gradient-bio: linear-gradient(135deg, #11998E 0%, #38EF7D 100%);
       --gradient-mgt: linear-gradient(135deg, #F2994A 0%, #F2C94C 100%);
+      --gradient-gold: linear-gradient(135deg, #D4AF37 0%, #FFDF73 100%);
       
-      --glass-bg: rgba(255, 255, 255, 0.65);
-      --glass-border: rgba(255, 255, 255, 0.8);
-      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.5);
+      --glass-shadow: 0 10px 40px rgba(0, 0, 0, 0.06);
       
       --font-title: 'Playfair Display', serif;
       --font-text: 'Manrope', sans-serif;
@@ -38,107 +39,57 @@
       background-color: var(--bg-base);
       color: var(--text-main);
       font-family: var(--font-text);
-      overflow-x: hidden;
-      cursor: none; /* Remplacé par le curseur custom */
+      overflow-x: hidden; /* Empêche le défilement horizontal, mais permet le vertical ! */
     }
 
     /* ==========================================================================
-       ARRIÈRE-PLAN ANIMÉ (ORBES DE COULEUR)
+       FOND ANIMÉ (ORBES) - ACCÉLÉRÉ ET VISIBLE
        ========================================================================== */
     .ambient-background {
-      position: fixed;
-      top: 0; left: 0; width: 100vw; height: 100vh;
-      z-index: -1;
-      overflow: hidden;
-      background: var(--bg-base);
+      position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -1; overflow: hidden; pointer-events: none;
     }
 
     .orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(80px);
-      opacity: 0.6;
-      animation: float 20s infinite alternate ease-in-out;
+      position: absolute; border-radius: 50%; filter: blur(90px);
+      animation: float 12s infinite alternate ease-in-out;
     }
 
-    .orb-1 { background: #E2E2E2; width: 60vw; height: 60vw; top: -10%; left: -10%; animation-delay: 0s; }
-    .orb-2 { background: #D6E4FF; width: 50vw; height: 50vw; top: 40%; right: -20%; animation-delay: -5s; }
-    .orb-3 { background: #E1F0DA; width: 40vw; height: 40vw; bottom: -20%; left: 20%; animation-delay: -10s; }
+    .orb-1 { background: rgba(0, 198, 255, 0.15); width: 50vw; height: 50vw; top: -10%; left: -10%; }
+    .orb-2 { background: rgba(242, 153, 74, 0.12); width: 40vw; height: 40vw; top: 40%; right: -10%; animation-delay: -4s; }
+    .orb-3 { background: rgba(17, 153, 142, 0.15); width: 45vw; height: 45vw; bottom: -20%; left: 20%; animation-delay: -8s; }
 
     @keyframes float {
       0% { transform: translate(0, 0) scale(1); }
-      50% { transform: translate(5vw, 10vh) scale(1.1); }
-      100% { transform: translate(-5vw, -5vh) scale(0.9); }
+      50% { transform: translate(10vw, 5vh) scale(1.1); }
+      100% { transform: translate(-5vw, -10vh) scale(0.9); }
     }
 
     /* ==========================================================================
        NAVIGATION
        ========================================================================== */
     nav {
-      position: fixed;
-      top: 0; left: 0; width: 100%;
-      padding: 1.5rem 5%;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      z-index: 1000;
-      background: rgba(245, 245, 247, 0.8);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
+      position: fixed; top: 0; left: 0; width: 100%;
+      padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
+      z-index: 1000; background: rgba(250, 250, 252, 0.8);
+      backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     }
 
-    .logo {
-      font-family: var(--font-title);
-      font-size: 1.5rem;
-      font-weight: 700;
-      color: var(--text-main);
-      text-decoration: none;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-    }
-
-    .nav-links a {
-      text-decoration: none;
-      color: var(--text-main);
-      font-weight: 600;
-      font-size: 0.8rem;
-      letter-spacing: 1px;
-      text-transform: uppercase;
-      opacity: 0.6;
-      transition: 0.3s;
-    }
-
+    .logo { font-family: var(--font-title); font-size: 1.5rem; font-weight: 700; color: var(--text-main); text-decoration: none; }
+    .nav-links { display: flex; gap: 2.5rem; }
+    .nav-links a { text-decoration: none; color: var(--text-main); font-weight: 600; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase; opacity: 0.5; transition: 0.3s; }
     .nav-links a:hover { opacity: 1; }
 
     /* ==========================================================================
        STRUCTURE DES SECTIONS
        ========================================================================== */
-    section {
-      min-height: 100vh;
-      padding: 150px 5% 100px;
-      display: flex;
-      align-items: center;
-      position: relative;
-    }
-
-    .container {
-      max-width: 1200px;
-      width: 100%;
-      margin: 0 auto;
-    }
-
-    /* Grille pour les projets */
-    .project-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4rem;
-      align-items: center;
-    }
+    section { padding: 120px 5% 100px; min-height: 100vh; display: flex; align-items: center; }
+    #hero { min-height: 100vh; }
     
+    .container { max-width: 1200px; width: 100%; margin: 0 auto; }
+
+    .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
     .project-grid.reverse { direction: rtl; }
     .project-grid.reverse > * { direction: ltr; }
 
@@ -146,265 +97,123 @@
        TYPOGRAPHIE ET TEXTES
        ========================================================================== */
     .sur-titre {
-      font-size: 0.75rem;
-      font-weight: 700;
-      letter-spacing: 3px;
-      text-transform: uppercase;
-      color: var(--text-muted);
-      margin-bottom: 1rem;
-      display: flex;
-      align-items: center;
-      gap: 1rem;
+      font-size: 0.75rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;
     }
+    .sur-titre::before { content: ''; width: 40px; height: 1px; background: var(--text-muted); }
+
+    h1 { font-family: var(--font-title); font-size: clamp(3.5rem, 8vw, 7rem); line-height: 1.05; margin-bottom: 1.5rem; color: var(--text-main); }
+    h1 em { font-style: italic; font-weight: 400; color: #666; }
+
+    h2 { font-family: var(--font-title); font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.1; margin-bottom: 1.5rem; }
     
-    .sur-titre::before { content: ''; width: 40px; height: 2px; background: var(--text-muted); }
+    p.lead { font-size: 1.25rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 2.5rem; max-width: 700px; }
+    p.body-text { font-size: 1.05rem; line-height: 1.8; color: #444; margin-bottom: 2rem; }
 
-    h1 {
-      font-family: var(--font-title);
-      font-size: clamp(4rem, 8vw, 7rem);
-      line-height: 1;
-      margin-bottom: 1.5rem;
-      color: var(--text-main);
-    }
-
-    h1 em { font-style: italic; font-weight: 400; color: #555; }
-
-    h2 {
-      font-family: var(--font-title);
-      font-size: clamp(2.5rem, 5vw, 4rem);
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-    }
-
-    p.lead {
-      font-size: 1.25rem;
-      line-height: 1.6;
-      color: var(--text-muted);
-      margin-bottom: 2rem;
-      max-width: 600px;
-    }
-
-    p.body-text {
-      font-size: 1rem;
-      line-height: 1.8;
-      color: #444;
-      margin-bottom: 2rem;
-    }
-
-    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .tags { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 2rem; }
     .tag {
-      padding: 0.5rem 1rem;
-      background: rgba(0,0,0,0.03);
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: 50px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      letter-spacing: 1px;
-      text-transform: uppercase;
+      padding: 0.5rem 1.2rem; background: rgba(0,0,0,0.03); border: 1px solid rgba(0,0,0,0.05);
+      border-radius: 50px; font-size: 0.7rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase;
     }
 
     /* ==========================================================================
-       CARTES GLASSMORPHISM (LE WOW FACTOR)
+       CARTES GLASSMORPHISM
        ========================================================================== */
     .glass-card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid var(--glass-border);
-      box-shadow: var(--glass-shadow);
-      border-radius: 24px;
-      padding: 3rem;
-      transition: transform 0.4s ease, box-shadow 0.4s ease;
-      position: relative;
-      overflow: hidden;
+      background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow);
+      border-radius: 24px; padding: 3rem; transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative; overflow: hidden;
     }
-
-    .glass-card::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
-      background: var(--text-main);
-      opacity: 0; transition: 0.4s;
-    }
-
-    .glass-card:hover {
-      transform: translateY(-10px);
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
-    }
-    
-    .glass-card:hover::before { opacity: 1; }
+    .glass-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1); }
 
     /* ==========================================================================
-       INTERFACES VISUELLES (DASHBOARDS CSS)
+       DASHBOARDS INTERACTIFS (ANIMÉS EN CSS)
        ========================================================================== */
     
     /* 1. Interface IA (Capgemini) */
-    .ui-dashboard {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 1rem;
-    }
-    
+    .ui-dashboard { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
     .ui-node {
-      background: rgba(255,255,255,0.8);
-      border: 1px solid rgba(0, 198, 255, 0.2);
-      border-radius: 16px;
-      padding: 1.5rem;
-      text-align: center;
-      transition: 0.3s;
+      background: #fff; border: 1px solid rgba(0, 198, 255, 0.2); border-radius: 16px;
+      padding: 1.5rem; text-align: center; transition: 0.4s; position: relative; overflow: hidden;
     }
-    .ui-node:hover {
-      background: var(--gradient-ai);
-      color: white;
-      transform: scale(1.05);
-      border-color: transparent;
-      box-shadow: 0 10px 20px rgba(0, 114, 255, 0.2);
+    .ui-node::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 100%;
+      background: var(--gradient-ai); opacity: 0; transition: 0.4s; z-index: 1;
     }
-    .ui-node h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.5rem; }
+    .ui-node:hover { transform: translateY(-5px); border-color: transparent; box-shadow: 0 10px 20px rgba(0, 114, 255, 0.15); }
+    .ui-node:hover::before { opacity: 1; }
+    .ui-node-content { position: relative; z-index: 2; transition: 0.4s; }
+    .ui-node:hover .ui-node-content { color: #fff; }
+    .ui-node h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.8rem; }
     .ui-node .icon { font-size: 2rem; }
 
-    /* 2. Interface KPI (CPAM) - Anneaux circulaires */
-    .kpi-container {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      flex-wrap: wrap;
-      gap: 1rem;
-    }
-    
+    /* 2. Interface KPI (CPAM) */
+    .kpi-container { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 2rem; }
     .kpi-item { text-align: center; }
-    
-    .circular-chart {
-      display: block;
-      margin: 0 auto;
-      max-width: 120px;
-      max-height: 120px;
-    }
-    .circle-bg {
-      fill: none;
-      stroke: rgba(0,0,0,0.05);
-      stroke-width: 3.8;
-    }
-    .circle {
-      fill: none;
-      stroke-width: 3.8;
-      stroke-linecap: round;
-      stroke-dasharray: 0, 100; /* Sera animé par JS */
-      transition: stroke-dasharray 2s cubic-bezier(0.22, 1, 0.36, 1);
-    }
+    .circular-chart { width: 120px; height: 120px; }
+    .circle-bg { fill: none; stroke: rgba(0,0,0,0.05); stroke-width: 3; }
+    .circle { fill: none; stroke-width: 3.5; stroke-linecap: round; stroke-dasharray: 0, 100; transition: stroke-dasharray 2s cubic-bezier(0.25, 1, 0.5, 1); }
     .kpi-item:nth-child(1) .circle { stroke: #F2994A; }
     .kpi-item:nth-child(2) .circle { stroke: #F2C94C; }
     .kpi-item:nth-child(3) .circle { stroke: #11998E; }
-    
-    .percentage {
-      fill: var(--text-main);
-      font-family: var(--font-text);
-      font-size: 0.5em;
-      font-weight: 700;
-      text-anchor: middle;
-    }
-    .kpi-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 1rem; }
+    .percentage { fill: var(--text-main); font-family: var(--font-title); font-size: 0.6em; text-anchor: middle; }
+    .kpi-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 1rem; color: var(--text-muted);}
 
-    /* 3. Interface Bio-Data (Tunisie) */
-    .bio-data {
-      display: flex;
-      flex-direction: column;
-      gap: 1.5rem;
-    }
+    /* 3. Interface Bio-Data */
+    .bio-data { display: flex; flex-direction: column; gap: 2rem; }
     .data-bar-wrap { width: 100%; }
-    .data-label { display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; }
-    .data-track { width: 100%; height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
-    .data-fill { height: 100%; background: var(--gradient-bio); width: 0; transition: width 2s cubic-bezier(0.22, 1, 0.36, 1); }
+    .data-label { display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.8rem; }
+    .data-track { width: 100%; height: 6px; background: rgba(0,0,0,0.05); border-radius: 10px; overflow: hidden; }
+    .data-fill { height: 100%; background: var(--gradient-bio); width: 0; transition: width 2s cubic-bezier(0.25, 1, 0.5, 1); }
 
     /* ==========================================================================
-       ARCHIVES (GRILLE)
+       GRILLE DES ARCHIVES (UNIBIO, HACKATHON, ETC)
        ========================================================================== */
-    .archives-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-    .archive-card { padding: 2.5rem; }
-    .archive-icon { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; }
-    .archive-date { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem; letter-spacing: 1px;}
+    .archives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
+    .archive-card { padding: 3rem 2.5rem; text-decoration: none; color: inherit; display: block;}
+    .archive-card:hover { border-color: rgba(212, 175, 55, 0.4); }
+    .archive-icon { font-size: 2.5rem; margin-bottom: 1.5rem; }
+    .archive-tag { font-size: 0.65rem; font-weight: 700; color: #D4AF37; margin-bottom: 0.8rem; letter-spacing: 2px; text-transform: uppercase; display: block;}
+    .archive-title { font-family: var(--font-title); font-size: 1.5rem; margin-bottom: 1rem; }
+    .archive-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
 
     /* ==========================================================================
-       BOUTONS ET CONTACT
+       BOUTONS
        ========================================================================== */
     .btn-group { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem; }
-    
     .btn {
-      padding: 1rem 2.5rem;
-      border-radius: 50px;
-      font-size: 0.9rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      text-decoration: none;
-      transition: 0.3s;
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
+      padding: 1.2rem 3rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; text-decoration: none; transition: 0.4s;
+      display: inline-flex; align-items: center; justify-content: center;
     }
-    
-    .btn-primary {
-      background: var(--text-main);
-      color: #fff;
-      border: 1px solid var(--text-main);
-    }
-    
-    .btn-primary:hover {
-      background: transparent;
-      color: var(--text-main);
-    }
-
-    .btn-outline {
-      background: transparent;
-      color: var(--text-main);
-      border: 1px solid rgba(0,0,0,0.2);
-    }
-
-    .btn-outline:hover {
-      border-color: var(--text-main);
-    }
+    .btn-primary { background: var(--text-main); color: #fff; border: 1px solid var(--text-main); }
+    .btn-primary:hover { background: transparent; color: var(--text-main); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(0,0,0,0.1);}
+    .btn-outline { background: transparent; color: var(--text-main); border: 1px solid rgba(0,0,0,0.2); }
+    .btn-outline:hover { border-color: var(--text-main); transform: translateY(-3px); }
 
     /* ==========================================================================
-       ANIMATIONS (REVEAL)
+       ANIMATIONS JS (REVEAL)
        ========================================================================== */
-    .reveal {
-      opacity: 0;
-      transform: translateY(40px);
-      transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal { opacity: 0; transform: translateY(50px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
+    .reveal.active { opacity: 1; transform: translateY(0); }
     
     .delay-1 { transition-delay: 0.1s; }
     .delay-2 { transition-delay: 0.2s; }
     .delay-3 { transition-delay: 0.3s; }
 
     /* ==========================================================================
-       CURSEUR PERSONNALISÉ
-       ========================================================================== */
-    .cursor-dot {
-      width: 8px; height: 8px; background: var(--text-main); border-radius: 50%;
-      position: fixed; pointer-events: none; z-index: 10000;
-      transform: translate(-50%, -50%); transition: opacity 0.3s;
-    }
-    .cursor-ring {
-      width: 40px; height: 40px; border: 1px solid rgba(29, 29, 31, 0.3); border-radius: 50%;
-      position: fixed; pointer-events: none; z-index: 9999;
-      transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, border-color 0.3s;
-    }
-    .hover-active .cursor-ring { width: 60px; height: 60px; border-color: var(--text-main); background: rgba(29, 29, 31, 0.05);}
-
-    /* ==========================================================================
        RESPONSIVE MOBILE
        ========================================================================== */
     @media (max-width: 900px) {
-      .project-grid, .project-grid.reverse { grid-template-columns: 1fr; gap: 3rem; }
+      .project-grid, .project-grid.reverse { grid-template-columns: 1fr; gap: 4rem; direction: ltr; }
+      .project-grid.reverse > * { direction: ltr; }
       nav { padding: 1.5rem; }
       .nav-links { display: none; }
-      section { padding: 120px 5% 60px; }
-      .cursor-dot, .cursor-ring { display: none; }
-      body { cursor: auto; }
+      section { padding: 120px 5% 80px; }
+      h1 { font-size: 3.5rem; }
+      .btn-group { flex-direction: column; width: 100%; }
+      .btn { width: 100%; }
     }
   </style>
 </head>
@@ -416,16 +225,14 @@
     <div class="orb orb-3"></div>
   </div>
 
-  <div class="cursor-dot" id="cursor-dot"></div>
-  <div class="cursor-ring" id="cursor-ring"></div>
-
   <nav>
-    <a href="#hero" class="logo custom-hover">Thalia.B</a>
+    <a href="#hero" class="logo">Thalia.B</a>
     <div class="nav-links">
-      <a href="#hero" class="custom-hover">Vision</a>
-      <a href="#capgemini" class="custom-hover">Projets</a>
-      <a href="#archives" class="custom-hover">Archives</a>
-      <a href="#contact" class="custom-hover">Contact</a>
+      <a href="#hero">Vision</a>
+      <a href="#capgemini">Projets IA & Mgt</a>
+      <a href="#bioscience">Bio-Tech</a>
+      <a href="#archives">Parcours</a>
+      <a href="#contact">Contact</a>
     </div>
   </nav>
 
@@ -434,10 +241,15 @@
       <div class="sur-titre reveal">Portfolio 2026</div>
       <h1 class="reveal delay-1">Thalia<br><em>Barrahi</em></h1>
       <p class="lead reveal delay-2">Manager de projets innovants. L'hybridation parfaite entre la rigueur de la <strong>Science</strong> et la vision de l'<strong>Intelligence Artificielle</strong>.</p>
+      
       <div class="tags reveal delay-3">
         <span class="tag">Management de l'Innovation</span>
         <span class="tag">IA Agentique</span>
         <span class="tag">Génie Biologique</span>
+      </div>
+
+      <div class="btn-group reveal delay-3">
+        <a href="#capgemini" class="btn btn-primary">Découvrir les projets</a>
       </div>
     </div>
   </section>
@@ -445,36 +257,44 @@
   <section id="capgemini">
     <div class="container project-grid">
       <div class="project-text">
-        <div class="sur-titre reveal">Challenge Digital Capgemini</div>
+        <div class="sur-titre reveal">Digital Student Challenge</div>
         <h2 class="reveal delay-1">Astroly :<br>The <em>Agentic</em> Era.</h2>
         <p class="body-text reveal delay-2">
-          Développement d'une architecture modulaire de <strong>6 agents IA</strong> intégrés à Microsoft 365. L'objectif : repenser l'attractivité et le recrutement des jeunes talents. Un passage d'un recrutement volumétrique à une approche basée sur l'expérience (mobile-first) et la data.
+          Développement d'une architecture modulaire de <strong>6 agents IA</strong> intégrés à Microsoft 365 pour le groupe Capgemini. Objectif : repenser le recrutement des jeunes talents en passant d'un processus volumétrique à une expérience "mobile-first" pilotée par la donnée et les compétences.
         </p>
         <div class="tags reveal delay-3">
           <span class="tag">IA Agentique</span>
-          <span class="tag">Architecture M365</span>
+          <span class="tag">Microsoft 365</span>
           <span class="tag">Copilot Studio</span>
         </div>
       </div>
       
-      <div class="glass-card reveal delay-2 custom-hover">
-        <h3 style="font-size:1rem; margin-bottom: 2rem;">Écosystème Agents IA</h3>
+      <div class="glass-card reveal delay-2 dashboard-card">
+        <h3 style="font-family: var(--font-text); font-size:1rem; margin-bottom: 2rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Écosystème Agents IA</h3>
         <div class="ui-dashboard">
           <div class="ui-node">
-            <div class="icon">🤖</div>
-            <h4>Matchmaker</h4>
+            <div class="ui-node-content">
+              <div class="icon">🤖</div>
+              <h4>Matchmaker</h4>
+            </div>
           </div>
           <div class="ui-node">
-            <div class="icon">⚡</div>
-            <h4>Orchestrateur</h4>
+            <div class="ui-node-content">
+              <div class="icon">⚡</div>
+              <h4>Orchestrateur</h4>
+            </div>
           </div>
           <div class="ui-node">
-            <div class="icon">📊</div>
-            <h4>Scoring</h4>
+            <div class="ui-node-content">
+              <div class="icon">📊</div>
+              <h4>Scoring</h4>
+            </div>
           </div>
           <div class="ui-node">
-            <div class="icon">🎯</div>
-            <h4>Nurturing</h4>
+            <div class="ui-node-content">
+              <div class="icon">🎯</div>
+              <h4>Nurturing</h4>
+            </div>
           </div>
         </div>
       </div>
@@ -487,23 +307,23 @@
         <div class="sur-titre reveal">Innovation Publique</div>
         <h2 class="reveal delay-1">CPAM Hérault :<br>Facilitation <em>Humaine</em>.</h2>
         <p class="body-text reveal delay-2">
-          Alternance en tant que Chef de projets innovants. Le défi n'est pas technologique, il est humain. Animation de démarches d'innovation participative, facilitation d'équipes et structuration rigoureuse de la performance via des KPIs.
+          Alternance en tant que Chef de projets innovants. Pilotage de démarches d'innovation participative, facilitation d'équipes et structuration de la performance. Transformer l'organisation ne se fait pas qu'avec des outils, mais par l'accompagnement au changement.
         </p>
         <div class="tags reveal delay-3">
           <span class="tag">Gestion de Projet</span>
-          <span class="tag">Facilitation</span>
+          <span class="tag">Intelligence Collective</span>
           <span class="tag">Pilotage KPI</span>
         </div>
       </div>
       
-      <div class="glass-card reveal delay-2 custom-hover">
-        <h3 style="font-size:1rem; margin-bottom: 2rem;">Indicateurs de Performance</h3>
+      <div class="glass-card reveal delay-2 dashboard-card">
+        <h3 style="font-family: var(--font-text); font-size:1rem; margin-bottom: 2.5rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Performance & Impact</h3>
         <div class="kpi-container">
           
           <div class="kpi-item">
             <svg viewBox="0 0 36 36" class="circular-chart">
               <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              <path class="circle kpi-anim" data-target="82" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="circle circle-anim" data-target="82" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
               <text x="18" y="20.35" class="percentage">82%</text>
             </svg>
             <div class="kpi-label">Engagement</div>
@@ -512,7 +332,7 @@
           <div class="kpi-item">
             <svg viewBox="0 0 36 36" class="circular-chart">
               <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              <path class="circle kpi-anim" data-target="94" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="circle circle-anim" data-target="94" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
               <text x="18" y="20.35" class="percentage">94%</text>
             </svg>
             <div class="kpi-label">Idéation</div>
@@ -521,10 +341,10 @@
           <div class="kpi-item">
             <svg viewBox="0 0 36 36" class="circular-chart">
               <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              <path class="circle kpi-anim" data-target="78" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
-              <text x="18" y="20.35" class="percentage">78%</text>
+              <path class="circle circle-anim" data-target="78" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <text x="18" y="20.35" class="percentage">Qualité</text>
             </svg>
-            <div class="kpi-label">Qualité</div>
+            <div class="kpi-label">Réussite</div>
           </div>
 
         </div>
@@ -538,32 +358,32 @@
         <div class="sur-titre reveal">Recherche & Data</div>
         <h2 class="reveal delay-1">Rhizomicrobiome :<br>Deep <em>Nature</em>.</h2>
         <p class="body-text reveal delay-2">
-          La précision du laboratoire rencontre l'analyse de données. Étude en Tunisie (CRRHAB) sur <strong>19 variétés</strong> de pommes de terre. Isolement de micro-organismes et tests d'antagonisme contre les champignons phytopathogènes.
+          Étude approfondie en Tunisie (CRRHAB) sur <strong>19 variétés</strong> de pommes de terre. Isolation de micro-organismes et tests d'antagonisme contre les champignons phytopathogènes. Quand la rigueur du laboratoire sert l'agronomie durable.
         </p>
         <div class="tags reveal delay-3">
           <span class="tag">Microbiologie</span>
           <span class="tag">Phytopathologie</span>
-          <span class="tag">RStudio</span>
+          <span class="tag">Analyse RStudio</span>
         </div>
       </div>
       
-      <div class="glass-card reveal delay-2 custom-hover">
-        <h3 style="font-size:1rem; margin-bottom: 2rem;">Analyse Data : Souches isolées</h3>
+      <div class="glass-card reveal delay-2 dashboard-card">
+        <h3 style="font-family: var(--font-text); font-size:1rem; margin-bottom: 2rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px;">Analyse Data : Souches isolées</h3>
         <div class="bio-data">
           
           <div class="data-bar-wrap">
             <div class="data-label"><span>Bactéries (Rhizome)</span> <span>85%</span></div>
-            <div class="data-track"><div class="data-fill data-anim" data-width="85%"></div></div>
+            <div class="data-track"><div class="data-fill bar-anim" data-width="85%"></div></div>
           </div>
           
           <div class="data-bar-wrap">
             <div class="data-label"><span>Champignons Antagonistes</span> <span>62%</span></div>
-            <div class="data-track"><div class="data-fill data-anim" data-width="62%"></div></div>
+            <div class="data-track"><div class="data-fill bar-anim" data-width="62%"></div></div>
           </div>
 
           <div class="data-bar-wrap">
             <div class="data-label"><span>Actinomycètes</span> <span>45%</span></div>
-            <div class="data-track"><div class="data-fill data-anim" data-width="45%"></div></div>
+            <div class="data-track"><div class="data-fill bar-anim" data-width="45%"></div></div>
           </div>
 
         </div>
@@ -574,136 +394,143 @@
   <section id="archives">
     <div class="container">
       <div class="sur-titre reveal">Parcours</div>
-      <h2 class="reveal delay-1" style="margin-bottom: 3rem;">Expériences & <em>Empreintes</em>.</h2>
+      <h2 class="reveal delay-1" style="margin-bottom: 4rem;">Expériences & <em>Empreintes</em>.</h2>
       
       <div class="archives-grid">
         
-        <div class="glass-card archive-card reveal delay-1 custom-hover">
+        <a href="#" class="glass-card archive-card reveal delay-1">
           <div class="archive-icon">🔬</div>
-          <div class="archive-date">18 MOIS · UNIBIO MEDICAL</div>
-          <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">Expertise Laboratoire</h3>
-          <p style="font-size: 0.9rem; color: #555; line-height: 1.6;">Hématologie, immunobiochimie et gestion de la qualité. La rigueur analytique appliquée au diagnostic médical.</p>
-        </div>
+          <span class="archive-tag">18 MOIS · Alternance</span>
+          <h3 class="archive-title">Unibio Medical</h3>
+          <p class="archive-desc">Technicienne de laboratoire. Hématologie, immunobiochimie et gestion de la qualité. La rigueur analytique appliquée au diagnostic médical.</p>
+        </a>
 
-        <div class="glass-card archive-card reveal delay-2 custom-hover">
+        <a href="#" class="glass-card archive-card reveal delay-2">
           <div class="archive-icon">⚡</div>
-          <div class="archive-date">SPRINT · INNOVATION</div>
-          <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">Hackathon 72h</h3>
-          <p style="font-size: 0.9rem; color: #555; line-height: 1.6;">De l'idée au MVP Figma en 72 heures. Calculs de viabilité économique et tests de faisabilité sous pression.</p>
-        </div>
+          <span class="archive-tag">Sprint · Innovation</span>
+          <h3 class="archive-title">Hackathon 72h</h3>
+          <p class="archive-desc">De l'idée au MVP Figma en 72 heures. Calculs de viabilité économique, tests de faisabilité sous pression et accompagnement stratégique.</p>
+        </a>
 
-        <div class="glass-card archive-card reveal delay-3 custom-hover">
+        <a href="#" class="glass-card archive-card reveal delay-3">
+          <div class="archive-icon">🚀</div>
+          <span class="archive-tag">Associatif</span>
+          <h3 class="archive-title">Start-up Lab</h3>
+          <p class="archive-desc">Chargée de communication et marketing. Développement de la visibilité et création d'une stratégie d'engagement pour les étudiants créateurs.</p>
+        </a>
+
+        <a href="#" class="glass-card archive-card reveal delay-1">
           <div class="archive-icon">🏆</div>
-          <div class="archive-date">DISTINCTIONS</div>
-          <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">Palmarès</h3>
-          <p style="font-size: 0.9rem; color: #555; line-height: 1.6;">Prix Coup de Pouce au Créa'thlon (Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min".</p>
-        </div>
+          <span class="archive-tag">Distinctions</span>
+          <h3 class="archive-title">Palmarès</h3>
+          <p class="archive-desc">Prix Coup de Pouce au Créa'thlon (Projet Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min". L'éloquence au service de l'idée.</p>
+        </a>
 
       </div>
     </div>
   </section>
 
-  <section id="contact" style="min-height: 80vh;">
+  <section id="contact" style="min-height: 80vh; padding-bottom: 50px;">
     <div class="container" style="text-align: center;">
-      <h2 class="reveal" style="font-size: clamp(3rem, 7vw, 6rem); margin-bottom: 0;">Écrire la<br><em>prochaine scène.</em></h2>
+      <h2 class="reveal" style="font-size: clamp(3rem, 7vw, 6rem); margin-bottom: 1rem;">Écrire la<br><em>prochaine scène.</em></h2>
+      <p class="reveal delay-1" style="color: var(--text-muted); margin-bottom: 4rem;">Disponible pour relever de nouveaux défis à l'intersection de la data, de la science et du management.</p>
       
       <div class="btn-group reveal delay-2" style="justify-content: center;">
-        <a href="mailto:thaliapro26@gmail.com" class="btn btn-primary custom-hover">Envoyer un email ↗</a>
-        <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn btn-outline custom-hover">LinkedIn ↗</a>
-        <a href="CV.pdf" download target="_blank" class="btn btn-outline custom-hover">Télécharger CV ↓</a>
+        <a href="mailto:thaliapro26@gmail.com" class="btn btn-primary">Envoyer un email</a>
+        <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn btn-outline">LinkedIn</a>
+        <a href="CV.pdf" download target="_blank" class="btn btn-outline">Télécharger CV</a>
       </div>
       
-      <p class="reveal delay-3" style="margin-top: 6rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase;">
+      <p class="reveal delay-3" style="margin-top: 8rem; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase;">
         © 2026 Thalia Barrahi — Portfolio
       </p>
     </div>
   </section>
 
   <script>
-    // 1. CURSEUR PERSONNALISÉ FLUIDE
-    const cursorDot = document.getElementById('cursor-dot');
-    const cursorRing = document.getElementById('cursor-ring');
-    let mouseX = window.innerWidth / 2;
-    let mouseY = window.innerHeight / 2;
-    let ringX = window.innerWidth / 2;
-    let ringY = window.innerHeight / 2;
-
-    document.addEventListener('mousemove', (e) => {
-      mouseX = e.clientX;
-      mouseY = e.clientY;
-      // Le point suit exactement la souris
-      cursorDot.style.left = mouseX + 'px';
-      cursorDot.style.top = mouseY + 'px';
-    });
-
-    // Animation fluide de l'anneau (effet de rattrapage)
-    function animateCursor() {
-      ringX += (mouseX - ringX) * 0.15;
-      ringY += (mouseY - ringY) * 0.15;
-      cursorRing.style.left = ringX + 'px';
-      cursorRing.style.top = ringY + 'px';
-      requestAnimationFrame(animateCursor);
-    }
-    animateCursor();
-
-    // Effet au survol des éléments interactifs
-    const hoverElements = document.querySelectorAll('a, .custom-hover, .btn');
-    hoverElements.forEach(el => {
-      el.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
-      el.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
-    });
-
-    // 2. RÉVÉLATION AU DÉFILEMENT (INTERSECTION OBSERVER)
-    const revealElements = document.querySelectorAll('.reveal');
-    const revealObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-          // On arrête d'observer une fois révélé pour garder l'état final
-          revealObserver.unobserve(entry.target);
-        }
+    document.addEventListener("DOMContentLoaded", () => {
+      
+      // 1. ANIMATION D'APPARITION DES ÉLÉMENTS AU DÉFILEMENT (REVEAL)
+      const reveals = document.querySelectorAll('.reveal');
+      
+      // On utilise l'observateur standard attaché à la fenêtre entière (infaillible)
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // On désactive l'observation une fois révélé pour que l'élément reste visible
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1, // Se déclenche quand 10% de l'élément est visible
+        rootMargin: "0px 0px -50px 0px"
       });
-    }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
 
-    revealElements.forEach(el => revealObserver.observe(el));
+      reveals.forEach(el => revealObserver.observe(el));
 
-    // Force la première section au chargement
-    window.addEventListener('DOMContentLoaded', () => {
+      // Force la révélation de la section Hero immédiatement au chargement
       setTimeout(() => {
-        document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible'));
+        document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('active'));
       }, 100);
+
+      
+      // 2. ANIMATION DES DONNÉES (CERCLES ET BARRES)
+      const dashboardCards = document.querySelectorAll('.dashboard-card');
+      
+      const dashboardObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            // Animer les cercles KPI
+            const circles = entry.target.querySelectorAll('.circle-anim');
+            circles.forEach(circle => {
+              const target = circle.getAttribute('data-target');
+              circle.style.strokeDasharray = `${target}, 100`;
+            });
+            
+            // Animer les barres de données
+            const bars = entry.target.querySelectorAll('.bar-anim');
+            bars.forEach(bar => {
+              const width = bar.getAttribute('data-width');
+              bar.style.width = width;
+            });
+
+            dashboardObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.3 });
+
+      dashboardCards.forEach(card => dashboardObserver.observe(card));
+
+
+      // 3. NAVIGATION ACTIVE AU SCROLL
+      const sections = document.querySelectorAll('section');
+      const navLinks = document.querySelectorAll('.nav-links a');
+
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          if (pageYOffset >= sectionTop - 300) {
+            current = section.getAttribute('id');
+          }
+        });
+
+        navLinks.forEach(link => {
+          link.style.opacity = '0.5';
+          link.style.color = 'var(--text-main)';
+          
+          const href = link.getAttribute('href').substring(1);
+          // Gestion des cas multiples (Projets IA & Mgt cible capgemini ET cpam)
+          if (href === current || 
+             (href === 'capgemini' && current === 'cpam')) {
+            link.style.opacity = '1';
+            link.style.color = 'var(--gold)';
+          }
+        });
+      });
+
     });
-
-    // 3. ANIMATION DES DASHBOARDS DE DONNÉES AU DÉFILEMENT
-    
-    // Animation KPI Circulaires
-    const kpiElements = document.querySelectorAll('.kpi-anim');
-    const kpiObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const target = entry.target.getAttribute('data-target');
-          // Le stroke-dasharray total est 100.
-          // Pour faire 82%, on met "82, 100".
-          entry.target.style.strokeDasharray = `${target}, 100`;
-          kpiObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-    kpiElements.forEach(el => kpiObserver.observe(el));
-
-    // Animation Barres Horizontales (Bio)
-    const dataBars = document.querySelectorAll('.data-anim');
-    const dataObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const width = entry.target.getAttribute('data-width');
-          entry.target.style.width = width;
-          dataObserver.unobserve(entry.target);
-        }
-      });
-    }, { threshold: 0.5 });
-    dataBars.forEach(bar => dataObserver.observe(bar));
-
   </script>
 </body>
 </html>
