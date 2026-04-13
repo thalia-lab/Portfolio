@@ -3,528 +3,707 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thalia Barrahi — Portfolio Visionnaire</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <title>Thalia Barrahi | Portfolio Innovation</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet">
 
   <style>
-    /* ════════════════ SYSTÈME DE DESIGN ════════════════ */
+    /* ==========================================================================
+       VARIABLES ET RESET
+       ========================================================================== */
     :root {
-      --linen:       #FDFBF7;
-      --anthracite:  #2D2D2D;
-      --gold:        #D4AF37;
-      --sage:        #A3B18A;
-      --ice-blue:    #7AA6D4; /* Bleu légèrement assombri pour mieux ressortir */
-      --font-serif:  'Cormorant Garamond', serif;
-      --font-sans:   'Plus Jakarta Sans', sans-serif;
+      --bg-base: #F5F5F7; /* Gris très clair style Apple */
+      --text-main: #1D1D1F;
+      --text-muted: #86868B;
+      
+      --gradient-ai: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%);
+      --gradient-bio: linear-gradient(135deg, #11998E 0%, #38EF7D 100%);
+      --gradient-mgt: linear-gradient(135deg, #F2994A 0%, #F2C94C 100%);
+      
+      --glass-bg: rgba(255, 255, 255, 0.65);
+      --glass-border: rgba(255, 255, 255, 0.8);
+      --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+      
+      --font-title: 'Playfair Display', serif;
+      --font-text: 'Manrope', sans-serif;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
     
-    html { font-size: 16px; }
+    html { scroll-behavior: smooth; }
     
-    body { 
-      background-color: var(--linen); 
-      color: var(--anthracite); 
-      font-family: var(--font-sans); 
-      font-weight: 300; 
-      overflow: hidden; 
-      cursor: default;
+    body {
+      background-color: var(--bg-base);
+      color: var(--text-main);
+      font-family: var(--font-text);
+      overflow-x: hidden;
+      cursor: none; /* Remplacé par le curseur custom */
     }
 
-    /* Grain de pellicule cinématographique */
-    body::before {
-      content: ''; 
-      position: fixed; inset: 0; z-index: 9999; pointer-events: none;
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='1'/%3E%3C/svg%3E");
-      opacity: 0.035; mix-blend-mode: multiply;
+    /* ==========================================================================
+       ARRIÈRE-PLAN ANIMÉ (ORBES DE COULEUR)
+       ========================================================================== */
+    .ambient-background {
+      position: fixed;
+      top: 0; left: 0; width: 100vw; height: 100vh;
+      z-index: -1;
+      overflow: hidden;
+      background: var(--bg-base);
     }
 
-    /* ════════════════ CONTENEUR DE DÉFILEMENT ════════════════ */
-    .scroll-container { 
-      height: 100vh; overflow-y: scroll; scroll-snap-type: y mandatory; scroll-behavior: smooth;
-    }
-    
-    .scene { 
-      min-height: 100vh; scroll-snap-align: start; scroll-snap-stop: always;
-      position: relative; display: flex; align-items: center; justify-content: center; overflow: hidden; 
+    .orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(80px);
+      opacity: 0.6;
+      animation: float 20s infinite alternate ease-in-out;
     }
 
-    /* ════════════════ NAVIGATION FIXE ════════════════ */
-    nav { 
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000; 
-      padding: 2rem 5%; display: flex; justify-content: space-between; align-items: center; mix-blend-mode: multiply; 
-    }
-    .nav-logo { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 500; text-decoration: none; color: var(--anthracite); }
-    .nav-links { display: flex; gap: 2.5rem; list-style: none; }
-    .nav-links a { text-decoration: none; color: var(--anthracite); text-transform: uppercase; font-size: 0.7rem; letter-spacing: 2px; opacity: 0.5; transition: 0.3s; position: relative; }
-    .nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--gold); transition: width 0.3s; }
-    .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--gold); }
-    .nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+    .orb-1 { background: #E2E2E2; width: 60vw; height: 60vw; top: -10%; left: -10%; animation-delay: 0s; }
+    .orb-2 { background: #D6E4FF; width: 50vw; height: 50vw; top: 40%; right: -20%; animation-delay: -5s; }
+    .orb-3 { background: #E1F0DA; width: 40vw; height: 40vw; bottom: -20%; left: 20%; animation-delay: -10s; }
 
-    /* ════════════════ HALOS LUMINEUX EN FOND ════════════════ */
-    .halo { position: absolute; border-radius: 50%; filter: blur(90px); pointer-events: none; z-index: 0; }
-    .halo-gold-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(212,175,55,0.15) 0%, transparent 70%); top: -10%; right: -5%; }
-    .halo-ice-1 { width: 700px; height: 700px; background: radial-gradient(circle, rgba(122,166,212,0.15) 0%, transparent 70%); top: -15%; left: 20%; }
-    .halo-amber-1 { width: 650px; height: 650px; background: radial-gradient(circle, rgba(230,175,80,0.15) 0%, transparent 70%); top: -5%; right: 10%; }
-    .halo-emerald-1 { width: 600px; height: 600px; background: radial-gradient(circle, rgba(163,177,138,0.15) 0%, transparent 70%); top: 10%; left: 20%; }
-
-    /* ════════════════ DESSINS FLOTTANTS (RÉPARÉS) ════════════════ */
-    .floating-container { 
-      position: absolute; top: 0; left: 0; width: 100%; height: 100%; 
-      pointer-events: none; 
-      z-index: 2; /* Juste au-dessus du fond, sous le texte */
-    }
-    
-    .float-item { 
-      position: absolute; 
-      opacity: 0.7; /* Opacité forte pour qu'ils soient bien visibles */
-      animation: floatAnim 12s infinite ease-in-out; 
-      filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.06)); /* Ombre élégante */
-    }
-    
-    @keyframes floatAnim {
-      0%   { transform: translateY(0) rotate(0deg) translateX(0); }
-      33%  { transform: translateY(-20px) rotate(4deg) translateX(15px); }
-      66%  { transform: translateY(15px) rotate(-4deg) translateX(-15px); }
-      100% { transform: translateY(0) rotate(0deg) translateX(0); }
+    @keyframes float {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(5vw, 10vh) scale(1.1); }
+      100% { transform: translate(-5vw, -5vh) scale(0.9); }
     }
 
-    /* ════════════════ TEXTES ET STRUCTURES ════════════════ */
-    .content-wrapper { position: relative; z-index: 10; width: 100%; max-width: 1150px; padding: 0 5%; }
-    
-    .scene-label { 
-      color: var(--gold); font-size: 0.7rem; letter-spacing: 4px; text-transform: uppercase; 
-      margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem; font-weight: 600; 
+    /* ==========================================================================
+       NAVIGATION
+       ========================================================================== */
+    nav {
+      position: fixed;
+      top: 0; left: 0; width: 100%;
+      padding: 1.5rem 5%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      z-index: 1000;
+      background: rgba(245, 245, 247, 0.8);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.5);
     }
-    .scene-label::before { content: ''; width: 30px; height: 1px; background: var(--gold); display: block; opacity: 0.5;}
+
+    .logo {
+      font-family: var(--font-title);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--text-main);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: var(--text-main);
+      font-weight: 600;
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      opacity: 0.6;
+      transition: 0.3s;
+    }
+
+    .nav-links a:hover { opacity: 1; }
+
+    /* ==========================================================================
+       STRUCTURE DES SECTIONS
+       ========================================================================== */
+    section {
+      min-height: 100vh;
+      padding: 150px 5% 100px;
+      display: flex;
+      align-items: center;
+      position: relative;
+    }
+
+    .container {
+      max-width: 1200px;
+      width: 100%;
+      margin: 0 auto;
+    }
+
+    /* Grille pour les projets */
+    .project-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
     
-    .hero-name { font-family: var(--font-serif); font-size: clamp(4rem, 10vw, 8rem); line-height: 0.9; margin-bottom: 2rem; font-weight: 300; }
-    .hero-name em { font-style: italic; opacity: 0.6; }
-    
-    .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
     .project-grid.reverse { direction: rtl; }
     .project-grid.reverse > * { direction: ltr; }
-    
-    .project-title { font-family: var(--font-serif); font-size: clamp(2.5rem, 4.5vw, 4rem); line-height: 1.05; margin-bottom: 1rem; }
-    .project-sub { font-family: var(--font-serif); font-style: italic; opacity: 0.6; margin-bottom: 2rem; font-size: 1.1rem;}
-    .project-body { font-size: 0.95rem; line-height: 1.9; opacity: 0.8; margin-bottom: 2.5rem; }
-    
-    .tag { 
-      display: inline-block; padding: 0.4rem 1.2rem; border: 1px solid rgba(0,0,0,0.1); 
-      border-radius: 30px; font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; 
-      margin: 0.2rem; font-weight: 500; transition: 0.3s;
-    }
-    .accent-blue { border-color: var(--ice-blue); color: #4A7A9E; background: rgba(122,166,212,0.08); }
-    .accent-sage { border-color: var(--sage); color: #586B45; background: rgba(163,177,138,0.08); }
-    .accent-gold { border-color: var(--gold); color: #8C701E; background: rgba(212,175,55,0.08); }
 
-    /* ════════════════ BOÎTES VISUELLES (KPI) ════════════════ */
-    .visual-box {
-      border: 1px solid rgba(0,0,0,0.05); border-radius: 6px; padding: 2.5rem;
-      background: rgba(255,255,255,0.4); backdrop-filter: blur(10px);
+    /* ==========================================================================
+       TYPOGRAPHIE ET TEXTES
+       ========================================================================== */
+    .sur-titre {
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
     }
     
-    .metric-row { display: flex; align-items: center; gap: 1rem; margin-bottom: 1.5rem; }
-    .metric-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; width: 100px; opacity: 0.6; }
-    .metric-bar-wrap { flex: 1; height: 4px; background: rgba(0,0,0,0.06); overflow: hidden; border-radius: 2px;}
-    .metric-bar { height: 100%; background: linear-gradient(90deg, var(--gold), transparent); transform-origin: left; transform: scaleX(0); transition: transform 1.5s cubic-bezier(0.22, 1, 0.36, 1); }
-    .metric-val { font-family: var(--font-serif); font-size: 1.2rem; width: 40px; text-align: right; }
+    .sur-titre::before { content: ''; width: 40px; height: 2px; background: var(--text-muted); }
 
-    /* ════════════════ GRILLE DES ARCHIVES ════════════════ */
-    .archives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
-    .card { 
-      background: rgba(255,255,255,0.5); backdrop-filter: blur(10px); 
-      border: 1px solid rgba(0,0,0,0.05); padding: 2rem; border-radius: 8px; 
-      transition: all 0.4s ease; position: relative; overflow: hidden;
+    h1 {
+      font-family: var(--font-title);
+      font-size: clamp(4rem, 8vw, 7rem);
+      line-height: 1;
+      margin-bottom: 1.5rem;
+      color: var(--text-main);
     }
-    .card::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 2px;
-      background: linear-gradient(90deg, var(--gold), var(--sage)); transform: scaleX(0); transform-origin: left; transition: 0.5s;
-    }
-    .card:hover { transform: translateY(-5px); background: rgba(255,255,255,0.9); box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
-    .card:hover::before { transform: scaleX(1); }
-    .card-icon { font-size: 1.8rem; margin-bottom: 1rem; display: block; }
-    .card-tag { font-size: 0.6rem; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 0.5rem; display: block;}
-    .card-title { font-family: var(--font-serif); font-size: 1.4rem; margin-bottom: 1rem; }
 
-    /* ════════════════ ANIMATIONS D'APPARITION ════════════════ */
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 1s cubic-bezier(0.22, 1, 0.36, 1); }
+    h1 em { font-style: italic; font-weight: 400; color: #555; }
+
+    h2 {
+      font-family: var(--font-title);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    p.lead {
+      font-size: 1.25rem;
+      line-height: 1.6;
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      max-width: 600px;
+    }
+
+    p.body-text {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: #444;
+      margin-bottom: 2rem;
+    }
+
+    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 2rem; }
+    .tag {
+      padding: 0.5rem 1rem;
+      background: rgba(0,0,0,0.03);
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 50px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+
+    /* ==========================================================================
+       CARTES GLASSMORPHISM (LE WOW FACTOR)
+       ========================================================================== */
+    .glass-card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border);
+      box-shadow: var(--glass-shadow);
+      border-radius: 24px;
+      padding: 3rem;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .glass-card::before {
+      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 4px;
+      background: var(--text-main);
+      opacity: 0; transition: 0.4s;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
+    }
+    
+    .glass-card:hover::before { opacity: 1; }
+
+    /* ==========================================================================
+       INTERFACES VISUELLES (DASHBOARDS CSS)
+       ========================================================================== */
+    
+    /* 1. Interface IA (Capgemini) */
+    .ui-dashboard {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1rem;
+    }
+    
+    .ui-node {
+      background: rgba(255,255,255,0.8);
+      border: 1px solid rgba(0, 198, 255, 0.2);
+      border-radius: 16px;
+      padding: 1.5rem;
+      text-align: center;
+      transition: 0.3s;
+    }
+    .ui-node:hover {
+      background: var(--gradient-ai);
+      color: white;
+      transform: scale(1.05);
+      border-color: transparent;
+      box-shadow: 0 10px 20px rgba(0, 114, 255, 0.2);
+    }
+    .ui-node h4 { font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; margin-top: 0.5rem; }
+    .ui-node .icon { font-size: 2rem; }
+
+    /* 2. Interface KPI (CPAM) - Anneaux circulaires */
+    .kpi-container {
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    
+    .kpi-item { text-align: center; }
+    
+    .circular-chart {
+      display: block;
+      margin: 0 auto;
+      max-width: 120px;
+      max-height: 120px;
+    }
+    .circle-bg {
+      fill: none;
+      stroke: rgba(0,0,0,0.05);
+      stroke-width: 3.8;
+    }
+    .circle {
+      fill: none;
+      stroke-width: 3.8;
+      stroke-linecap: round;
+      stroke-dasharray: 0, 100; /* Sera animé par JS */
+      transition: stroke-dasharray 2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .kpi-item:nth-child(1) .circle { stroke: #F2994A; }
+    .kpi-item:nth-child(2) .circle { stroke: #F2C94C; }
+    .kpi-item:nth-child(3) .circle { stroke: #11998E; }
+    
+    .percentage {
+      fill: var(--text-main);
+      font-family: var(--font-text);
+      font-size: 0.5em;
+      font-weight: 700;
+      text-anchor: middle;
+    }
+    .kpi-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-top: 1rem; }
+
+    /* 3. Interface Bio-Data (Tunisie) */
+    .bio-data {
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+    .data-bar-wrap { width: 100%; }
+    .data-label { display: flex; justify-content: space-between; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; margin-bottom: 0.5rem; }
+    .data-track { width: 100%; height: 8px; background: rgba(0,0,0,0.05); border-radius: 4px; overflow: hidden; }
+    .data-fill { height: 100%; background: var(--gradient-bio); width: 0; transition: width 2s cubic-bezier(0.22, 1, 0.36, 1); }
+
+    /* ==========================================================================
+       ARCHIVES (GRILLE)
+       ========================================================================== */
+    .archives-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+    .archive-card { padding: 2.5rem; }
+    .archive-icon { font-size: 2.5rem; margin-bottom: 1.5rem; display: block; }
+    .archive-date { font-size: 0.7rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.5rem; letter-spacing: 1px;}
+
+    /* ==========================================================================
+       BOUTONS ET CONTACT
+       ========================================================================== */
+    .btn-group { display: flex; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem; }
+    
+    .btn {
+      padding: 1rem 2.5rem;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      text-decoration: none;
+      transition: 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .btn-primary {
+      background: var(--text-main);
+      color: #fff;
+      border: 1px solid var(--text-main);
+    }
+    
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--text-main);
+    }
+
+    .btn-outline {
+      background: transparent;
+      color: var(--text-main);
+      border: 1px solid rgba(0,0,0,0.2);
+    }
+
+    .btn-outline:hover {
+      border-color: var(--text-main);
+    }
+
+    /* ==========================================================================
+       ANIMATIONS (REVEAL)
+       ========================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+    }
     .reveal.visible { opacity: 1; transform: translateY(0); }
+    
     .delay-1 { transition-delay: 0.1s; }
     .delay-2 { transition-delay: 0.2s; }
     .delay-3 { transition-delay: 0.3s; }
 
-    /* ════════════════ RESPONSIVE ════════════════ */
+    /* ==========================================================================
+       CURSEUR PERSONNALISÉ
+       ========================================================================== */
+    .cursor-dot {
+      width: 8px; height: 8px; background: var(--text-main); border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 10000;
+      transform: translate(-50%, -50%); transition: opacity 0.3s;
+    }
+    .cursor-ring {
+      width: 40px; height: 40px; border: 1px solid rgba(29, 29, 31, 0.3); border-radius: 50%;
+      position: fixed; pointer-events: none; z-index: 9999;
+      transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, border-color 0.3s;
+    }
+    .hover-active .cursor-ring { width: 60px; height: 60px; border-color: var(--text-main); background: rgba(29, 29, 31, 0.05);}
+
+    /* ==========================================================================
+       RESPONSIVE MOBILE
+       ========================================================================== */
     @media (max-width: 900px) {
-      .project-grid, .project-grid.reverse { grid-template-columns: 1fr; gap: 3rem; direction: ltr; }
-      .project-grid.reverse > * { direction: ltr; }
+      .project-grid, .project-grid.reverse { grid-template-columns: 1fr; gap: 3rem; }
       nav { padding: 1.5rem; }
       .nav-links { display: none; }
-      .hero-name { font-size: 4rem; }
-      .visual-box { display: block; margin-top: 1rem; } /* Pour afficher les boîtes sur mobile */
+      section { padding: 120px 5% 60px; }
+      .cursor-dot, .cursor-ring { display: none; }
+      body { cursor: auto; }
     }
   </style>
 </head>
 <body>
 
-  <nav>
-    <a href="#hero" class="nav-logo">Thalia.B</a>
-    <ul class="nav-links">
-      <li><a href="#hero" class="active">Vision</a></li>
-      <li><a href="#capgemini">Projets</a></li>
-      <li><a href="#archives">Archives</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
-  </nav>
-
-  <div class="scroll-container" id="main-scroll">
-
-    <section class="scene" id="hero">
-      <div class="halo halo-gold-1"></div>
-      
-      <div class="floating-container">
-        <svg class="float-item" style="top:25%; left:18%; width:30px;" viewBox="0 0 20 20"><circle cx="10" cy="10" r="3" fill="var(--gold)"/></svg>
-        <svg class="float-item" style="top:65%; left:80%; width:20px; animation-delay:-3s;" viewBox="0 0 20 20"><circle cx="10" cy="10" r="2" fill="var(--gold)"/></svg>
-        <svg class="float-item" style="top:35%; left:75%; width:60px; animation-delay:-6s;" viewBox="0 0 50 50"><circle cx="25" cy="25" r="23" stroke="var(--gold)" fill="none" stroke-width="1.5" stroke-dasharray="4 6"/></svg>
-      </div>
-
-      <div class="content-wrapper">
-        <span class="scene-label reveal">Scène 01 — L'Ouverture</span>
-        <h1 class="hero-name reveal delay-1">Thalia<br><em>Barrahi</em></h1>
-        <p class="project-sub reveal delay-2" style="font-size: 1.5rem; max-width: 600px;">
-          Concevoir demain entre Science & Innovation.
-        </p>
-        <div class="reveal delay-3" style="display: flex; gap: 2rem; font-size: 0.75rem; letter-spacing: 1px; opacity: 0.8; text-transform: uppercase; margin-top: 2rem; color: var(--gold);">
-          <span>◈ Management Innovation</span>
-          <span>◈ Biotechnologie</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="scene" id="capgemini">
-      <div class="halo halo-ice-1"></div>
-      
-      <div class="floating-container">
-        <svg class="float-item" style="top:20%; right:10%; width:160px;" viewBox="0 0 100 100">
-          <circle cx="50" cy="50" r="30" stroke="var(--ice-blue)" fill="none" stroke-width="2"/>
-          <line x1="50" y1="20" x2="50" y2="0" stroke="var(--ice-blue)" stroke-width="2"/>
-          <circle cx="50" cy="5" r="4" fill="var(--ice-blue)"/>
-          <line x1="80" y1="50" x2="100" y2="50" stroke="var(--ice-blue)" stroke-width="2"/>
-          <circle cx="95" cy="50" r="4" fill="var(--ice-blue)"/>
-        </svg>
-        <svg class="float-item" style="top:70%; left:15%; width:50px; animation-delay:-5s;" viewBox="0 0 40 40">
-          <rect x="10" y="10" width="20" height="20" stroke="var(--ice-blue)" stroke-width="2" fill="none" rx="2"/>
-        </svg>
-      </div>
-
-      <div class="content-wrapper">
-        <div class="project-grid">
-          <div>
-            <span class="scene-label reveal">Scène 02 — IA Agentique</span>
-            <h2 class="project-title reveal delay-1">Astroly :<br>The <em>Agentic</em> Era.</h2>
-            <p class="project-sub reveal delay-1">Challenge Digital Capgemini × IAE Montpellier</p>
-            <p class="project-body reveal delay-2">
-              Développement d'un écosystème modulaire de <strong>6 agents IA</strong> sur Microsoft 365. 
-              Une solution conçue pour transformer le recrutement des jeunes talents par l'automatisation du screening, 
-              le matching de compétences et l'amélioration de l'expérience candidat (mobile-first).
-            </p>
-            <div class="reveal delay-3">
-              <span class="tag accent-blue">Copilot Studio</span>
-              <span class="tag accent-blue">Microsoft 365</span>
-              <span class="tag">UX Candidat</span>
-            </div>
-          </div>
-          <div class="visual-box reveal delay-2">
-            <h4 style="font-family: var(--font-serif); font-style: italic; margin-bottom: 1.5rem; opacity: 0.9; color: var(--ice-blue); font-size: 1.3rem;">Écosystème Agents</h4>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; font-size: 0.75rem; letter-spacing: 1px; text-transform: uppercase;">
-              <div style="padding: 12px; border: 1px solid rgba(122,166,212,0.6); border-radius: 6px; text-align: center; background: rgba(255,255,255,0.5);">🔍 Screening</div>
-              <div style="padding: 12px; border: 1px solid rgba(122,166,212,0.6); border-radius: 6px; text-align: center; background: rgba(255,255,255,0.5);">⚡ Orchestrateur</div>
-              <div style="padding: 12px; border: 1px solid rgba(122,166,212,0.6); border-radius: 6px; text-align: center; background: rgba(255,255,255,0.5);">🧠 Matching</div>
-              <div style="padding: 12px; border: 1px solid rgba(122,166,212,0.6); border-radius: 6px; text-align: center; background: rgba(255,255,255,0.5);">🎯 Onboarding</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="scene" id="cpam">
-      <div class="halo halo-amber-1"></div>
-      
-      <div class="floating-container">
-        <svg class="float-item" style="top:25%; left:12%; width:80px;" viewBox="0 0 100 100"><circle cx="50" cy="50" r="40" stroke="var(--gold)" fill="none" stroke-width="2" stroke-dasharray="6 6"/></svg>
-        <svg class="float-item" style="top:60%; right:15%; width:60px; animation-delay:-7s;" viewBox="0 0 100 100"><path d="M20 50 L80 50 M50 20 L50 80" stroke="var(--gold)" stroke-width="2"/></svg>
-      </div>
-
-      <div class="content-wrapper">
-        <div class="project-grid reverse">
-          <div>
-            <span class="scene-label reveal">Scène 03 — Innovation participative</span>
-            <h2 class="project-title reveal delay-1">CPAM Hérault :<br>L'Innovation <em>Humaine</em>.</h2>
-            <p class="project-sub reveal delay-1">Alternance · Chef de projets innovants</p>
-            <p class="project-body reveal delay-2">
-              Pilotage de l'innovation participative au sein d'un acteur majeur du service public. 
-              Animation de la démarche d'idéation, facilitation de groupes de travail et 
-              structuration du suivi de la performance via des indicateurs clés (KPI).
-            </p>
-            <div class="reveal delay-3">
-              <span class="tag accent-gold">Gestion de Projet</span>
-              <span class="tag accent-gold">Facilitation</span>
-              <span class="tag">Analyse KPI</span>
-            </div>
-          </div>
-          
-          <div class="visual-box reveal delay-2">
-            <h4 style="font-family: var(--font-serif); font-style: italic; margin-bottom: 1.5rem; opacity: 0.9; color: var(--gold); font-size: 1.3rem;">Indicateurs de Performance</h4>
-            <div class="metric-row">
-              <span class="metric-label">Engagement</span>
-              <div class="metric-bar-wrap"><div class="metric-bar" style="width:82%;"></div></div>
-              <span class="metric-val">82%</span>
-            </div>
-            <div class="metric-row">
-              <span class="metric-label">Idéation</span>
-              <div class="metric-bar-wrap"><div class="metric-bar" style="width:94%; transition-delay: 0.2s;"></div></div>
-              <span class="metric-val">94%</span>
-            </div>
-            <div class="metric-row">
-              <span class="metric-label">Qualité</span>
-              <div class="metric-bar-wrap"><div class="metric-bar" style="width:78%; transition-delay: 0.4s;"></div></div>
-              <span class="metric-val">78%</span>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="scene" id="bioscience">
-      <div class="halo halo-emerald-1"></div>
-      
-      <div class="floating-container">
-        <svg class="float-item" style="top:15%; left:12%; width:80px;" viewBox="0 0 50 100">
-          <path d="M10 10 Q40 50 10 90 M40 10 Q10 50 40 90" stroke="var(--sage)" fill="none" stroke-width="2.5"/>
-          <line x1="12" y1="30" x2="38" y2="30" stroke="var(--sage)" stroke-width="1.5"/>
-          <line x1="15" y1="50" x2="35" y2="50" stroke="var(--sage)" stroke-width="1.5"/>
-          <line x1="12" y1="70" x2="38" y2="70" stroke="var(--sage)" stroke-width="1.5"/>
-        </svg>
-        <svg class="float-item" style="top:70%; right:15%; width:70px; animation-delay:-6s;" viewBox="0 0 40 40">
-          <path d="M10 25 Q20 5 30 25 Z M20 25 L20 35" stroke="var(--sage)" fill="none" stroke-width="2.5"/>
-        </svg>
-      </div>
-
-      <div class="content-wrapper">
-        <div class="project-grid">
-          <div>
-            <span class="scene-label reveal">Scène 04 — Phytopathologie</span>
-            <h2 class="project-title reveal delay-1">Rhizomicrobiome :<br>Deep <em>Nature</em>.</h2>
-            <p class="project-sub reveal delay-1">Stage de Recherche — Tunisie (CRRHAB)</p>
-            <p class="project-body reveal delay-2">
-              Exploration microbiologique de <strong>19 variétés de pomme de terre</strong>. 
-              Isolement et purification de micro-organismes, couplés à des tests de potentiel antagoniste 
-              contre les champignons phytopathogènes pour une approche d'agronomie durable.
-            </p>
-            <div class="reveal delay-3">
-              <span class="tag accent-sage">Microbiologie</span>
-              <span class="tag accent-sage">Recherche</span>
-              <span class="tag">Bio-Data</span>
-            </div>
-          </div>
-          
-          <div class="visual-box reveal delay-2" style="display: flex; flex-direction: column; align-items: center; gap: 1rem;">
-            <div style="display: flex; gap: 1.5rem; align-items: flex-end;">
-              <div style="width: 90px; height: 90px; border-radius: 50%; border: 2px solid var(--sage); display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-style: italic; background: rgba(255,255,255,0.6); font-size: 1.2rem; color: var(--sage); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">Rhizome</div>
-              <div style="width: 60px; height: 60px; border-radius: 50%; border: 1px solid var(--sage); display: flex; align-items: center; justify-content: center; font-size: 0.8rem; background: rgba(255,255,255,0.4); color: var(--sage);">Bact.</div>
-            </div>
-            <div style="display: flex; gap: 1.5rem; align-items: flex-start;">
-              <div style="width: 70px; height: 70px; border-radius: 50%; border: 1px solid var(--sage); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; background: rgba(255,255,255,0.4); color: var(--sage);">Mycor.</div>
-              <div style="width: 100px; height: 100px; border-radius: 50%; border: 2px solid var(--sage); display: flex; align-items: center; justify-content: center; font-family: var(--font-serif); font-style: italic; background: rgba(255,255,255,0.6); font-size: 1.3rem; color: var(--sage); box-shadow: 0 4px 10px rgba(0,0,0,0.05);">19 Var.</div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="scene" id="archives" style="align-items: flex-start; padding-top: 15vh;">
-      <div class="content-wrapper">
-        <span class="scene-label reveal">Scène 05 — Les Archives</span>
-        <h2 class="project-title reveal delay-1" style="margin-bottom: 2rem;">Parcours & <em>Empreintes</em>.</h2>
-        
-        <div class="archives-grid">
-          <div class="card reveal delay-1">
-            <span class="card-icon">🔬</span>
-            <span class="card-tag">18 MOIS · ALTERNANCE</span>
-            <h3 class="card-title">Unibio Medical</h3>
-            <p style="font-size:0.85rem; opacity:0.7; line-height: 1.6;">Technicienne de laboratoire (Crest). Expertise en hématologie, immunobiochimie et gestion de la qualité (maintenance, stocks, contrôles).</p>
-          </div>
-          
-          <div class="card reveal delay-2">
-            <span class="card-icon">⚡</span>
-            <span class="card-tag">SPRINT · INNOVATION</span>
-            <h3 class="card-title">Hackathon MVP</h3>
-            <p style="font-size:0.85rem; opacity:0.7; line-height: 1.6;">De l'idée au projet en 72h. Accompagnement d'une plateforme d'échange : calculs de viabilité, tests de faisabilité et prototypage Figma.</p>
-          </div>
-          
-          <div class="card reveal delay-3">
-            <span class="card-icon">🏆</span>
-            <span class="card-tag">DISTINCTIONS</span>
-            <h3 class="card-title">Palmarès</h3>
-            <p style="font-size:0.85rem; opacity:0.7; line-height: 1.6;"><strong>Prix Coup de Pouce</strong> au Créa'thlon (Sun-charge) et <strong>2e place nationale</strong> au concours "Mon Projet en 4 min". L'éloquence au service de l'idée.</p>
-          </div>
-          
-          <div class="card reveal delay-1">
-            <span class="card-icon">🎓</span>
-            <span class="card-tag">FORMATION</span>
-            <h3 class="card-title">Background Hybride</h3>
-            <p style="font-size:0.85rem; opacity:0.7; line-height: 1.6;">Master 1 Management de projets innovants (IAE Montpellier) fondé sur une rigueur scientifique acquise en BUT Génie Biologique.</p>
-          </div>
-          
-          <div class="card reveal delay-2">
-            <span class="card-icon">🚀</span>
-            <span class="card-tag">ASSOCIATIF</span>
-            <h3 class="card-title">Start-up Lab</h3>
-            <p style="font-size:0.85rem; opacity:0.7; line-height: 1.6;">Chargée de communication et marketing (2025). Développement de la visibilité et stratégie d'engagement étudiant.</p>
-          </div>
-          
-          <div class="card reveal delay-3" style="background: rgba(212,175,55,0.05); border-color: rgba(212,175,55,0.2);">
-            <span class="card-icon">◈</span>
-            <span class="card-tag">OUTILS & VISION</span>
-            <h3 class="card-title">Data & Design</h3>
-            <p style="font-size:0.85rem; opacity:0.7; line-height: 1.6;">Maîtrise de Python, Rstudio et Linux alliée à une passion pour le dessin créatif. La capacité à tisser des ponts entre data, tech et humain.</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <section class="scene" id="contact">
-      <div class="halo halo-gold-1" style="top: 50%; left: 50%; transform: translate(-50%, -50%); opacity: 0.3;"></div>
-      <div class="content-wrapper" style="text-align: center;">
-        <h2 class="hero-name reveal" style="font-size: clamp(3rem, 8vw, 6rem);">Écrire la<br><em>prochaine scène.</em></h2>
-        
-        <div class="reveal delay-1" style="margin-top: 4rem; display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;">
-          <a href="mailto:thaliapro26@gmail.com" style="color: var(--anthracite); text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid var(--gold); padding-bottom: 5px; transition: 0.3s; font-weight: 500;">Email</a>
-          <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" style="color: var(--anthracite); text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid var(--gold); padding-bottom: 5px; transition: 0.3s; font-weight: 500;">LinkedIn</a>
-          
-          <a href="CV.pdf" download target="_blank" style="color: var(--gold); text-decoration: none; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; border-bottom: 2px solid var(--gold); padding-bottom: 5px; transition: 0.3s; font-weight: 600;">Télécharger CV</a>
-        </div>
-        
-        <p class="reveal delay-2" style="margin-top: 6rem; font-size: 0.65rem; opacity: 0.5; letter-spacing: 3px; text-transform: uppercase; color: var(--gold);">
-          © 2026 Thalia Barrahi — Portfolio
-        </p>
-      </div>
-    </section>
-
+  <div class="ambient-background">
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
   </div>
 
-  <script>
-    const scrollContainer = document.getElementById('main-scroll');
-    
-    // 1. REVEAL AU DÉFILEMENT
-    const reveals = document.querySelectorAll('.reveal');
-    const observerOptions = {
-      root: scrollContainer,
-      threshold: 0.10
-    };
+  <div class="cursor-dot" id="cursor-dot"></div>
+  <div class="cursor-ring" id="cursor-ring"></div>
 
-    const observer = new IntersectionObserver((entries) => {
+  <nav>
+    <a href="#hero" class="logo custom-hover">Thalia.B</a>
+    <div class="nav-links">
+      <a href="#hero" class="custom-hover">Vision</a>
+      <a href="#capgemini" class="custom-hover">Projets</a>
+      <a href="#archives" class="custom-hover">Archives</a>
+      <a href="#contact" class="custom-hover">Contact</a>
+    </div>
+  </nav>
+
+  <section id="hero">
+    <div class="container">
+      <div class="sur-titre reveal">Portfolio 2026</div>
+      <h1 class="reveal delay-1">Thalia<br><em>Barrahi</em></h1>
+      <p class="lead reveal delay-2">Manager de projets innovants. L'hybridation parfaite entre la rigueur de la <strong>Science</strong> et la vision de l'<strong>Intelligence Artificielle</strong>.</p>
+      <div class="tags reveal delay-3">
+        <span class="tag">Management de l'Innovation</span>
+        <span class="tag">IA Agentique</span>
+        <span class="tag">Génie Biologique</span>
+      </div>
+    </div>
+  </section>
+
+  <section id="capgemini">
+    <div class="container project-grid">
+      <div class="project-text">
+        <div class="sur-titre reveal">Challenge Digital Capgemini</div>
+        <h2 class="reveal delay-1">Astroly :<br>The <em>Agentic</em> Era.</h2>
+        <p class="body-text reveal delay-2">
+          Développement d'une architecture modulaire de <strong>6 agents IA</strong> intégrés à Microsoft 365. L'objectif : repenser l'attractivité et le recrutement des jeunes talents. Un passage d'un recrutement volumétrique à une approche basée sur l'expérience (mobile-first) et la data.
+        </p>
+        <div class="tags reveal delay-3">
+          <span class="tag">IA Agentique</span>
+          <span class="tag">Architecture M365</span>
+          <span class="tag">Copilot Studio</span>
+        </div>
+      </div>
+      
+      <div class="glass-card reveal delay-2 custom-hover">
+        <h3 style="font-size:1rem; margin-bottom: 2rem;">Écosystème Agents IA</h3>
+        <div class="ui-dashboard">
+          <div class="ui-node">
+            <div class="icon">🤖</div>
+            <h4>Matchmaker</h4>
+          </div>
+          <div class="ui-node">
+            <div class="icon">⚡</div>
+            <h4>Orchestrateur</h4>
+          </div>
+          <div class="ui-node">
+            <div class="icon">📊</div>
+            <h4>Scoring</h4>
+          </div>
+          <div class="ui-node">
+            <div class="icon">🎯</div>
+            <h4>Nurturing</h4>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="cpam">
+    <div class="container project-grid reverse">
+      <div class="project-text">
+        <div class="sur-titre reveal">Innovation Publique</div>
+        <h2 class="reveal delay-1">CPAM Hérault :<br>Facilitation <em>Humaine</em>.</h2>
+        <p class="body-text reveal delay-2">
+          Alternance en tant que Chef de projets innovants. Le défi n'est pas technologique, il est humain. Animation de démarches d'innovation participative, facilitation d'équipes et structuration rigoureuse de la performance via des KPIs.
+        </p>
+        <div class="tags reveal delay-3">
+          <span class="tag">Gestion de Projet</span>
+          <span class="tag">Facilitation</span>
+          <span class="tag">Pilotage KPI</span>
+        </div>
+      </div>
+      
+      <div class="glass-card reveal delay-2 custom-hover">
+        <h3 style="font-size:1rem; margin-bottom: 2rem;">Indicateurs de Performance</h3>
+        <div class="kpi-container">
+          
+          <div class="kpi-item">
+            <svg viewBox="0 0 36 36" class="circular-chart">
+              <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="circle kpi-anim" data-target="82" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <text x="18" y="20.35" class="percentage">82%</text>
+            </svg>
+            <div class="kpi-label">Engagement</div>
+          </div>
+
+          <div class="kpi-item">
+            <svg viewBox="0 0 36 36" class="circular-chart">
+              <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="circle kpi-anim" data-target="94" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <text x="18" y="20.35" class="percentage">94%</text>
+            </svg>
+            <div class="kpi-label">Idéation</div>
+          </div>
+
+          <div class="kpi-item">
+            <svg viewBox="0 0 36 36" class="circular-chart">
+              <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <path class="circle kpi-anim" data-target="78" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+              <text x="18" y="20.35" class="percentage">78%</text>
+            </svg>
+            <div class="kpi-label">Qualité</div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="bioscience">
+    <div class="container project-grid">
+      <div class="project-text">
+        <div class="sur-titre reveal">Recherche & Data</div>
+        <h2 class="reveal delay-1">Rhizomicrobiome :<br>Deep <em>Nature</em>.</h2>
+        <p class="body-text reveal delay-2">
+          La précision du laboratoire rencontre l'analyse de données. Étude en Tunisie (CRRHAB) sur <strong>19 variétés</strong> de pommes de terre. Isolement de micro-organismes et tests d'antagonisme contre les champignons phytopathogènes.
+        </p>
+        <div class="tags reveal delay-3">
+          <span class="tag">Microbiologie</span>
+          <span class="tag">Phytopathologie</span>
+          <span class="tag">RStudio</span>
+        </div>
+      </div>
+      
+      <div class="glass-card reveal delay-2 custom-hover">
+        <h3 style="font-size:1rem; margin-bottom: 2rem;">Analyse Data : Souches isolées</h3>
+        <div class="bio-data">
+          
+          <div class="data-bar-wrap">
+            <div class="data-label"><span>Bactéries (Rhizome)</span> <span>85%</span></div>
+            <div class="data-track"><div class="data-fill data-anim" data-width="85%"></div></div>
+          </div>
+          
+          <div class="data-bar-wrap">
+            <div class="data-label"><span>Champignons Antagonistes</span> <span>62%</span></div>
+            <div class="data-track"><div class="data-fill data-anim" data-width="62%"></div></div>
+          </div>
+
+          <div class="data-bar-wrap">
+            <div class="data-label"><span>Actinomycètes</span> <span>45%</span></div>
+            <div class="data-track"><div class="data-fill data-anim" data-width="45%"></div></div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="archives">
+    <div class="container">
+      <div class="sur-titre reveal">Parcours</div>
+      <h2 class="reveal delay-1" style="margin-bottom: 3rem;">Expériences & <em>Empreintes</em>.</h2>
+      
+      <div class="archives-grid">
+        
+        <div class="glass-card archive-card reveal delay-1 custom-hover">
+          <div class="archive-icon">🔬</div>
+          <div class="archive-date">18 MOIS · UNIBIO MEDICAL</div>
+          <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">Expertise Laboratoire</h3>
+          <p style="font-size: 0.9rem; color: #555; line-height: 1.6;">Hématologie, immunobiochimie et gestion de la qualité. La rigueur analytique appliquée au diagnostic médical.</p>
+        </div>
+
+        <div class="glass-card archive-card reveal delay-2 custom-hover">
+          <div class="archive-icon">⚡</div>
+          <div class="archive-date">SPRINT · INNOVATION</div>
+          <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">Hackathon 72h</h3>
+          <p style="font-size: 0.9rem; color: #555; line-height: 1.6;">De l'idée au MVP Figma en 72 heures. Calculs de viabilité économique et tests de faisabilité sous pression.</p>
+        </div>
+
+        <div class="glass-card archive-card reveal delay-3 custom-hover">
+          <div class="archive-icon">🏆</div>
+          <div class="archive-date">DISTINCTIONS</div>
+          <h3 style="font-size: 1.2rem; margin-bottom: 1rem;">Palmarès</h3>
+          <p style="font-size: 0.9rem; color: #555; line-height: 1.6;">Prix Coup de Pouce au Créa'thlon (Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min".</p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="min-height: 80vh;">
+    <div class="container" style="text-align: center;">
+      <h2 class="reveal" style="font-size: clamp(3rem, 7vw, 6rem); margin-bottom: 0;">Écrire la<br><em>prochaine scène.</em></h2>
+      
+      <div class="btn-group reveal delay-2" style="justify-content: center;">
+        <a href="mailto:thaliapro26@gmail.com" class="btn btn-primary custom-hover">Envoyer un email ↗</a>
+        <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn btn-outline custom-hover">LinkedIn ↗</a>
+        <a href="CV.pdf" download target="_blank" class="btn btn-outline custom-hover">Télécharger CV ↓</a>
+      </div>
+      
+      <p class="reveal delay-3" style="margin-top: 6rem; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase;">
+        © 2026 Thalia Barrahi — Portfolio
+      </p>
+    </div>
+  </section>
+
+  <script>
+    // 1. CURSEUR PERSONNALISÉ FLUIDE
+    const cursorDot = document.getElementById('cursor-dot');
+    const cursorRing = document.getElementById('cursor-ring');
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let ringX = window.innerWidth / 2;
+    let ringY = window.innerHeight / 2;
+
+    document.addEventListener('mousemove', (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      // Le point suit exactement la souris
+      cursorDot.style.left = mouseX + 'px';
+      cursorDot.style.top = mouseY + 'px';
+    });
+
+    // Animation fluide de l'anneau (effet de rattrapage)
+    function animateCursor() {
+      ringX += (mouseX - ringX) * 0.15;
+      ringY += (mouseY - ringY) * 0.15;
+      cursorRing.style.left = ringX + 'px';
+      cursorRing.style.top = ringY + 'px';
+      requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    // Effet au survol des éléments interactifs
+    const hoverElements = document.querySelectorAll('a, .custom-hover, .btn');
+    hoverElements.forEach(el => {
+      el.addEventListener('mouseenter', () => document.body.classList.add('hover-active'));
+      el.addEventListener('mouseleave', () => document.body.classList.remove('hover-active'));
+    });
+
+    // 2. RÉVÉLATION AU DÉFILEMENT (INTERSECTION OBSERVER)
+    const revealElements = document.querySelectorAll('.reveal');
+    const revealObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('visible');
+          // On arrête d'observer une fois révélé pour garder l'état final
+          revealObserver.unobserve(entry.target);
         }
       });
-    }, observerOptions);
+    }, { threshold: 0.15, rootMargin: "0px 0px -50px 0px" });
 
-    reveals.forEach(el => observer.observe(el));
+    revealElements.forEach(el => revealObserver.observe(el));
 
-    // Force l'apparition de la première scène au chargement
+    // Force la première section au chargement
     window.addEventListener('DOMContentLoaded', () => {
       setTimeout(() => {
         document.querySelectorAll('#hero .reveal').forEach(el => el.classList.add('visible'));
       }, 100);
     });
 
-    // 2. MISE À JOUR DE LA NAVIGATION
-    const sections = document.querySelectorAll('.scene[id]');
-    const navLinks = document.querySelectorAll('.nav-links a');
-
-    scrollContainer.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(section => {
-        const sectionTop = section.offsetTop;
-        if (scrollContainer.scrollTop >= sectionTop - 300) {
-          current = section.getAttribute('id');
-        }
-      });
-
-      navLinks.forEach(link => {
-        link.classList.remove('active');
-        if (link.getAttribute('href').substring(1) === current || 
-           (current === 'cpam' && link.getAttribute('href') === '#capgemini') ||
-           (current === 'bioscience' && link.getAttribute('href') === '#capgemini') ) {
-          
-          if(link.getAttribute('href') === '#capgemini' && (current === 'cpam' || current === 'bioscience' || current === 'capgemini')){
-             link.classList.add('active');
-          } else if (link.getAttribute('href').substring(1) === current) {
-             link.classList.add('active');
-          }
-        }
-      });
-    });
-
-    // 3. ANIMATION DES BARRES KPI
-    const metricBars = document.querySelectorAll('.metric-bar');
-    const barObserver = new IntersectionObserver((entries) => {
+    // 3. ANIMATION DES DASHBOARDS DE DONNÉES AU DÉFILEMENT
+    
+    // Animation KPI Circulaires
+    const kpiElements = document.querySelectorAll('.kpi-anim');
+    const kpiObserver = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
-          entry.target.style.transform = 'scaleX(0)';
-          setTimeout(() => { entry.target.style.transform = ''; }, 50);
+          const target = entry.target.getAttribute('data-target');
+          // Le stroke-dasharray total est 100.
+          // Pour faire 82%, on met "82, 100".
+          entry.target.style.strokeDasharray = `${target}, 100`;
+          kpiObserver.unobserve(entry.target);
         }
       });
-    }, { root: scrollContainer, threshold: 0.5 });
+    }, { threshold: 0.5 });
+    kpiElements.forEach(el => kpiObserver.observe(el));
 
-    metricBars.forEach(bar => barObserver.observe(bar));
-
-    // 4. CURSEUR PERSONNALISÉ
-    const cursor = document.createElement('div');
-    cursor.style.cssText = `
-      position: fixed; pointer-events: none; z-index: 10000;
-      width: 8px; height: 8px; border-radius: 50%;
-      background: var(--gold); opacity: 0.8; /* Opacité augmentée */
-      transform: translate(-50%, -50%);
-      transition: transform 0.1s, opacity 0.3s;
-      mix-blend-mode: multiply;
-    `;
-    document.body.appendChild(cursor);
-
-    const ring = document.createElement('div');
-    ring.style.cssText = `
-      position: fixed; pointer-events: none; z-index: 9998;
-      width: 36px; height: 36px; border-radius: 50%;
-      border: 2px solid rgba(212,175,55,0.6); /* Bordure épaissie */
-      transform: translate(-50%, -50%);
-      transition: left 0.15s ease-out, top 0.15s ease-out, transform 0.3s;
-      mix-blend-mode: multiply;
-    `;
-    document.body.appendChild(ring);
-
-    document.addEventListener('mousemove', e => {
-      cursor.style.left = e.clientX + 'px';
-      cursor.style.top = e.clientY + 'px';
-      ring.style.left = e.clientX + 'px';
-      ring.style.top = e.clientY + 'px';
-    });
-
-    document.querySelectorAll('a, .card, .visual-box').forEach(el => {
-      el.addEventListener('mouseenter', () => {
-        ring.style.transform = 'translate(-50%, -50%) scale(1.5)';
-        ring.style.borderColor = 'rgba(212,175,55,1)';
-        cursor.style.opacity = '1';
+    // Animation Barres Horizontales (Bio)
+    const dataBars = document.querySelectorAll('.data-anim');
+    const dataObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const width = entry.target.getAttribute('data-width');
+          entry.target.style.width = width;
+          dataObserver.unobserve(entry.target);
+        }
       });
-      el.addEventListener('mouseleave', () => {
-        ring.style.transform = 'translate(-50%, -50%) scale(1)';
-        ring.style.borderColor = 'rgba(212,175,55,0.6)';
-        cursor.style.opacity = '0.8';
-      });
-    });
+    }, { threshold: 0.5 });
+    dataBars.forEach(bar => dataObserver.observe(bar));
+
   </script>
 </body>
 </html>
