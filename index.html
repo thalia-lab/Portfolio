@@ -3,246 +3,258 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thalia Barrahi | L'Hybridation Tech & Science</title>
+  <title>Thalia Barrahi | Innovation & Science</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400;1,500&family=Manrope:wght@200;300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
-       1. DA : BIOLUMINESCENCE & PREMIUM TECH
+       1. VARIABLES ET DESIGN SYSTEM "CREATIVE STUDIO"
        ========================================================================== */
     :root {
-      --bg-carbon: #0a0a0c; 
-      --bg-surface: #121215;
+      /* Fond sombre ultra premium */
+      --bg-base: #09090b; 
+      --bg-card: #18181b;
       
-      --text-main: #F3F4F6;
-      --text-muted: #9CA3AF;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
       
-      /* Accents Bioluminescents */
-      --glow-emerald: #10B981; /* Bio */
-      --glow-purple: #8B5CF6;  /* IA */
-      --glow-amber: #F59E0B;   /* Management */
+      /* Mesh Gradients / Couleurs Vibrantes */
+      --accent-ai: #3b82f6;      /* Bleu Azure */
+      --accent-bio: #10b981;     /* Vert Émeraude */
+      --accent-mgt: #f43f5e;     /* Corail */
+      --accent-gold: #f59e0b;    /* Ambre */
       
-      --glass-border: rgba(255, 255, 255, 0.08);
-      --glass-bg: rgba(20, 20, 25, 0.6);
+      --glass-border: rgba(255, 255, 255, 0.1);
+      --glass-bg: rgba(24, 24, 27, 0.6);
       
-      --font-display: 'Cormorant', serif;
-      --font-body: 'Manrope', sans-serif;
+      --font-title: 'Syne', sans-serif;
+      --font-body: 'Inter', sans-serif;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; background-color: var(--bg-carbon); }
+    html { scroll-behavior: smooth; font-size: 16px; background-color: var(--bg-base); }
     body {
       color: var(--text-main); font-family: var(--font-body);
       overflow-x: hidden; cursor: none;
       -webkit-font-smoothing: antialiased;
     }
 
-    /* Bruit Cinématographique */
-    .film-grain {
-      position: fixed; inset: 0; pointer-events: none; z-index: 9999; 
-      opacity: 0.05; mix-blend-mode: overlay;
+    /* Bruit de fond (Texture) */
+    .texture-overlay {
+      position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.03; mix-blend-mode: screen;
       background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
 
-    /* Auras Bioluminescentes (Background) */
-    .ambient-glow { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
-    .glow-orb { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.4; animation: float 20s infinite alternate ease-in-out; }
-    .orb-purple { background: var(--glow-purple); width: 50vw; height: 50vw; top: -10%; left: -10%; }
-    .orb-emerald { background: var(--glow-emerald); width: 60vw; height: 60vw; bottom: -20%; right: -10%; animation-delay: -5s; opacity: 0.25; }
-    .orb-amber { background: var(--glow-amber); width: 40vw; height: 40vw; top: 40%; left: 20%; animation-delay: -10s; opacity: 0.2; }
-
-    @keyframes float { 0% { transform: translate(0,0) scale(1); } 100% { transform: translate(5vw, -5vh) scale(1.1); } }
+    /* Gestion Robuste des Images */
+    .img-wrapper {
+      position: relative; width: 100%; height: 100%; min-height: 250px; background: var(--bg-card); 
+      border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center;
+    }
+    .img-wrapper::before {
+      content: attr(data-title); position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
+      color: var(--text-muted); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; text-align: center; padding: 1rem; z-index: 1;
+    }
+    .img-wrapper img {
+      position: relative; z-index: 2; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;
+    }
+    .img-wrapper.contain img { object-fit: contain; background: #fff; padding: 1rem;}
 
     /* ==========================================================================
-       2. CURSEUR MAGNÉTIQUE
+       2. ARRIÈRE-PLAN VIBRANT (MESH GRADIENTS)
+       ========================================================================== */
+    .mesh-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
+    .mesh-blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.3; animation: float 20s infinite alternate ease-in-out; }
+    
+    .blob-1 { background: var(--accent-ai); width: 50vw; height: 50vw; top: -10%; left: -10%; }
+    .blob-2 { background: var(--accent-mgt); width: 60vw; height: 60vw; top: 40%; right: -20%; animation-delay: -5s; }
+    .blob-3 { background: var(--accent-bio); width: 55vw; height: 55vw; bottom: -20%; left: 10%; animation-delay: -10s; }
+
+    @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(5vw, 10vh) scale(1.1); } }
+
+    /* ==========================================================================
+       3. CURSEUR MAGNÉTIQUE
        ========================================================================== */
     .cursor-dot {
-      position: fixed; width: 6px; height: 6px; background: #fff;
+      position: fixed; width: 8px; height: 8px; background: #fff;
       border-radius: 50%; pointer-events: none; z-index: 10000;
       transform: translate(-50%, -50%); transition: opacity 0.3s;
-      box-shadow: 0 0 10px #fff;
     }
     .cursor-ring {
-      position: fixed; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,0.3);
+      position: fixed; width: 45px; height: 45px; border: 1px solid rgba(255, 255, 255, 0.4);
       border-radius: 50%; pointer-events: none; z-index: 9999;
       transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s;
     }
     body.cursor-hover .cursor-ring {
-      width: 70px; height: 70px; border-color: transparent;
-      background: rgba(255,255,255,0.1); backdrop-filter: blur(4px);
+      width: 70px; height: 70px; border-color: transparent; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(4px);
     }
     body.cursor-hover .cursor-dot { opacity: 0; }
 
     /* ==========================================================================
-       3. NAVIGATION MINIMALISTE
+       4. NAVIGATION
        ========================================================================== */
     nav {
-      position: fixed; top: 0; width: 100%; padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; z-index: 1000;
-      background: linear-gradient(to bottom, rgba(10,10,12,0.9) 0%, rgba(10,10,12,0) 100%);
+      position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 1000;
+      background: rgba(24, 24, 27, 0.7); backdrop-filter: blur(16px); border: 1px solid var(--glass-border);
+      padding: 0.8rem 2rem; border-radius: 100px; display: flex; gap: 3rem; align-items: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     }
-    .logo { font-family: var(--font-display); font-size: 1.8rem; font-style: italic; color: #fff; text-decoration: none; letter-spacing: 1px;}
-    .nav-links { display: flex; gap: 3rem; }
-    .nav-links a { color: var(--text-main); text-decoration: none; font-size: 0.7rem; font-weight: 500; text-transform: uppercase; letter-spacing: 2px; position: relative; overflow: hidden; padding-bottom: 4px;}
-    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: #fff; transform: translateX(-100%); transition: transform 0.4s cubic-bezier(0.25, 1, 0.5, 1); }
-    .nav-links a:hover::after { transform: translateX(0); }
+    .logo { font-family: var(--font-title); font-weight: 800; font-size: 1.2rem; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: #fff; }
 
     /* ==========================================================================
-       4. TYPOGRAPHIE & UTILITAIRES
+       5. TYPOGRAPHIE & UTILITAIRES
        ========================================================================== */
-    .sur-titre { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; letter-spacing: 4px; color: var(--text-muted); margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem;}
-    .sur-titre::before { content: ''; width: 40px; height: 1px; background: var(--text-muted); }
+    h1, h2, h3 { font-family: var(--font-title); line-height: 1.1; letter-spacing: -0.02em; }
     
-    .tags { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem; }
-    .tag { padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.65rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; border: 1px solid var(--glass-border); background: rgba(255,255,255,0.03); color: var(--text-muted);}
-    .tag.purple { border-color: rgba(139, 92, 246, 0.3); color: var(--glow-purple); }
-    .tag.emerald { border-color: rgba(16, 185, 129, 0.3); color: var(--glow-emerald); }
-    .tag.amber { border-color: rgba(245, 158, 11, 0.3); color: var(--glow-amber); }
-
-    /* ==========================================================================
-       5. HERO SECTION (CINEMATIC)
-       ========================================================================== */
-    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 5vw; position: relative; }
-    .hero-title { font-family: var(--font-display); font-size: clamp(4rem, 11vw, 12rem); line-height: 0.85; font-weight: 300; letter-spacing: -0.02em; }
-    .hero-title em { font-style: italic; color: transparent; -webkit-text-stroke: 1px rgba(255,255,255,0.8); }
+    .text-gradient { background: linear-gradient(135deg, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
     
-    .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 8vh; border-top: 1px solid var(--glass-border); padding-top: 2rem; flex-wrap: wrap; gap: 2rem;}
-    .hero-desc { font-size: 1.1rem; line-height: 1.7; color: var(--text-muted); font-weight: 300; max-width: 600px; }
-    .hero-desc strong { color: #fff; font-weight: 500; }
+    .badge-wrap { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .badge {
+      padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: #fff;
+    }
+    .badge.ai { color: #60A5FA; border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.1); }
+    .badge.mgt { color: #FB7185; border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.1); }
+    .badge.bio { color: #34D399; border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.1); }
 
     /* ==========================================================================
-       6. GRILLE ASYMÉTRIQUE & GLASSMORPHISM
+       6. HERO SECTION
        ========================================================================== */
-    .project-section { padding: 15vh 5vw; border-bottom: 1px solid var(--glass-border); }
-    .proj-grid { display: grid; grid-template-columns: 5fr 7fr; gap: 6vw; align-items: center; }
-    .proj-grid.reverse { grid-template-columns: 7fr 5fr; }
-    .proj-grid.reverse .proj-text { order: 2; }
-    .proj-grid.reverse .proj-visual { order: 1; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+    
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; padding-top: 80px;}
+    .hero-pre { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 4px; color: var(--text-muted); margin-bottom: 1.5rem; }
+    .hero-title { font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 800; margin-bottom: 2rem; }
+    .hero-desc { font-size: clamp(1.1rem, 2vw, 1.4rem); line-height: 1.6; color: var(--text-muted); font-weight: 400; max-width: 750px; margin-bottom: 3rem;}
+    .hero-desc strong { color: #fff; font-weight: 600; }
 
-    .proj-title { font-family: var(--font-display); font-size: clamp(3rem, 5vw, 5rem); line-height: 1; margin-bottom: 1.5rem; font-weight: 400;}
-    .proj-title em { font-style: italic; }
-    .proj-desc { font-size: 1.05rem; line-height: 1.8; color: var(--text-muted); font-weight: 300; }
-
-    /* UI Dashboards (Le travail de l'Illustrateur) */
-    .glass-panel {
+    /* ==========================================================================
+       7. CARTES PROJETS (FLEXBOX ROBUSTE)
+       ========================================================================== */
+    .project-section { padding: 80px 0; }
+    
+    .glass-card {
       background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border); border-radius: 24px; padding: 3rem;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.5); position: relative; overflow: hidden;
+      border: 1px solid var(--glass-border); border-radius: 32px;
+      padding: 3rem; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      display: flex; gap: 4rem; align-items: center;
+      margin-bottom: 4rem; transition: transform 0.4s; position: relative;
     }
-
-    /* Schéma SVG IA */
-    .ai-nodes { display: flex; flex-wrap: wrap; gap: 1rem; position: relative; z-index: 2;}
-    .ai-node { background: rgba(255,255,255,0.03); border: 1px solid rgba(139, 92, 246, 0.2); padding: 1rem 1.5rem; border-radius: 12px; display: flex; align-items: center; gap: 1rem; font-size: 0.8rem; font-weight: 500; letter-spacing: 1px; text-transform: uppercase; color: #fff;}
-    .ai-dot { width: 8px; height: 8px; background: var(--glow-purple); border-radius: 50%; box-shadow: 0 0 10px var(--glow-purple); animation: pulse 2s infinite alternate;}
-    @keyframes pulse { 0% { opacity: 0.5; transform: scale(1); } 100% { opacity: 1; transform: scale(1.5); } }
-
-    /* Schéma MGT */
-    .kpi-list { display: flex; flex-direction: column; gap: 1.5rem; }
-    .kpi-item { border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1.5rem; }
-    .kpi-header { display: flex; justify-content: space-between; font-family: var(--font-display); font-size: 1.5rem; font-style: italic; color: #fff; margin-bottom: 0.5rem;}
-    .kpi-bar { width: 100%; height: 2px; background: rgba(255,255,255,0.1); position: relative; }
-    .kpi-fill { position: absolute; top: 0; left: 0; height: 100%; background: var(--glow-amber); width: 0; transition: width 1.5s cubic-bezier(0.25, 1, 0.5, 1); box-shadow: 0 0 10px var(--glow-amber);}
-
-    /* Schéma BIO (NDA Lock) */
-    .bio-waves { position: absolute; inset: 0; opacity: 0.1; }
-    .bio-waves path { fill: none; stroke: var(--glow-emerald); stroke-width: 2; stroke-dasharray: 1000; stroke-dashoffset: 1000; animation: drawWave 5s linear infinite; }
-    @keyframes drawWave { to { stroke-dashoffset: 0; } }
+    .glass-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2);}
+    .glass-card.reverse { flex-direction: row-reverse; }
     
-    .nda-blur-box { filter: blur(8px); opacity: 0.3; }
-    .nda-line { height: 10px; background: #fff; margin-bottom: 15px; border-radius: 5px; }
-    .nda-lock { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(10,10,12,0.6); backdrop-filter: blur(4px); }
-    .nda-lock svg { width: 40px; height: 40px; stroke: var(--glow-emerald); fill: none; stroke-width: 1.5; margin-bottom: 1rem; }
-    .nda-text { font-family: var(--font-display); font-size: 1.5rem; color: #fff; font-style: italic; }
+    .proj-text { flex: 1; }
+    .proj-visual { flex: 1; width: 100%; }
+
+    .proj-title { font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 1.5rem; color: #fff;}
+    .proj-desc { font-size: 1.05rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 2rem;}
 
     /* ==========================================================================
-       7. LE PHOTOGRAPHE (TRAITEMENT DES IMAGES ARCHIVES)
+       8. COMPOSANTS UI / DASHBOARDS (PROPRES ET FIXES)
        ========================================================================== */
-    .archives-section { padding: 15vh 5vw; }
-    .archives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(350px, 1fr)); gap: 4vw; margin-top: 5vh; }
+    .ui-showcase { background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; width: 100%;}
+    .ui-header { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 1.5rem; display: flex; justify-content: space-between; }
+
+    /* UI Astroly (Agents) */
+    .agent-list { display: flex; flex-direction: column; gap: 0.8rem; }
+    .agent-item { background: rgba(255,255,255,0.05); padding: 1rem 1.5rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; transition: 0.3s;}
+    .agent-item:hover { border-color: var(--accent-ai); background: rgba(59, 130, 246, 0.1); transform: translateX(5px);}
+    .agent-info { font-weight: 600; font-size: 0.9rem; color: #fff;}
+    .agent-status { width: 8px; height: 8px; background: var(--accent-bio); border-radius: 50%; box-shadow: 0 0 10px var(--accent-bio);}
+
+    /* UI CPAM (Jauges) */
+    .kpi-wrapper { display: flex; flex-direction: column; gap: 1.2rem; }
+    .kpi-row { background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(244, 63, 94, 0.1);}
+    .kpi-header { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.8rem; color: #fff;}
+    .kpi-track { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
+    .kpi-fill { height: 100%; background: linear-gradient(90deg, var(--accent-mgt), var(--accent-gold)); border-radius: 10px; width: 0; transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+    /* UI CRRHAB (NDA Lock) */
+    .bio-data-list { display: flex; flex-direction: column; gap: 1rem; filter: blur(6px); opacity: 0.3; user-select: none; }
+    .bio-data-item { height: 35px; background: rgba(255,255,255,0.8); border-radius: 8px; width: 100%; }
+    .bio-data-item:nth-child(2) { width: 80%; } .bio-data-item:nth-child(3) { width: 90%; }
     
-    .archive-card { text-decoration: none; color: inherit; display: flex; flex-direction: column; group;}
-    
-    /* Fallback & Conteneur 4:5 ou 16:9 */
-    .img-wrapper {
-      position: relative; width: 100%; aspect-ratio: 4/3; overflow: hidden; border-radius: 16px; margin-bottom: 2rem;
-      background: var(--bg-surface); border: 1px solid var(--glass-border);
-    }
-    .img-wrapper::before {
-      content: attr(data-fallback); position: absolute; inset: 0;
-      display: flex; align-items: center; justify-content: center;
-      color: var(--text-muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; z-index: 1;
-    }
-    .img-wrapper img {
-      position: relative; z-index: 2; width: 100%; height: 100%; object-fit: cover;
-      filter: grayscale(80%) contrast(1.1) brightness(0.7); transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
-    }
-    .img-wrapper.contain img { object-fit: contain; background: #fff; filter: none; padding: 1rem;}
-    
-    /* Effet Hover Photographique */
-    .archive-card:hover .img-wrapper img { filter: grayscale(0%) contrast(1) brightness(1); transform: scale(1.05); }
-    
-    .arc-meta { font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--glow-emerald); margin-bottom: 0.8rem; font-weight: 600;}
-    .arc-title { font-family: var(--font-display); font-size: 2rem; margin-bottom: 1rem; color: #fff; }
-    .arc-desc { font-size: 0.95rem; line-height: 1.6; color: var(--text-muted); font-weight: 300;}
+    .nda-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(9, 9, 11, 0.6); border-radius: 20px;}
+    .nda-badge { background: #fff; padding: 1.5rem 2rem; border-radius: 16px; text-align: center; border: 1px solid var(--accent-bio); box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);}
+    .nda-icon { font-size: 2rem; margin-bottom: 0.5rem; color: var(--accent-bio); }
+    .nda-title { font-weight: 800; font-size: 1rem; color: #000; text-transform: uppercase;}
+    .nda-desc { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.3rem;}
 
     /* ==========================================================================
-       8. ANIMATIONS MOTION DESIGN (REVEAL MASKS)
+       9. ARCHIVES (GRILLE CSS ROBUSTE)
        ========================================================================== */
-    .reveal-text { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
-    .reveal-text.is-visible { opacity: 1; transform: translateY(0); }
+    .archives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+    
+    .archive-card {
+      background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px;
+      padding: 1.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column;
+      transition: transform 0.3s;
+    }
+    .archive-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.3);}
+    .archive-card:hover .img-wrapper img { transform: scale(1.05); }
+
+    .arc-meta { font-size: 0.75rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem;}
+    .arc-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #fff;}
+    .arc-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1; }
+
+    .action-link { font-size: 0.8rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 1px;}
+    .action-link svg { width: 16px; height: 16px; transition: transform 0.3s; }
+    .archive-card:hover .action-link svg { transform: translateX(5px); }
+
+    /* ==========================================================================
+       10. CONTACT & BOUTONS
+       ========================================================================== */
+    .contact-section { text-align: center; padding: 120px 0 80px; max-width: 800px; margin: 0 auto; }
+    .contact-title { font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; line-height: 1; margin-bottom: 1.5rem; }
+    
+    .btn-wrap { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem;}
+    .btn {
+      padding: 1.2rem 2.5rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 1px; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.8rem; transition: all 0.3s;
+    }
+    .btn-solid { background: #fff; color: var(--bg-base); box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
+    .btn-solid:hover { background: var(--accent-ai); color: #fff; transform: translateY(-3px); }
+    .btn-outline { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
+    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; transform: translateY(-3px); }
+
+    /* ==========================================================================
+       11. ANIMATIONS & RESPONSIVE
+       ========================================================================== */
+    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
     .d-1 { transition-delay: 0.1s; } .d-2 { transition-delay: 0.2s; }
 
-    /* Masque d'apparition Cinématographique pour les images/cartes */
-    .reveal-mask {
-      clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
-      transition: clip-path 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    @media (max-width: 1024px) {
+      .glass-card { flex-direction: column; gap: 3rem; padding: 2.5rem; }
+      .glass-card.reverse { flex-direction: column; }
+      .proj-visual { width: 100%; }
     }
-    .reveal-mask.is-visible { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
-
-    /* ==========================================================================
-       9. CONTACT & FOOTER
-       ========================================================================== */
-    .contact-section { padding: 15vh 5vw; text-align: center; border-top: 1px solid var(--glass-border); }
-    .contact-title { font-family: var(--font-display); font-size: clamp(4rem, 10vw, 10rem); font-style: italic; color: transparent; -webkit-text-stroke: 1px #fff; margin-bottom: 3rem;}
-    
-    .btn-group { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap;}
-    .btn {
-      padding: 1.2rem 3rem; border-radius: 50px; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px;
-      color: #fff; text-decoration: none; border: 1px solid rgba(255,255,255,0.3); transition: 0.4s;
-      display: inline-flex; align-items: center; gap: 1rem;
-    }
-    .btn:hover { background: #fff; color: var(--bg-carbon); }
-    
-    .btn.primary { background: #fff; color: var(--bg-carbon); }
-    .btn.primary:hover { background: transparent; color: #fff; border-color: #fff; }
-
-    /* ==========================================================================
-       10. RESPONSIVE
-       ========================================================================== */
-    @media (max-width: 900px) {
-      nav { padding: 1.5rem 5vw; background: var(--bg-carbon); }
+    @media (max-width: 768px) {
+      nav { padding: 0.8rem 1.5rem; width: 90%; justify-content: center;}
       .nav-links { display: none; }
-      .hero { padding-top: 120px; }
-      .proj-grid, .proj-grid.reverse { grid-template-columns: 1fr; gap: 3rem; }
-      .proj-grid.reverse .proj-text { order: 1; }
-      .proj-grid.reverse .proj-visual { order: 2; }
-      .glass-panel { padding: 2rem; }
+      .hero { padding-top: 150px; }
+      .hero-title { font-size: 3rem; }
+      .glass-card { padding: 2rem; border-radius: 20px; }
+      .btn-wrap { flex-direction: column; width: 100%; }
+      .btn { width: 100%; justify-content: center; }
       .cursor-dot, .cursor-ring { display: none; }
       body { cursor: auto; }
-      .btn-group { flex-direction: column; width: 100%; }
-      .btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
 
-  <div class="film-grain"></div>
-  <div class="ambient-glow">
-    <div class="glow-orb orb-purple"></div>
-    <div class="glow-orb orb-emerald"></div>
-    <div class="glow-orb orb-amber"></div>
+  <div class="texture-overlay"></div>
+  <div class="mesh-bg">
+    <div class="mesh-blob blob-1"></div>
+    <div class="mesh-blob blob-2"></div>
+    <div class="mesh-blob blob-3"></div>
   </div>
 
   <div class="cursor-dot"></div>
@@ -251,221 +263,200 @@
   <nav>
     <a href="#hero" class="logo interactive">Thalia.B</a>
     <div class="nav-links">
-      <a href="#projets" class="interactive">Projets</a>
-      <a href="#recherche" class="interactive">Recherche</a>
-      <a href="#archives" class="interactive">Parcours</a>
-      <a href="#contact" class="interactive">Contact</a>
+      <a href="#projets" class="interactive nav-item">Projets</a>
+      <a href="#recherche" class="interactive nav-item">Recherche</a>
+      <a href="#archives" class="interactive nav-item">Parcours</a>
     </div>
   </nav>
 
-  <section class="hero" id="hero">
-    <h1 class="hero-title reveal-text is-visible">
-      Science,<br>Management<br><em>& I.A.</em>
-    </h1>
+  <div class="container">
     
-    <div class="hero-bottom reveal-text d-1 is-visible">
-      <div style="flex: 1;">
-        <p class="hero-desc">
-          Manager de projets innovants. L'hybridation absolue entre la rigueur analytique de la <strong>Science du Vivant</strong> et l'architecture des <strong>nouvelles technologies</strong>.
-        </p>
-        <div class="tags">
-          <span class="tag purple">Master 1 Management de l'Innovation</span>
-          <span class="tag emerald">BUT Génie Biologique</span>
-        </div>
+    <section class="hero" id="hero">
+      <div class="hero-pre reveal is-visible">Portfolio 2026</div>
+      <h1 class="hero-title reveal d-1 is-visible">
+        Science,<br>Management &<br><span class="text-gradient">Intelligence Artificielle.</span>
+      </h1>
+      <p class="hero-desc reveal d-2 is-visible">
+        Manager de projets innovants. L'hybridation exigeante entre la rigueur analytique de la <strong>Science du Vivant</strong> et l'architecture des <strong>nouvelles technologies</strong>.
+      </p>
+      <div class="badge-wrap reveal d-2 is-visible" style="justify-content: center; margin-top: 1rem;">
+        <span class="badge ai">Master 1 Management de l'Innovation</span>
+        <span class="badge bio">BUT Génie Biologique</span>
       </div>
-      
-      <div style="text-align: right;">
-        <div class="sur-titre" style="justify-content: flex-end; margin: 0;">Portfolio 2026</div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <section class="project-section" id="projets">
-    <div class="proj-grid">
-      <div class="proj-text">
-        <div class="sur-titre reveal-text">Digital Student Challenge</div>
-        <h2 class="proj-title reveal-text d-1">Astroly,<br><span class="text-gradient-ai">IA Agentique</span>.</h2>
-        <p class="proj-desc reveal-text d-2">
-          Capgemini x IAE Montpellier. Développement d'une architecture modulaire de <strong>6 agents IA</strong> sur Microsoft 365 (Copilot Studio). Objectif : révolutionner l'attractivité des jeunes talents via l'automatisation du screening et l'expérience "mobile-first".
-        </p>
-        <div class="tags reveal-text d-2">
-          <span class="tag purple">Architecture Multi-Agents</span>
-          <span class="tag purple">Microsoft 365</span>
-        </div>
-      </div>
+    <section class="project-section" id="projets">
       
-      <div class="proj-visual reveal-mask d-1">
-        <div class="glass-panel">
-          <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 2rem;">Écosystème Déployé</div>
-          <div class="ai-nodes">
-            <div class="ai-node"><div class="ai-dot"></div> Orientation</div>
-            <div class="ai-node"><div class="ai-dot" style="animation-delay: 0.5s;"></div> Opportunités</div>
-            <div class="ai-node"><div class="ai-dot" style="animation-delay: 1s;"></div> Écoles</div>
-            <div class="ai-node"><div class="ai-dot" style="animation-delay: 0.2s;"></div> Newsletters</div>
-            <div class="ai-node"><div class="ai-dot" style="animation-delay: 0.8s;"></div> Scoring</div>
-            <div class="ai-node"><div class="ai-dot" style="animation-delay: 1.2s;"></div> Performance</div>
+      <div class="glass-card reveal">
+        <div class="proj-text">
+          <div class="hero-pre" style="color: var(--accent-ai);">Digital Student Challenge</div>
+          <h2 class="proj-title">Astroly,<br>L'Ère <span class="text-gradient">Agentique</span>.</h2>
+          <p class="proj-desc">
+            Capgemini x IAE Montpellier. Développement d'une architecture modulaire de <strong>6 agents IA</strong> sur Microsoft 365. Objectif : révolutionner l'attractivité des jeunes talents via l'automatisation du screening et l'expérience "mobile-first".
+          </p>
+          <div class="badge-wrap" style="margin-top: 2rem;">
+            <span class="badge ai">Copilot Studio</span>
+            <span class="badge ai">Architecture M365</span>
           </div>
-          <svg style="position: absolute; top:0; left:0; width:100%; height:100%; z-index:1; pointer-events:none;">
-            <path d="M50,100 Q150,50 250,150 T400,100" fill="none" stroke="rgba(139, 92, 246, 0.2)" stroke-width="1" stroke-dasharray="4 4" />
-          </svg>
         </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="project-section">
-    <div class="proj-grid reverse">
-      <div class="proj-text">
-        <div class="sur-titre reveal-text">Innovation Publique</div>
-        <h2 class="proj-title reveal-text d-1">Intelligence<br><span class="text-gradient-mgt">Collective</span>.</h2>
-        <p class="proj-desc reveal-text d-2">
-          Alternance CPAM Hérault (2025-2026) en tant que Chef de projets innovants. La transformation d'une organisation ne se résout pas par la technologie seule, mais par l'encadrement humain. Pilotage d'idéation et structuration de la performance.
-        </p>
-        <div class="tags reveal-text d-2">
-          <span class="tag amber">Facilitation de groupes</span>
-          <span class="tag amber">Pilotage KPI</span>
-        </div>
-      </div>
-      
-      <div class="proj-visual reveal-mask d-1">
-        <div class="glass-panel">
-          <div style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-bottom: 2rem;">Suivi de Performance</div>
-          <div class="kpi-list">
-            <div class="kpi-item">
-              <div class="kpi-header"><span>Innovation</span> <span>100%</span></div>
-              <div class="kpi-bar"><div class="kpi-fill kpi-anim" data-target="100%"></div></div>
-            </div>
-            <div class="kpi-item">
-              <div class="kpi-header"><span>Facilitation</span> <span>100%</span></div>
-              <div class="kpi-bar"><div class="kpi-fill kpi-anim" data-target="100%" style="transition-delay: 0.2s;"></div></div>
-            </div>
-            <div class="kpi-item">
-              <div class="kpi-header"><span>Gestion</span> <span>100%</span></div>
-              <div class="kpi-bar"><div class="kpi-fill kpi-anim" data-target="100%" style="transition-delay: 0.4s;"></div></div>
+        
+        <div class="proj-visual">
+          <div class="ui-showcase">
+            <div class="ui-header"><span>Écosystème d'Agents</span> <span style="color: var(--accent-ai);">● Actif</span></div>
+            <div class="agent-list">
+              <div class="agent-item"><div class="agent-info">💬 Assistant Orientation</div><div class="agent-status"></div></div>
+              <div class="agent-item"><div class="agent-info">🎯 Veille Opportunités</div><div class="agent-status"></div></div>
+              <div class="agent-item"><div class="agent-info">🏫 Prospection Écoles</div><div class="agent-status"></div></div>
+              <div class="agent-item"><div class="agent-info">📊 Scoring Profils</div><div class="agent-status"></div></div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <section class="project-section" id="recherche">
-    <div class="proj-grid">
-      <div class="proj-text">
-        <div class="sur-titre reveal-text">Laboratoire Phytopathologie</div>
-        <h2 class="proj-title reveal-text d-1">Science du<br><span class="text-gradient-bio">Vivant</span>.</h2>
-        <p class="proj-desc reveal-text d-2">
-          Recherche au CRRHAB (Tunisie). Rapport et soutenance : <em>"Test du comportement de 19 variétés de pomme de terre basé sur leurs paramètres agronomiques et microbiomes associés"</em>.<br><br>
-          Isolement de souches d'intérêt (Bacillus, Serratia) et tests d'antagonisme contre les maladies fongiques pour l'agronomie durable.
-        </p>
-        <div class="tags reveal-text d-2">
-          <span class="tag emerald">Biocontrôle</span>
-          <span class="tag emerald">Agroécologie</span>
-        </div>
-      </div>
-      
-      <div class="proj-visual reveal-mask d-1">
-        <div class="glass-panel" style="padding: 0; min-height: 300px; display: flex; align-items: center; justify-content: center;">
-          <svg class="bio-waves" viewBox="0 0 400 300">
-            <path d="M0,150 Q100,50 200,150 T400,150" />
-            <path d="M0,150 Q100,250 200,150 T400,150" style="opacity: 0.5;" />
-          </svg>
-          
-          <div class="nda-blur-box" style="width: 80%; padding: 2rem;">
-            <div class="nda-line" style="width: 100%;"></div>
-            <div class="nda-line" style="width: 70%;"></div>
-            <div class="nda-line" style="width: 90%;"></div>
+      <div class="glass-card reverse reveal">
+        <div class="proj-text">
+          <div class="hero-pre" style="color: var(--accent-mgt);">Innovation Publique</div>
+          <h2 class="proj-title">Intelligence<br><span class="text-gradient">Collective</span>.</h2>
+          <p class="proj-desc">
+            Alternance CPAM Hérault (2025-2026). La transformation d'une organisation ne se résout pas par la technologie seule, mais par l'encadrement humain. Pilotage d'idéation, facilitation de groupes et structuration de la performance.
+          </p>
+          <div class="badge-wrap" style="margin-top: 2rem;">
+            <span class="badge mgt">Facilitation</span>
+            <span class="badge mgt">Pilotage KPI</span>
           </div>
-
-          <div class="nda-lock">
-            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-            <div class="nda-text">Données Sécurisées</div>
-            <div style="font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); margin-top: 0.5rem; font-weight: 600;">Accord de Confidentialité</div>
+        </div>
+        
+        <div class="proj-visual">
+          <div class="ui-showcase">
+            <div class="ui-header"><span>Suivi de Performance</span></div>
+            <div class="kpi-wrapper">
+              <div class="kpi-row">
+                <div class="kpi-header"><span>Innovation Participative</span><span>100%</span></div>
+                <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%"></div></div>
+              </div>
+              <div class="kpi-row">
+                <div class="kpi-header"><span>Facilitation de groupes</span><span>100%</span></div>
+                <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%" style="transition-delay: 0.2s;"></div></div>
+              </div>
+              <div class="kpi-row">
+                <div class="kpi-header"><span>Gestion de projets</span><span>100%</span></div>
+                <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%" style="transition-delay: 0.4s;"></div></div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  </section>
 
-  <section class="archives-section" id="archives">
-    <div class="sur-titre reveal-text">Parcours</div>
-    <h2 class="proj-title reveal-text d-1" style="margin-bottom: 4rem;">Empreintes & <em>Expériences</em>.</h2>
-    
-    <div class="archives-grid">
+      <div class="glass-card reveal" id="recherche">
+        <div class="proj-text">
+          <div class="hero-pre" style="color: var(--accent-bio);">Laboratoire Phytopathologie</div>
+          <h2 class="proj-title">Science du<br><span class="text-gradient">Vivant</span>.</h2>
+          <p class="proj-desc">
+            Recherche au CRRHAB (Tunisie). Rapport et soutenance : <em>"Test du comportement de 19 variétés de pomme de terre basé sur leurs paramètres agronomiques et microbiomes"</em>.<br><br>
+            Isolement de souches d'intérêt (Bacillus, Serratia) et tests d'antagonisme contre les maladies fongiques pour l'agronomie durable.
+          </p>
+          <div class="badge-wrap" style="margin-top: 2rem;">
+            <span class="badge bio">Biocontrôle</span>
+            <span class="badge bio">Agroécologie</span>
+          </div>
+        </div>
+        
+        <div class="proj-visual">
+          <div class="ui-showcase" style="position: relative; overflow: hidden;">
+            <div class="ui-header"><span>Matrice d'Inhibition</span></div>
+            <div class="bio-data-list">
+              <div class="bio-data-item"></div><div class="bio-data-item"></div><div class="bio-data-item"></div>
+            </div>
+            <div class="nda-overlay">
+              <div class="nda-badge">
+                <div class="nda-icon">🔒</div>
+                <div class="nda-title">Données Sous NDA</div>
+                <div class="nda-desc">Accord de Confidentialité</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <section class="project-section" id="archives" style="padding-top: 0;">
+      <div class="hero-pre reveal" style="text-align: center;">Parcours</div>
+      <h2 class="hero-title reveal" style="font-size: clamp(2.5rem, 5vw, 4rem); text-align: center; margin-bottom: 2rem;">Empreintes & Expériences.</h2>
       
-      <a href="#" class="archive-card interactive reveal-mask">
-        <div class="img-wrapper" data-fallback="Aperçu Heron Exchange">
-          <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="SaaS B2B">
-        </div>
-        <div class="arc-meta" style="color: var(--glow-purple);">SaaS B2B · Pépite LR</div>
-        <h3 class="arc-title">Heron Exchange</h3>
-        <p class="arc-desc">Accompagnement de la porteuse de projet (Chloé Cantave). Stratégie contre la fraude BEC (~7M de PME cibles). Diagnostic terrain et modèle de revenus.</p>
-      </a>
+      <div class="archives-grid">
+        
+        <a href="#" class="archive-card interactive reveal">
+          <div class="img-wrapper" data-title="Heron Exchange SaaS">
+            <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="SaaS B2B">
+          </div>
+          <div class="arc-meta" style="color: var(--accent-ai);">SaaS B2B · Pépite LR</div>
+          <h3 class="arc-title">Heron Exchange</h3>
+          <p class="arc-desc">Accompagnement stratégique sur une plateforme luttant contre la fraude BEC (~7M de PME cibles). Diagnostic terrain et modèle de revenus.</p>
+          <div class="action-link">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
+        </a>
 
-      <a href="Soutenance de 2eme année.pdf" target="_blank" class="archive-card interactive reveal-mask d-1">
-        <div class="img-wrapper contain" data-fallback="Aperçu Poster">
-          <img src="Poster scientifique bleu et vert.png" alt="Poster Scientifique">
-        </div>
-        <div class="arc-meta" style="color: var(--glow-emerald);">18 Mois · Alternance</div>
-        <h3 class="arc-title">Unibio Medical</h3>
-        <p class="arc-desc">Technicienne de laboratoire. Hématologie, hémostase et immunobiochimie. Rigueur analytique et synthèse via un poster scientifique (Cliquer pour le PDF).</p>
-      </a>
+        <a href="Soutenance de 2eme année.pdf" target="_blank" class="archive-card interactive reveal d-1">
+          <div class="img-wrapper contain" data-title="Poster Scientifique">
+            <img src="Poster scientifique bleu et vert.png" alt="Poster Unibio">
+          </div>
+          <div class="arc-meta" style="color: var(--accent-bio);">18 Mois · Alternance</div>
+          <h3 class="arc-title">Unibio Medical</h3>
+          <p class="arc-desc">Technicienne de laboratoire. Hématologie, hémostase et immunobiochimie. Rigueur analytique et synthèse via un poster scientifique.</p>
+          <div class="action-link">Ouvrir le PDF <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg></div>
+        </a>
 
-      <a href="#" class="archive-card interactive reveal-mask">
-        <div class="img-wrapper" data-fallback="Culture in vitro">
-          <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Vanillier">
-        </div>
-        <div class="arc-meta" style="color: var(--glow-emerald);">IUT Montpellier · 2022</div>
-        <h3 class="arc-title">Culture in vitro</h3>
-        <p class="arc-desc">Projet sur la micropropagation du Vanillier (milieu MS). Maîtrise de la stérilité sous hotte à flux laminaire et processus d'acclimatation.</p>
-      </a>
+        <a href="#" class="archive-card interactive reveal">
+          <div class="img-wrapper" data-title="Culture In Vitro">
+            <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Culture in vitro">
+          </div>
+          <div class="arc-meta" style="color: var(--accent-bio);">IUT Montpellier · 2022</div>
+          <h3 class="arc-title">Culture in vitro</h3>
+          <p class="arc-desc">Projet sur la micropropagation du Vanillier (milieu MS). Maîtrise de la stérilité sous hotte à flux laminaire et processus d'acclimatation.</p>
+          <div class="action-link">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
+        </a>
 
-      <a href="#" class="archive-card interactive reveal-mask d-1">
-        <div class="img-wrapper" data-fallback="Distinctions">
-          <img src="https://images.unsplash.com/photo-1561489413-985b06da5bee?q=80&w=800&auto=format&fit=crop" alt="Awards">
-        </div>
-        <div class="arc-meta" style="color: var(--glow-amber);">Distinctions Nationales</div>
-        <h3 class="arc-title">Palmarès & Pitch</h3>
-        <p class="arc-desc">Prix Coup de Pouce Créa'thlon (2025, Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min" (2021). L'éloquence au service de l'idée.</p>
-      </a>
+        <a href="#" class="archive-card interactive reveal d-1">
+          <div class="img-wrapper" style="background: linear-gradient(135deg, #f43f5e, #f59e0b);" data-title="">
+            <svg style="width: 80px; height: 80px; stroke: #fff; fill: none; stroke-width: 1.5;" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
+          </div>
+          <div class="arc-meta" style="color: var(--accent-mgt);">Distinctions Nationales</div>
+          <h3 class="arc-title">Palmarès & Pitch</h3>
+          <p class="arc-desc">Prix Coup de Pouce Créa'thlon (2025, Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min" (2021). L'éloquence au service de l'idée.</p>
+          <div class="action-link">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
+        </a>
 
-    </div>
-  </section>
+      </div>
+    </section>
 
-  <section class="contact-section" id="contact">
-    <h2 class="contact-title reveal-text">Let's <em>Talk</em>.</h2>
-    <p class="proj-desc reveal-text d-1" style="margin: 0 auto 3rem; text-align: center;">
-      Basée à Montpellier | Permis B, véhiculée.<br>Disponible pour innover à l'intersection de la data, de la science et du management.
-    </p>
-    
-    <div class="btn-group reveal-text d-2">
-      <a href="mailto:thaliapro26@gmail.com" class="btn primary interactive">
-        Écrire un email
-      </a>
-      <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn interactive">
-        LinkedIn
-      </a>
-      <a href="CV.pdf" download target="_blank" class="btn interactive" style="border-color: var(--glow-emerald); color: var(--glow-emerald);">
-        Télécharger CV
-      </a>
-    </div>
+    <section class="contact-section" id="contact">
+      <h2 class="hero-title reveal">Let's <span class="text-gradient">Talk.</span></h2>
+      <p class="hero-desc reveal d-1" style="margin: 0 auto 3rem;">Basée à Montpellier | Permis B, véhiculée.</p>
+      
+      <div class="btn-wrap reveal d-2">
+        <a href="mailto:thaliapro26@gmail.com" class="btn btn-solid interactive">Écrire un email</a>
+        <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn btn-outline interactive">LinkedIn</a>
+        <a href="CV.pdf" download target="_blank" class="btn btn-outline interactive" style="border-color: var(--accent-bio); color: #fff;">Télécharger CV</a>
+      </div>
 
-    <div style="margin-top: 15vh; font-size: 0.65rem; font-weight: 600; letter-spacing: 2px; color: var(--text-muted); text-transform: uppercase;">
-      © 2026 Thalia Barrahi — Design Studio
-    </div>
-  </section>
+      <div style="margin-top: 8rem; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px;">
+        © 2026 Thalia Barrahi — Design Studio
+      </div>
+    </section>
+
+  </div>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       
-      /* --- 1. CURSEUR MAGNÉTIQUE FLUIDE --- */
+      /* --- CURSEUR MAGNÉTIQUE --- */
       const dot = document.querySelector('.cursor-dot');
       const ring = document.querySelector('.cursor-ring');
       
-      let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-      let ringX = mouseX, ringY = mouseY;
-
       if (window.innerWidth > 900) {
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let ringX = mouseX, ringY = mouseY;
+
         window.addEventListener('mousemove', (e) => {
           mouseX = e.clientX; mouseY = e.clientY;
           dot.style.left = `${mouseX}px`; dot.style.top = `${mouseY}px`;
@@ -479,9 +470,7 @@
         };
         animateCursor();
 
-        // Interactions Hover
-        const interactives = document.querySelectorAll('a, .interactive');
-        interactives.forEach(el => {
+        document.querySelectorAll('a, .interactive').forEach(el => {
           el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
           el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
         });
@@ -489,447 +478,19 @@
         dot.style.display = 'none'; ring.style.display = 'none';
       }
 
-      /* --- 2. RÉVÉLATIONS AU SCROLL (TEXTES & MASQUES) --- */
-      const observerOptions = { threshold: 0.1, rootMargin: "0px 0px -50px 0px" };
-      
-      const revealObserver = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('is-visible');
-            
-            // Si c'est une carte KPI, déclencher l'animation des jauges
-            const kpiFills = entry.target.querySelectorAll('.kpi-anim');
-            kpiFills.forEach(fill => { fill.style.width = fill.getAttribute('data-target'); });
-
-            revealObserver.unobserve(entry.target);
-          }
-        });
-      }, observerOptions);
-
-      document.querySelectorAll('.reveal-text, .reveal-mask').forEach(el => {
-        revealObserver.observe(el);
-      });
-
-      /* --- 3. PARALLAXE LÉGER SUR LES IMAGES --- */
-      const images = document.querySelectorAll('.img-wrapper img');
-      window.addEventListener('scroll', () => {
-        const scrolled = window.pageYOffset;
-        images.forEach(img => {
-          const speed = 0.03;
-          img.style.transform = `translateY(${-(scrolled * speed)}px) scale(1.05)`;
-        });
-      });
-
-    });
-  </script>
-</body>
-</html>       ========================================================================== */
-    nav {
-      position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 1000;
-      background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.9);
-      padding: 0.8rem 2rem; border-radius: 100px; display: flex; gap: 3rem; align-items: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-    }
-    .logo { font-family: var(--font-title); font-weight: 800; font-size: 1.2rem; color: var(--text-main); text-decoration: none; letter-spacing: -0.5px; }
-    .nav-links { display: flex; gap: 2rem; }
-    .nav-links a { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
-    .nav-links a:hover, .nav-links a.active { color: var(--color-ai); }
-
-    /* ==========================================================================
-       4. TYPOGRAPHIE & UTILITAIRES
-       ========================================================================== */
-    h1, h2, h3 { font-family: var(--font-title); line-height: 1.1; letter-spacing: -0.02em; }
-    
-    .text-gradient-ai { background: linear-gradient(135deg, #2563EB, #8B5CF6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .text-gradient-mgt { background: linear-gradient(135deg, #F43F5E, #F97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    .text-gradient-bio { background: linear-gradient(135deg, #10B981, #14B8A6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-
-    .badge-wrap { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem; }
-    .badge {
-      padding: 0.5rem 1.2rem; border-radius: 50px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
-      background: rgba(255,255,255,0.6); border: 1px solid rgba(255,255,255,0.8); color: var(--text-main);
-    }
-    .badge.ai { color: var(--color-ai); border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.05); }
-    .badge.mgt { color: var(--color-mgt); border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.05); }
-    .badge.bio { color: var(--color-bio); border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.05); }
-
-    /* ==========================================================================
-       5. HERO SECTION
-       ========================================================================== */
-    .container { max-width: 1300px; margin: 0 auto; padding: 0 5%; }
-    
-    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; padding-top: 80px;}
-    .hero-pre { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 4px; color: var(--text-muted); margin-bottom: 1.5rem; }
-    .hero-title { font-size: clamp(4rem, 10vw, 8rem); font-weight: 800; margin-bottom: 2rem; }
-    .hero-desc { font-size: clamp(1.1rem, 2vw, 1.4rem); line-height: 1.6; color: var(--text-muted); font-weight: 400; max-width: 750px; }
-    .hero-desc strong { color: var(--text-main); font-weight: 600; }
-
-    /* ==========================================================================
-       6. CARTES PROJETS (GLASSMORPHISM CRÉATIF)
-       ========================================================================== */
-    .project-section { padding: 100px 0; }
-    
-    .glass-card {
-      background: var(--glass-bg); backdrop-filter: blur(30px); -webkit-backdrop-filter: blur(30px);
-      border: 1px solid var(--glass-border); border-radius: 40px;
-      padding: 4rem; box-shadow: var(--glass-shadow);
-      display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center;
-      margin-bottom: 4rem; transition: transform 0.4s; position: relative; overflow: hidden;
-    }
-    .glass-card:hover { transform: translateY(-10px); }
-    .glass-card.reverse { direction: rtl; }
-    .glass-card.reverse > * { direction: ltr; }
-
-    .proj-title { font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 1.5rem; }
-    .proj-desc { font-size: 1.1rem; line-height: 1.7; color: var(--text-muted); }
-
-    /* ==========================================================================
-       7. INTERFACES GRAPHIQUES (LES "FAUX" DASHBOARDS)
-       ========================================================================== */
-    .ui-mockup {
-      background: rgba(255,255,255,0.7); border: 1px solid #fff; border-radius: 24px;
-      padding: 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.03); width: 100%;
-    }
-    .ui-header { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-main); margin-bottom: 2rem; display: flex; align-items: center; justify-content: space-between; }
-    
-    /* UI Astroly (Agents) */
-    .agent-list { display: flex; flex-direction: column; gap: 1rem; }
-    .agent-item { background: #fff; padding: 1rem 1.5rem; border-radius: 16px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.05); border: 1px solid rgba(59, 130, 246, 0.1); transition: 0.3s;}
-    .agent-item:hover { transform: translateX(10px); border-color: var(--color-ai); }
-    .agent-info { display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: 0.95rem;}
-    .agent-icon { width: 32px; height: 32px; background: rgba(59, 130, 246, 0.1); color: var(--color-ai); border-radius: 8px; display: flex; align-items: center; justify-content: center;}
-    .agent-status { width: 8px; height: 8px; background: #10B981; border-radius: 50%; box-shadow: 0 0 10px #10B981;}
-
-    /* UI CPAM (Anneaux circulaires animés) */
-    .kpi-grid { display: flex; justify-content: space-around; flex-wrap: wrap; gap: 1.5rem; }
-    .kpi-card { text-align: center; }
-    .kpi-circle { width: 100px; height: 100px; margin: 0 auto 1rem; position: relative; }
-    .kpi-circle svg { width: 100%; height: 100%; transform: rotate(-90deg); }
-    .kpi-bg { fill: none; stroke: rgba(244, 63, 94, 0.1); stroke-width: 4; }
-    .kpi-progress { fill: none; stroke: url(#mgt-grad); stroke-width: 4; stroke-linecap: round; stroke-dasharray: 283; stroke-dashoffset: 283; transition: stroke-dashoffset 2s cubic-bezier(0.2, 0.8, 0.2, 1); }
-    .kpi-val { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-family: var(--font-title); font-size: 1.5rem; font-weight: 700; color: var(--color-mgt); }
-    .kpi-label { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px; }
-
-    /* UI CRRHAB (Tableau de données NDA) */
-    .bio-table { width: 100%; border-collapse: collapse; filter: blur(6px); opacity: 0.4; user-select: none; pointer-events: none;}
-    .bio-table th, .bio-table td { padding: 1rem; border-bottom: 1px solid rgba(0,0,0,0.1); text-align: left; }
-    .bio-table th { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
-    .bio-bar { height: 6px; background: var(--color-bio); border-radius: 10px; }
-    
-    .nda-lock {
-      position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
-      background: rgba(255,255,255,0.5); border-radius: 24px;
-    }
-    .nda-box { background: #fff; padding: 2rem 3rem; border-radius: 24px; text-align: center; box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15); border: 1px solid rgba(16, 185, 129, 0.3); }
-    .nda-box svg { width: 40px; height: 40px; stroke: var(--color-bio); fill: none; stroke-width: 2; margin-bottom: 1rem;}
-
-    /* ==========================================================================
-       8. GRILLE ARCHIVES
-       ========================================================================== */
-    .archive-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; margin-top: 3rem; }
-    .arc-card {
-      background: rgba(255,255,255,0.6); border: 1px solid var(--glass-border); border-radius: 30px;
-      padding: 1.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column;
-      transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); backdrop-filter: blur(20px);
-    }
-    .arc-card:hover { transform: translateY(-10px); background: #fff; box-shadow: 0 30px 60px rgba(0,0,0,0.06); }
-    
-    .arc-img-wrap { width: 100%; height: 220px; border-radius: 20px; overflow: hidden; margin-bottom: 1.5rem; position: relative;}
-    .arc-img-wrap img { transition: transform 0.6s ease; }
-    .arc-card:hover .arc-img-wrap img { transform: scale(1.05); }
-    
-    .arc-tag { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; margin-bottom: 0.8rem; display: block;}
-    .arc-title { font-size: 1.6rem; margin-bottom: 1rem; }
-    .arc-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1; }
-
-    .doc-btn { position: absolute; bottom: 1rem; right: 1rem; background: rgba(255,255,255,0.9); padding: 0.6rem 1.2rem; border-radius: 50px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; color: var(--color-bio); backdrop-filter: blur(10px); border: 1px solid rgba(16, 185, 129, 0.2); box-shadow: 0 10px 20px rgba(0,0,0,0.1); display: flex; align-items: center; gap: 0.5rem;}
-
-    /* ==========================================================================
-       9. CONTACT & BOUTONS
-       ========================================================================== */
-    .contact-section { text-align: center; padding: 150px 0; }
-    .btn-wrap { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem; }
-    
-    .btn {
-      display: inline-flex; align-items: center; gap: 0.8rem; padding: 1.2rem 3rem; border-radius: 100px;
-      font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
-      text-decoration: none; transition: all 0.3s;
-    }
-    .btn-solid { background: var(--text-main); color: #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-    .btn-solid:hover { background: var(--color-ai); transform: translateY(-3px); }
-    .btn-outline { background: rgba(255,255,255,0.8); color: var(--text-main); border: 1px solid rgba(0,0,0,0.1); }
-    .btn-outline:hover { background: #fff; border-color: var(--text-main); transform: translateY(-3px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-
-    /* ==========================================================================
-       10. ANIMATIONS
-       ========================================================================== */
-    .reveal { opacity: 0; transform: translateY(50px); transition: all 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
-    .reveal.is-visible { opacity: 1; transform: translateY(0); }
-    .d-1 { transition-delay: 0.1s; } .d-2 { transition-delay: 0.2s; }
-
-    /* Responsive */
-    @media (max-width: 1024px) {
-      .glass-card { grid-template-columns: 1fr; gap: 3rem; padding: 3rem; }
-      .glass-card.reverse .ui-showcase { order: 2; }
-      .glass-card.reverse .project-text { order: 1; }
-    }
-    @media (max-width: 768px) {
-      nav { padding: 0.8rem; width: 90%; gap: 1rem; }
-      .nav-links { display: none; }
-      .hero { padding-top: 150px; }
-      .hero-title { font-size: 3.5rem; }
-      .glass-card { padding: 2rem; border-radius: 24px; }
-      .ui-showcase { padding: 1.5rem; }
-      .btn-wrap { flex-direction: column; }
-      .btn { width: 100%; justify-content: center; }
-    }
-  </style>
-</head>
-<body>
-
-  <svg style="width:0;height:0;position:absolute;" aria-hidden="true" focusable="false">
-    <linearGradient id="mgt-grad" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#F43F5E" />
-      <stop offset="100%" stop-color="#F97316" />
-    </linearGradient>
-  </svg>
-
-  <div class="texture-overlay"></div>
-  
-  <div class="mesh-bg">
-    <div class="mesh-blob blob-1"></div>
-    <div class="mesh-blob blob-2"></div>
-    <div class="mesh-blob blob-3"></div>
-    <div class="mesh-blob blob-4"></div>
-  </div>
-
-  <nav>
-    <a href="#hero" class="logo">Thalia.B</a>
-    <div class="nav-links">
-      <a href="#projets">Projets</a>
-      <a href="#recherche">Recherche</a>
-      <a href="#archives">Parcours</a>
-    </div>
-    <a href="mailto:thaliapro26@gmail.com" class="badge" style="background: var(--text-main); color: #fff; text-decoration: none;">Contact</a>
-  </nav>
-
-  <div class="container">
-    
-    <section class="hero" id="hero">
-      <div class="hero-pre reveal is-visible">Portfolio 2026</div>
-      <h1 class="hero-title reveal d-1 is-visible">
-        Science,<br>Management &<br><span class="text-gradient-ai">Intelligence Artificielle.</span>
-      </h1>
-      <p class="hero-desc reveal d-2 is-visible">
-        Manager de projets innovants. L'hybridation exigeante entre la rigueur analytique de la <strong>Science</strong> et l'architecture des <strong>nouvelles technologies</strong>.
-      </p>
-      <div class="badge-wrap reveal d-2 is-visible" style="justify-content: center; margin-top: 2rem;">
-        <span class="badge ai">Master 1 Management de l'Innovation</span>
-        <span class="badge bio">BUT Génie Biologique</span>
-      </div>
-    </section>
-
-    <section class="project-section" id="projets">
-      
-      <div class="glass-card reveal">
-        <div class="project-text">
-          <div class="hero-pre" style="color: var(--color-ai);">Digital Student Challenge</div>
-          <h2 class="proj-title">Astroly,<br>L'Ère <span class="text-gradient-ai">Agentique</span>.</h2>
-          <p class="proj-desc">
-            Capgemini x IAE Montpellier. Développement d'une architecture modulaire de <strong>6 agents IA</strong> sur Microsoft 365. Objectif : révolutionner l'attractivité des jeunes talents via l'automatisation du screening et l'expérience "mobile-first".
-          </p>
-          <div class="badge-wrap">
-            <span class="badge ai">Copilot Studio</span>
-            <span class="badge ai">Architecture M365</span>
-          </div>
-        </div>
-        
-        <div class="ui-showcase">
-          <div class="ui-header"><span>Écosystème d'Agents Déployés</span> <span style="color: var(--color-ai);">● Actif</span></div>
-          <div class="agent-list">
-            <div class="agent-item">
-              <div class="agent-info"><div class="agent-icon">💬</div> Assistant Orientation</div>
-              <div class="agent-status"></div>
-            </div>
-            <div class="agent-item">
-              <div class="agent-info"><div class="agent-icon">🎯</div> Veille Opportunités</div>
-              <div class="agent-status"></div>
-            </div>
-            <div class="agent-item">
-              <div class="agent-info"><div class="agent-icon">🏫</div> Prospection Écoles</div>
-              <div class="agent-status"></div>
-            </div>
-            <div class="agent-item">
-              <div class="agent-info"><div class="agent-icon">📊</div> Scoring Profils</div>
-              <div class="agent-status"></div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="glass-card reverse reveal">
-        <div class="project-text">
-          <div class="hero-pre" style="color: var(--color-mgt);">Innovation Publique</div>
-          <h2 class="proj-title">Intelligence<br><span class="text-gradient-mgt">Collective</span>.</h2>
-          <p class="proj-desc">
-            Alternance CPAM Hérault (2025-2026). La transformation d'une organisation ne se résout pas par la technologie seule, mais par l'encadrement humain. Pilotage d'idéation, facilitation de groupes et structuration de la performance (KPI).
-          </p>
-          <div class="badge-wrap">
-            <span class="badge mgt">Facilitation</span>
-            <span class="badge mgt">Pilotage KPI</span>
-          </div>
-        </div>
-        
-        <div class="ui-showcase">
-          <div class="ui-header"><span>Indicateurs de Performance</span></div>
-          <div class="kpi-grid">
-            <div class="kpi-card">
-              <div class="kpi-circle">
-                <svg viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="45" class="kpi-bg" />
-                  <circle cx="50" cy="50" r="45" class="kpi-progress kpi-anim" data-target="0" />
-                </svg>
-                <div class="kpi-val">100<span style="font-size:0.8rem;">%</span></div>
-              </div>
-              <div class="kpi-label">Idéation</div>
-            </div>
-            <div class="kpi-card">
-              <div class="kpi-circle">
-                <svg viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="45" class="kpi-bg" />
-                  <circle cx="50" cy="50" r="45" class="kpi-progress kpi-anim" data-target="0" style="transition-delay: 0.2s;" />
-                </svg>
-                <div class="kpi-val">100<span style="font-size:0.8rem;">%</span></div>
-              </div>
-              <div class="kpi-label">Facilitation</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div class="glass-card reveal" id="recherche">
-        <div class="project-text">
-          <div class="hero-pre" style="color: var(--color-bio);">Laboratoire Phytopathologie</div>
-          <h2 class="proj-title">Science du<br><span class="text-gradient-bio">Vivant</span>.</h2>
-          <p class="proj-desc">
-            Recherche au CRRHAB (Tunisie). Rapport et soutenance : <em>"Test du comportement de 19 variétés de pomme de terre basé sur leurs paramètres agronomiques et microbiomes"</em>.<br><br>
-            Isolement de souches d'intérêt (Bacillus, Serratia) et tests d'antagonisme contre les maladies fongiques pour l'agronomie durable.
-          </p>
-          <div class="badge-wrap">
-            <span class="badge bio">Biocontrôle</span>
-            <span class="badge bio">Tolérance Variétale</span>
-          </div>
-        </div>
-        
-        <div class="ui-showcase" style="padding: 0; border: none; background: transparent;">
-          <div class="ui-showcase" style="margin-bottom: 0;">
-            <div class="ui-header"><span>Matrice d'Inhibition Fongique</span></div>
-            <table class="bio-table">
-              <tr><th>Souche</th><th>F. Oxysporum</th><th>Colletotrichum</th></tr>
-              <tr><td>Serratia S14</td><td><div class="bio-bar" style="width: 80%;"></div></td><td><div class="bio-bar" style="width: 40%;"></div></td></tr>
-              <tr><td>Bacillus S40</td><td><div class="bio-bar" style="width: 60%;"></div></td><td><div class="bio-bar" style="width: 90%;"></div></td></tr>
-              <tr><td>Alcaligenes S18</td><td><div class="bio-bar" style="width: 90%;"></div></td><td><div class="bio-bar" style="width: 85%;"></div></td></tr>
-            </table>
-          </div>
-          
-          <div class="nda-lock">
-            <div class="nda-box">
-              <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-              <div class="nda-title">Données sous N.D.A</div>
-              <div class="nda-desc">Résultats réels confidentiels</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-    </section>
-
-    <section class="project-section" id="archives" style="padding-top: 0;">
-      <div class="hero-pre reveal" style="text-align: center;">Parcours</div>
-      <h2 class="hero-title reveal" style="font-size: clamp(3rem, 5vw, 4rem); text-align: center; margin-bottom: 2rem;">Empreintes & Expériences.</h2>
-      
-      <div class="archive-grid">
-        
-        <a href="#" class="arc-card reveal">
-          <div class="arc-img-wrap">
-            <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Heron Exchange Plateforme">
-          </div>
-          <div class="arc-tag" style="color: var(--color-ai);">SaaS B2B · Pépite LR</div>
-          <h3 class="arc-title">Heron Exchange</h3>
-          <p class="arc-desc">Accompagnement stratégique sur une plateforme luttant contre la fraude BEC (~7M de PME cibles). Diagnostic terrain et modèle de revenus.</p>
-          <div class="action-link">Découvrir <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-        </a>
-
-        <a href="Soutenance de 2eme année.pdf" target="_blank" class="arc-card reveal d-1">
-          <div class="arc-img-wrap img-contain">
-            <img src="Poster scientifique bleu et vert.png" alt="Poster Scientifique Unibio">
-            <div class="doc-btn">
-              <svg style="width:14px; height:14px; fill:none; stroke:currentColor; stroke-width:2;" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg>
-              PDF
-            </div>
-          </div>
-          <div class="arc-tag" style="color: var(--color-bio);">18 Mois · Alternance</div>
-          <h3 class="arc-title">Unibio Medical</h3>
-          <p class="arc-desc">Technicienne de laboratoire. Hématologie, hémostase et immunobiochimie. Rigueur analytique et synthèse scientifique.</p>
-          <div class="action-link">Ouvrir le poster <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-        </a>
-
-        <a href="#" class="arc-card reveal">
-          <div class="arc-img-wrap">
-            <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Culture in vitro">
-          </div>
-          <div class="arc-tag" style="color: var(--color-bio);">IUT Montpellier · 2022</div>
-          <h3 class="arc-title">Culture in vitro</h3>
-          <p class="arc-desc">Projet sur la micropropagation du Vanillier (milieu MS). Maîtrise de la stérilité sous hotte à flux laminaire et acclimatation.</p>
-          <div class="action-link">Découvrir <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-        </a>
-
-        <a href="#" class="arc-card reveal d-1">
-          <div class="arc-img-wrap" style="background: linear-gradient(135deg, #F43F5E, #F59E0B); display:flex; align-items:center; justify-content:center;">
-            <svg style="width: 80px; height: 80px; stroke: #fff; fill: none; stroke-width: 1.5;" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-          </div>
-          <div class="arc-tag" style="color: var(--color-mgt);">Distinctions Nationales</div>
-          <h3 class="arc-title">Palmarès & Pitch</h3>
-          <p class="arc-desc">Prix Coup de Pouce Créa'thlon (2025, Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min" (2021). L'éloquence au service de l'idée.</p>
-          <div class="action-link">Découvrir <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-        </a>
-
-      </div>
-    </section>
-
-    <section class="contact-section" id="contact">
-      <h2 class="hero-title reveal">Travaillons<br><span class="text-gradient-ai">Ensemble.</span></h2>
-      <p class="hero-desc reveal d-1" style="margin: 0 auto 3rem;">Basée à Montpellier | Permis B, véhiculée.</p>
-      
-      <div class="btn-wrap reveal d-2">
-        <a href="mailto:thaliapro26@gmail.com" class="btn btn-solid">Écrire un email</a>
-        <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn btn-outline">LinkedIn</a>
-        <a href="CV.pdf" download target="_blank" class="btn btn-outline" style="border-color: var(--color-ai); color: var(--color-ai);">Télécharger CV</a>
-      </div>
-
-      <div style="margin-top: 8rem; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px;">
-        © 2026 Thalia Barrahi — Creative Studio
-      </div>
-    </section>
-
-  </div>
-
-  <script>
-    document.addEventListener("DOMContentLoaded", () => {
-      
-      /* 1. RÉVÉLATION AU SCROLL */
+      /* --- RÉVÉLATION AU SCROLL --- */
       const reveals = document.querySelectorAll('.reveal');
       const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
             
-            // Lancer les animations KPI une fois la carte visible
-            const kpiCircles = entry.target.querySelectorAll('.kpi-anim');
-            kpiCircles.forEach(circle => {
-              circle.style.strokeDashoffset = circle.getAttribute('data-target');
+            // Lancer les animations KPI une fois visible
+            const kpiFills = entry.target.querySelectorAll('.kpi-anim');
+            kpiFills.forEach(fill => {
+              fill.style.width = fill.getAttribute('data-target');
             });
-
+            
             revealObserver.unobserve(entry.target);
           }
         });
@@ -937,9 +498,9 @@
 
       reveals.forEach(el => revealObserver.observe(el));
 
-      /* 2. NAVIGATION ACTIVE */
+      /* --- NAVIGATION ACTIVE --- */
       const sections = document.querySelectorAll('section[id], div[id]');
-      const navLinks = document.querySelectorAll('.nav-links a');
+      const navLinks = document.querySelectorAll('.nav-item');
 
       window.addEventListener('scroll', () => {
         let current = '';
@@ -950,8 +511,7 @@
 
         navLinks.forEach(link => {
           link.classList.remove('active');
-          const href = link.getAttribute('href').substring(1);
-          if (href === current || (href === 'projets' && current === 'capgemini')) {
+          if (link.getAttribute('href').substring(1) === current) {
             link.classList.add('active');
           }
         });
