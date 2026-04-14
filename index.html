@@ -3,69 +3,553 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thalia Barrahi | Portfolio Innovation</title>
+  <title>Thalia Barrahi | Portfolio Éditorial</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
-       1. VARIABLES & DESIGN NACRÉ
+       1. VARIABLES "QUIET LUXURY"
        ========================================================================== */
     :root {
-      --bg-pearl: #F7F7F5;
-      --text-dark: #1A1A1A;
-      --text-muted: #6B7280;
+      --bg-alabaster: #F4F3F0; /* Blanc cassé très élégant */
+      --bg-white: #FFFFFF;
+      --text-ink: #111111; /* Presque noir */
+      --text-muted: #737373;
+      --border-fine: rgba(17, 17, 17, 0.15);
       
-      /* Accents Organiques */
-      --ai-blue: #2563EB;
-      --bio-green: #059669;
-      --mgt-coral: #F43F5E;
-      --gold-accent: #D97706;
+      /* Accents subtils */
+      --accent-tech: #2563EB;
+      --accent-bio: #059669;
+      --accent-gold: #D97706;
       
       --font-serif: 'Instrument Serif', serif;
-      --font-sans: 'Outfit', sans-serif;
+      --font-sans: 'Manrope', sans-serif;
+      --font-mono: 'JetBrains Mono', monospace; /* Pour les datas/dashboards */
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-    body { background-color: var(--bg-pearl); color: var(--text-dark); font-family: var(--font-sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; cursor: none; }
+    html { scroll-behavior: smooth; font-size: 16px; background-color: var(--bg-alabaster); }
+    body { color: var(--text-ink); font-family: var(--font-sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; cursor: none; }
 
-    /* Fix pour images cassées */
-    img { position: relative; width: 100%; height: 100%; object-fit: cover; background: #E5E7EB; border-radius: inherit; }
-    img::after { 
-      content: "Aperçu Document"; position: absolute; inset: 0; display: flex; align-items: center; 
-      justify-content: center; background: #E5E7EB; font-size: 0.7rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase;
+    /* Grain photographique ultra-fin */
+    .film-grain {
+      position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.04; mix-blend-mode: multiply;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
     }
 
+    /* Traitement universel des images */
+    img { width: 100%; height: 100%; object-fit: cover; display: block; background: #E5E4E1; border-radius: inherit;}
+    .img-contain { object-fit: contain !important; background: #fff !important; padding: 1.5rem;}
+
     /* ==========================================================================
-       2. FOND VIBRANT & TEXTURE
+       2. CURSEUR SUR MESURE (Minimaliste)
        ========================================================================== */
-    .mesh-bg { position: fixed; inset: 0; z-index: -2; overflow: hidden; background: var(--bg-pearl); }
-    .mesh-blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.4; animation: drift 20s infinite alternate ease-in-out; }
-    .blob-1 { background: var(--ai-blue); width: 60vw; height: 60vw; top: -10%; left: -10%; }
-    .blob-2 { background: var(--mgt-coral); width: 50vw; height: 50vw; top: 40%; right: -20%; animation-delay: -5s; }
-    .blob-3 { background: var(--bio-green); width: 55vw; height: 55vw; bottom: -20%; left: 10%; animation-delay: -10s; }
-
-    @keyframes drift { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(5vw, 5vh) scale(1.1); } }
-    .noise { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.04; mix-blend-mode: multiply; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
+    .cursor-dot { position: fixed; width: 6px; height: 6px; background: var(--text-ink); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); transition: opacity 0.3s; }
+    .cursor-ring { position: fixed; width: 40px; height: 40px; border: 1px solid rgba(17, 17, 17, 0.3); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s, border-color 0.3s; }
+    body.cursor-hover .cursor-ring { width: 70px; height: 70px; background: rgba(17, 17, 17, 0.05); border-color: transparent; backdrop-filter: blur(2px); }
+    body.cursor-hover .cursor-dot { opacity: 0; }
 
     /* ==========================================================================
-       3. CURSEUR & NAV
+       3. NAVIGATION ÉDITORIALE
        ========================================================================== */
-    .cursor-dot { position: fixed; width: 8px; height: 8px; background: var(--text-dark); border-radius: 50%; pointer-events: none; z-index: 10000; transform: translate(-50%, -50%); }
-    .cursor-ring { position: fixed; width: 45px; height: 45px; border: 1px solid rgba(0,0,0,0.15); border-radius: 50%; pointer-events: none; z-index: 9999; transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, background 0.3s; }
-    body.cursor-hover .cursor-ring { width: 70px; height: 70px; background: rgba(0,0,0,0.03); }
-
-    nav { position: fixed; top: 0; width: 100%; padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; z-index: 1000; }
-    .logo { font-weight: 800; font-size: 1.5rem; text-decoration: none; color: var(--text-dark); letter-spacing: -1px; }
-    .logo span { font-family: var(--font-serif); font-style: italic; font-weight: 400; font-size: 1.8rem; }
-    .nav-links { display: flex; gap: 3rem; }
-    .nav-links a { color: var(--text-dark); text-decoration: none; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; }
+    nav {
+      position: fixed; top: 0; width: 100%; padding: 2rem 4rem; display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+      background: linear-gradient(to bottom, rgba(244, 243, 240, 1) 0%, rgba(244, 243, 240, 0) 100%);
+    }
+    .logo { font-family: var(--font-serif); font-size: 2.2rem; font-style: italic; color: var(--text-ink); text-decoration: none; line-height: 1; }
+    .nav-links { display: flex; gap: 3rem; align-items: center; }
+    .nav-links a { color: var(--text-ink); text-decoration: none; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; position: relative; padding-bottom: 5px; }
+    .nav-links a::after { content: ''; position: absolute; bottom: 0; left: 0; width: 100%; height: 1px; background: var(--text-ink); transform: scaleX(0); transform-origin: right; transition: transform 0.4s ease; }
+    .nav-links a:hover::after { transform: scaleX(1); transform-origin: left; }
 
     /* ==========================================================================
-       4. HERO & STACKING CARDS
+       4. TYPOGRAPHIE & UTILITAIRES
+       ========================================================================== */
+    .heading-massive { font-family: var(--font-serif); font-size: clamp(5rem, 14vw, 15rem); line-height: 0.85; font-weight: 400; letter-spacing: -0.02em; }
+    .heading-massive em { font-style: italic; color: var(--text-muted); }
+    
+    .meta-text { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); }
+    .body-text { font-size: 1.1rem; line-height: 1.6; font-weight: 400; color: var(--text-muted); }
+    .body-text strong { color: var(--text-ink); font-weight: 600; }
+
+    .tag-list { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
+    .tag { font-family: var(--font-mono); font-size: 0.65rem; padding: 0.4rem 0.8rem; border: 1px solid var(--border-fine); border-radius: 4px; color: var(--text-ink); text-transform: uppercase; }
+
+    /* ==========================================================================
+       5. HERO SECTION
+       ========================================================================== */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 4rem; position: relative; border-bottom: 1px solid var(--border-fine); }
+    
+    .hero-top { margin-bottom: 2rem; }
+    .hero-bottom { display: flex; justify-content: space-between; align-items: flex-end; margin-top: 4rem; max-width: 1400px;}
+    
+    .hero-desc-wrapper { border-left: 2px solid var(--text-ink); padding-left: 2rem; max-width: 600px; margin-left: 10vw;}
+
+    /* ==========================================================================
+       6. LAYOUT ASYMÉTRIQUE (STICKY SCROLL)
+       ========================================================================== */
+    .project-section { display: grid; grid-template-columns: 5fr 7fr; border-bottom: 1px solid var(--border-fine); }
+    .project-section.reverse { grid-template-columns: 7fr 5fr; }
+    
+    /* Colonne Texte (Collante) */
+    .project-text-col { padding: 8rem 4rem; border-right: 1px solid var(--border-fine); }
+    .project-section.reverse .project-text-col { order: 2; border-right: none; border-left: 1px solid var(--border-fine); }
+    
+    .sticky-wrapper { position: sticky; top: 20vh; }
+    
+    .proj-num { font-family: var(--font-serif); font-size: 2rem; font-style: italic; color: var(--text-muted); margin-bottom: 1.5rem; display: block; }
+    .proj-title { font-family: var(--font-serif); font-size: clamp(3rem, 5vw, 4.5rem); line-height: 1; margin-bottom: 2rem; }
+
+    /* Colonne Visuelle (Défilante) */
+    .project-visual-col { padding: 8rem 4rem; background: var(--bg-white); display: flex; align-items: center; justify-content: center;}
+    .project-section.reverse .project-visual-col { order: 1; }
+
+    /* ==========================================================================
+       7. UI COMPONENTS (L'ESTHÉTIQUE "BLUEPRINT" / HAUTE FIDÉLITÉ)
+       ========================================================================== */
+    .ui-showcase { width: 100%; border: 1px solid var(--border-fine); border-radius: 12px; background: var(--bg-alabaster); overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.03); }
+    .ui-header { border-bottom: 1px solid var(--border-fine); padding: 1rem 1.5rem; display: flex; justify-content: space-between; align-items: center; background: #fff; }
+
+    /* UI 1 : Astroly (Dark Terminal) */
+    .ui-terminal { background: #0F0F0F; color: #fff; border-radius: 12px; padding: 2rem; width: 100%; box-shadow: 0 30px 60px rgba(0,0,0,0.1); }
+    .term-header { display: flex; gap: 0.5rem; margin-bottom: 2rem; }
+    .term-dot { width: 10px; height: 10px; border-radius: 50%; background: #333; }
+    .term-dot.red { background: #FF5F56; } .term-dot.yellow { background: #FFBD2E; } .term-dot.green { background: #27C93F; }
+    
+    .agent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .agent-pill { border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 8px; font-family: var(--font-mono); font-size: 0.75rem; display: flex; align-items: center; gap: 1rem; transition: 0.3s;}
+    .agent-pill:hover { border-color: var(--accent-tech); background: rgba(37, 99, 235, 0.1); }
+    .agent-status { width: 6px; height: 6px; background: var(--accent-tech); border-radius: 50%; box-shadow: 0 0 10px var(--accent-tech); }
+
+    /* UI 2 : CPAM (Gauge System) */
+    .kpi-system { padding: 2rem; background: #fff; }
+    .kpi-row { margin-bottom: 2rem; }
+    .kpi-row:last-child { margin-bottom: 0; }
+    .kpi-meta { display: flex; justify-content: space-between; font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; margin-bottom: 0.8rem; color: var(--text-ink); }
+    .kpi-track { height: 2px; background: var(--border-fine); width: 100%; position: relative; }
+    .kpi-fill { position: absolute; top: -1px; left: 0; height: 4px; background: var(--text-ink); width: 0; transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+    /* UI 3 : CRRHAB (Data Table & NDA) */
+    .bio-table { width: 100%; border-collapse: collapse; font-family: var(--font-mono); font-size: 0.75rem; filter: blur(4px); opacity: 0.4; user-select: none;}
+    .bio-table th, .bio-table td { padding: 1rem; border-bottom: 1px dashed var(--border-fine); text-align: left; }
+    
+    .nda-lock { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.7); backdrop-filter: blur(2px); }
+    .nda-box { border: 1px solid var(--accent-bio); padding: 2rem; border-radius: 8px; text-align: center; background: #fff; box-shadow: 0 20px 40px rgba(5, 150, 105, 0.08); }
+    .nda-box svg { width: 32px; height: 32px; stroke: var(--accent-bio); fill: none; stroke-width: 1.5; margin-bottom: 1rem; }
+
+    /* ==========================================================================
+       8. INDEX DES ARCHIVES (MAGAZINE LIST)
+       ========================================================================== */
+    .archives-section { padding: 10rem 4rem; }
+    .archive-header { display: flex; justify-content: space-between; align-items: flex-end; border-bottom: 1px solid var(--text-ink); padding-bottom: 2rem; margin-bottom: 2rem; }
+    
+    .archive-list { list-style: none; }
+    .archive-item {
+      display: grid; grid-template-columns: 1fr 3fr 1fr; align-items: center;
+      padding: 3rem 0; border-bottom: 1px solid var(--border-fine);
+      text-decoration: none; color: var(--text-ink); position: relative;
+    }
+    
+    .arc-year { font-family: var(--font-serif); font-size: 1.8rem; font-style: italic; color: var(--text-muted); }
+    .arc-title { font-family: var(--font-serif); font-size: clamp(2.5rem, 4vw, 4rem); line-height: 1; transition: transform 0.4s ease; transform-origin: left;}
+    .arc-meta-info { text-align: right; }
+    .arc-role { font-family: var(--font-mono); font-size: 0.65rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-ink); display: block; margin-bottom: 0.5rem;}
+    .arc-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.5; max-width: 250px; margin-left: auto; }
+
+    .archive-item:hover .arc-title { transform: translateX(20px); }
+    .archive-item:hover .arc-year { color: var(--text-ink); }
+
+    /* Image Révélée au Survol (Style Galerie d'Art) */
+    .hover-reveal-img {
+      position: absolute; width: 350px; height: 450px; border-radius: 4px;
+      top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0.9);
+      opacity: 0; pointer-events: none; z-index: 10; transition: all 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+      box-shadow: 0 30px 60px rgba(0,0,0,0.15); border: 8px solid #fff;
+    }
+    .archive-item:hover .hover-reveal-img { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+    /* ==========================================================================
+       9. CONTACT & BOUTONS
+       ========================================================================== */
+    .contact-section { padding: 10rem 4rem; text-align: center; border-top: 1px solid var(--border-fine); background: var(--bg-white); }
+    
+    .btn-wrap { display: flex; justify-content: center; gap: 2rem; flex-wrap: wrap; margin-top: 4rem; }
+    .btn {
+      display: inline-flex; align-items: center; padding: 1rem 2.5rem; border-radius: 50px;
+      font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      text-decoration: none; border: 1px solid var(--text-ink); color: var(--text-ink); transition: 0.3s;
+    }
+    .btn:hover { background: var(--text-ink); color: var(--bg-white); }
+    
+    /* Bouton spécifique pour le CV */
+    .btn-cv { border-color: var(--accent-bio); color: var(--accent-bio); }
+    .btn-cv:hover { background: var(--accent-bio); color: #fff; border-color: var(--accent-bio); }
+
+    /* ==========================================================================
+       10. ANIMATIONS (REVEAL)
+       ========================================================================== */
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+    .reveal.is-visible { opacity: 1; transform: translateY(0); }
+    .d-1 { transition-delay: 0.1s; } .d-2 { transition-delay: 0.2s; }
+
+    /* ==========================================================================
+       11. RESPONSIVE
+       ========================================================================== */
+    @media (max-width: 900px) {
+      nav { padding: 1.5rem 2rem; }
+      .nav-links { display: none; }
+      .hero { padding: 0 2rem; }
+      .hero-bottom { flex-direction: column; align-items: flex-start; gap: 3rem; }
+      .hero-desc-wrapper { margin-left: 0; }
+      .project-section, .project-section.reverse { grid-template-columns: 1fr; }
+      .project-text-col { padding: 4rem 2rem; border-right: none; border-bottom: 1px solid var(--border-fine); }
+      .project-section.reverse .project-text-col { border-left: none; }
+      .project-visual-col { padding: 4rem 2rem; }
+      .sticky-wrapper { position: relative; top: 0; }
+      .archives-section { padding: 4rem 2rem; }
+      .archive-item { grid-template-columns: 1fr; gap: 1rem; padding: 2rem 0; }
+      .arc-meta-info { text-align: left; }
+      .arc-desc { margin-left: 0; }
+      .hover-reveal-img { display: none; }
+      .contact-section { padding: 6rem 2rem; }
+      .cursor-dot, .cursor-ring { display: none; }
+      body { cursor: auto; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="film-grain"></div>
+
+  <div class="cursor-dot"></div>
+  <div class="cursor-ring"></div>
+
+  <nav>
+    <a href="#hero" class="logo interactive">Thalia.</a>
+    <div class="nav-links">
+      <a href="#projets" class="interactive">Projets</a>
+      <a href="#recherche" class="interactive">Recherche</a>
+      <a href="#archives" class="interactive">Parcours</a>
+    </div>
+    <a href="mailto:thaliapro26@gmail.com" class="interactive" style="font-family: var(--font-mono); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-ink); text-decoration: none;">Contact ↗</a>
+  </nav>
+
+  <section class="hero" id="hero">
+    <div class="hero-top">
+      <div class="meta-text reveal is-visible">Portfolio Éditorial — 2026</div>
+    </div>
+    
+    <h1 class="heading-massive reveal d-1 is-visible">
+      Science,<br><em>Management</em><br>& I.A.
+    </h1>
+    
+    <div class="hero-bottom reveal d-2 is-visible">
+      <div class="hero-desc-wrapper">
+        <p class="body-text">
+          Manager de projets innovants. <strong>L'hybridation exigeante</strong> entre la rigueur analytique du laboratoire et l'architecture des nouvelles technologies.
+        </p>
+        <div class="tag-list">
+          <span class="tag">M1 Management de l'Innovation</span>
+          <span class="tag">BUT Génie Biologique</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="project-section" id="projets">
+    <div class="project-text-col">
+      <div class="sticky-wrapper">
+        <span class="proj-num reveal">01</span>
+        <h2 class="proj-title reveal d-1">Astroly,<br>L'Ère <em>Agentique</em>.</h2>
+        
+        <p class="body-text reveal d-2" style="margin-bottom: 1.5rem;">
+          <strong>Le Défi :</strong> Chez Capgemini, 49% des jeunes talents abandonnent face à un recrutement archaïque. L'objectif était de stopper la déperdition des profils "Pépites" issus des challenges innovation.
+        </p>
+        <p class="body-text reveal d-2">
+          <strong>La Solution :</strong> Conception d'une architecture modulaire de <strong>6 agents IA</strong> sur Microsoft 365 (Copilot Studio). Un passage du sourcing de masse à une expérience "mobile-first" ultra-personnalisée : candidature sans CV en 5 min et scoring automatisé.
+        </p>
+
+        <div class="tag-list reveal d-2">
+          <span class="tag" style="border-color: var(--accent-tech); color: var(--accent-tech);">Architecture IA</span>
+          <span class="tag">Copilot Studio</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="project-visual-col">
+      <div class="ui-terminal reveal">
+        <div class="term-header">
+          <div class="term-dot red"></div><div class="term-dot yellow"></div><div class="term-dot green"></div>
+        </div>
+        <div style="font-family: var(--font-mono); font-size: 0.7rem; color: #888; margin-bottom: 1.5rem; text-transform: uppercase; letter-spacing: 2px;">~ / Capgemini / Agents_Deployes</div>
+        
+        <div class="agent-grid">
+          <div class="agent-pill"><div class="agent-status"></div> Assistant Orientation</div>
+          <div class="agent-pill"><div class="agent-status"></div> Veille Opportunités</div>
+          <div class="agent-pill"><div class="agent-status"></div> Prospection Écoles</div>
+          <div class="agent-pill"><div class="agent-status"></div> Génération Newsletters</div>
+          <div class="agent-pill"><div class="agent-status"></div> Scoring Profils</div>
+          <div class="agent-pill"><div class="agent-status"></div> Suivi Performance</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="project-section reverse">
+    <div class="project-text-col" style="background: var(--bg-white);">
+      <div class="sticky-wrapper">
+        <span class="proj-num reveal">02</span>
+        <h2 class="proj-title reveal d-1">Intelligence<br><em>Collective</em>.</h2>
+        
+        <p class="body-text reveal d-2">
+          <strong>Alternance CPAM Hérault (2025-2026).</strong> La transformation d'une organisation ne se résout pas uniquement par la technologie, mais par l'encadrement humain. En tant que Chef de projets innovants, je pilote les démarches d'idéation, la facilitation de groupes et la structuration des indicateurs de performance (KPI).
+        </p>
+
+        <div class="tag-list reveal d-2">
+          <span class="tag" style="border-color: var(--accent-gold); color: var(--accent-gold);">Facilitation</span>
+          <span class="tag">Management</span>
+          <span class="tag">Stratégie</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="project-visual-col">
+      <div class="ui-showcase kpi-system reveal">
+        <div class="ui-header">
+          <span class="meta-text">Tableau de bord</span>
+          <span class="meta-text" style="color: var(--accent-gold);">Performance Globale</span>
+        </div>
+        <div style="padding: 2rem;">
+          <div class="kpi-row">
+            <div class="kpi-meta"><span>Idéation Participative</span><span>100%</span></div>
+            <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%"></div></div>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi-meta"><span>Facilitation d'Équipes</span><span>100%</span></div>
+            <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%" style="transition-delay: 0.2s;"></div></div>
+          </div>
+          <div class="kpi-row">
+            <div class="kpi-meta"><span>Gestion de Projets</span><span>100%</span></div>
+            <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%" style="transition-delay: 0.4s;"></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="project-section" id="recherche">
+    <div class="project-text-col">
+      <div class="sticky-wrapper">
+        <span class="proj-num reveal">03</span>
+        <h2 class="proj-title reveal d-1">Science du<br><em>Vivant</em>.</h2>
+        
+        <p class="body-text reveal d-2" style="margin-bottom: 1.5rem;">
+          <strong>Le Défi :</strong> Explorer des alternatives viables aux pesticides chimiques en s'appuyant sur l'immunité naturelle des plantes.
+        </p>
+        <p class="body-text reveal d-2">
+          <strong>La Stratégie :</strong> Recherche au CRRHAB (Tunisie). <em>"Test du comportement de 19 variétés de pomme de terre basé sur leurs paramètres agronomiques et microbiomes"</em>. Isolement de souches d'intérêt (Bacillus, Serratia) et tests d'antagonisme in vitro contre les maladies fongiques.
+        </p>
+
+        <div class="tag-list reveal d-2">
+          <span class="tag" style="border-color: var(--accent-bio); color: var(--accent-bio);">Biocontrôle</span>
+          <span class="tag">Agroécologie</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="project-visual-col" style="background: #F0EFEA;">
+      <div class="ui-showcase reveal" style="position: relative;">
+        <div class="ui-header">
+          <span class="meta-text">Base de données</span>
+          <span class="meta-text" style="color: var(--accent-bio);">Matrice d'Inhibition</span>
+        </div>
+        <div style="padding: 2rem;">
+          <table class="bio-table">
+            <tr><th>Souche isolée</th><th>Inhibition (F. Oxysporum)</th></tr>
+            <tr><td>Serratia S14</td><td>==================> 85%</td></tr>
+            <tr><td>Bacillus S40</td><td>=======> 45%</td></tr>
+            <tr><td>Alcaligenes S18</td><td>===============> 72%</td></tr>
+          </table>
+        </div>
+        
+        <div class="nda-lock">
+          <div class="nda-box">
+            <svg viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+            <h4 style="font-family: var(--font-serif); font-size: 2rem; font-style: italic; color: var(--text-ink); line-height: 1;">Données Sécurisées</h4>
+            <p class="meta-text" style="margin-top: 0.5rem; color: var(--accent-bio);">Résultats sous accord de confidentialité</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="archives-section" id="archives">
+    <div class="archive-header reveal">
+      <h2 class="heading-massive" style="font-size: clamp(3rem, 6vw, 6rem);"><em>Index</em>.</h2>
+      <div class="meta-text">04 Projets</div>
+    </div>
+    
+    <ul class="archive-list">
+      
+      <li>
+        <a href="#" class="archive-item interactive reveal">
+          <div class="arc-year">2026</div>
+          <h3 class="arc-title">Heron Exchange</h3>
+          <div class="arc-meta-info">
+            <span class="arc-role">SaaS B2B · Pépite LR</span>
+            <p class="arc-desc">Accompagnement stratégique. Plateforme contre la fraude BEC (~7M PME). Diagnostic et modèle de revenus.</p>
+          </div>
+          <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Plateforme Heron" class="hover-reveal-img">
+        </a>
+      </li>
+
+      <li>
+        <a href="Soutenance de 2eme année.pdf" target="_blank" class="archive-item interactive reveal">
+          <div class="arc-year">18 Mois</div>
+          <h3 class="arc-title" style="color: var(--accent-bio);">Unibio Medical</h3>
+          <div class="arc-meta-info">
+            <span class="arc-role" style="color: var(--accent-bio);">Alternance Laboratoire</span>
+            <p class="arc-desc">Technicienne de laboratoire (Hématologie, immunobiochimie). Rigueur analytique. <br><strong>Cliquer pour ouvrir le Poster PDF ↗</strong></p>
+          </div>
+          <img src="Poster scientifique bleu et vert.png" alt="Poster Unibio" class="hover-reveal-img img-contain">
+        </a>
+      </li>
+
+      <li>
+        <a href="#" class="archive-item interactive reveal">
+          <div class="arc-year">2022</div>
+          <h3 class="arc-title">Culture in vitro</h3>
+          <div class="arc-meta-info">
+            <span class="arc-role">IUT Montpellier</span>
+            <p class="arc-desc">Micropropagation du Vanillier (milieu MS). Maîtrise de la stérilité sous hotte à flux laminaire.</p>
+          </div>
+          <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Culture in vitro" class="hover-reveal-img">
+        </a>
+      </li>
+
+      <li>
+        <a href="#" class="archive-item interactive reveal">
+          <div class="arc-year">Prix</div>
+          <h3 class="arc-title">Palmarès & Pitch</h3>
+          <div class="arc-meta-info">
+            <span class="arc-role">Distinctions Nationales</span>
+            <p class="arc-desc">Prix Coup de Pouce Créa'thlon (2025, Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min" (2021).</p>
+          </div>
+          <img src="https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=600&auto=format&fit=crop" alt="Abstract Award" class="hover-reveal-img">
+        </a>
+      </li>
+
+    </ul>
+  </section>
+
+  <section class="contact-section" id="contact">
+    <h2 class="contact-title reveal">Let's <em>Talk.</em></h2>
+    <p class="body-text reveal d-1" style="margin: 0 auto; text-align: center; max-width: 500px;">
+      Basée à Montpellier | Permis B, véhiculée.<br>Disponible pour innover à l'intersection de la data, de la science et du management.
+    </p>
+    
+    <div class="btn-wrap reveal d-2">
+      <a href="mailto:thaliapro26@gmail.com" class="btn btn-dark interactive">Écrire un email</a>
+      <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn btn-outline interactive">LinkedIn</a>
+      
+      <a href="CV.pdf" download target="_blank" class="btn btn-cv interactive">Télécharger CV</a>
+    </div>
+
+    <div class="meta-text" style="margin-top: 8rem;">
+      © 2026 Thalia Barrahi — Architecture Numérique & Design Éditorial
+    </div>
+  </section>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      
+      /* --- 1. CURSEUR MAGNÉTIQUE --- */
+      const dot = document.querySelector('.cursor-dot');
+      const ring = document.querySelector('.cursor-ring');
+      
+      if (window.innerWidth > 900) {
+        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
+        let ringX = mouseX, ringY = mouseY;
+
+        window.addEventListener('mousemove', (e) => {
+          mouseX = e.clientX; mouseY = e.clientY;
+          dot.style.left = `${mouseX}px`; dot.style.top = `${mouseY}px`;
+        });
+
+        const animateCursor = () => {
+          ringX += (mouseX - ringX) * 0.15;
+          ringY += (mouseY - ringY) * 0.15;
+          ring.style.left = `${ringX}px`; ring.style.top = `${ringY}px`;
+          requestAnimationFrame(animateCursor);
+        };
+        animateCursor();
+
+        document.querySelectorAll('a, .interactive').forEach(el => {
+          el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+          el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+        });
+      } else {
+        dot.style.display = 'none'; ring.style.display = 'none';
+      }
+
+      /* --- 2. RÉVÉLATION AU SCROLL --- */
+      const reveals = document.querySelectorAll('.reveal');
+      const revealObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('is-visible');
+            
+            // Jauges KPI
+            const kpiFills = entry.target.querySelectorAll('.kpi-anim');
+            kpiFills.forEach(fill => { fill.style.width = fill.getAttribute('data-target'); });
+
+            revealObserver.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+      reveals.forEach(el => revealObserver.observe(el));
+
+      /* --- 3. IMAGES FLOTTANTES (ARCHIVES) --- */
+      if (window.innerWidth > 900) {
+        const archiveItems = document.querySelectorAll('.archive-item');
+        
+        archiveItems.forEach(item => {
+          const img = item.querySelector('.hover-reveal-img');
+          if (!img) return;
+
+          let isHovered = false;
+          let currentX = 0, currentY = 0;
+          let targetX = 0, targetY = 0;
+
+          item.addEventListener('mouseenter', () => { isHovered = true; });
+          item.addEventListener('mouseleave', () => { isHovered = false; });
+
+          item.addEventListener('mousemove', (e) => {
+            const rect = item.getBoundingClientRect();
+            targetX = e.clientX - rect.left;
+            targetY = e.clientY - rect.top;
+          });
+
+          const render = () => {
+            if (isHovered) {
+              currentX += (targetX - currentX) * 0.1;
+              currentY += (targetY - currentY) * 0.1;
+              img.style.left = `${currentX}px`;
+              img.style.top = `${currentY}px`;
+            }
+            requestAnimationFrame(render);
+          };
+          render();
+        });
+      }
+    });
+  </script>
+</body>
+</html>       4. HERO & STACKING CARDS
        ========================================================================== */
     .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 5vw; }
     .hero-title { font-size: clamp(4rem, 10vw, 9rem); font-weight: 800; line-height: 0.85; letter-spacing: -0.04em; margin-bottom: 2rem; }
