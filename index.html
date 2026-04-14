@@ -7,208 +7,264 @@
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
-       1. DESIGN SYSTEM (STABLE & CLEAN)
+       1. VARIABLES ET DESIGN SYSTEM "MODERN TECH"
        ========================================================================== */
     :root {
-      --bg-light: #F4F3F0; 
-      --bg-white: #FFFFFF;
-      --text-dark: #111111; 
-      --text-muted: #6B7280;
+      --bg-base: #F8FAFC; 
+      --text-main: #0F172A;
+      --text-muted: #64748B;
       
-      --accent-ai: #2563EB;
-      --accent-mgt: #E11D48;
-      --accent-bio: #059669;
-      --accent-gold: #D97706;
+      /* Couleurs vibrantes "Aurora" */
+      --color-ai: #3B82F6;    /* Bleu Royal */
+      --color-purple: #8B5CF6;/* Violet Tech */
+      --color-mgt: #F43F5E;   /* Corail / Terracotta */
+      --color-bio: #10B981;   /* Vert Émeraude */
+      --color-gold: #F59E0B;  /* Ambre */
       
-      --border-color: rgba(17, 17, 17, 0.1);
+      /* Verre Dépoli (Glassmorphism Infaillible) */
+      --glass-bg: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 0.9);
+      --glass-shadow: 0 20px 40px rgba(15, 23, 42, 0.05);
       
-      --font-serif: 'Instrument Serif', serif;
-      --font-sans: 'Manrope', sans-serif;
-      --font-mono: 'JetBrains Mono', monospace;
+      --font-main: 'Plus Jakarta Sans', sans-serif;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; font-size: 16px; background-color: var(--bg-light); }
-    body { color: var(--text-dark); font-family: var(--font-sans); -webkit-font-smoothing: antialiased; line-height: 1.6; }
+    html { scroll-behavior: smooth; font-size: 16px; background-color: var(--bg-base); }
+    body { color: var(--text-main); font-family: var(--font-main); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-    /* Remplacement d'image sécurisé */
-    .img-container {
-      width: 100%; height: 250px; background: #E5E4E1; border-radius: 12px; overflow: hidden;
-      display: flex; align-items: center; justify-content: center; position: relative;
+    /* Sécurité Images (Évite l'icône bleue si l'image est manquante) */
+    img { position: relative; width: 100%; height: 100%; object-fit: cover; display: block; background: #E2E8F0; border-radius: inherit; transition: transform 0.6s ease;}
+    img::after {
+      content: "Aperçu Visuel"; position: absolute; inset: 0; background: #E2E8F0;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
     }
-    .img-container span { position: absolute; font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; z-index: 1;}
-    .img-container img { position: relative; z-index: 2; width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-    .img-container.contain img { object-fit: contain; padding: 1rem; background: #fff; }
 
     /* ==========================================================================
-       2. TYPOGRAPHIE
+       2. FOND "AURORA" VIBRANT & ANIMÉ
        ========================================================================== */
-    h1, h2, h3, h4 { font-family: var(--font-sans); line-height: 1.2; color: var(--text-dark); }
-    .serif { font-family: var(--font-serif); font-weight: 400; font-style: italic; }
+    .aurora-bg { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; background: var(--bg-base); }
+    .aurora-blob { position: absolute; filter: blur(120px); border-radius: 50%; opacity: 0.4; animation: drift 20s infinite alternate ease-in-out; }
     
-    .meta { font-family: var(--font-mono); font-size: 0.7rem; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); display: block; margin-bottom: 1rem; }
-    
-    .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 1.5rem; }
-    .tag { font-family: var(--font-sans); font-size: 0.7rem; font-weight: 700; padding: 0.4rem 1rem; border-radius: 50px; border: 1px solid var(--border-color); text-transform: uppercase; letter-spacing: 1px; }
-    .tag.ai { color: var(--accent-ai); background: rgba(37, 99, 235, 0.05); border-color: rgba(37, 99, 235, 0.2); }
-    .tag.mgt { color: var(--accent-mgt); background: rgba(225, 29, 72, 0.05); border-color: rgba(225, 29, 72, 0.2); }
-    .tag.bio { color: var(--accent-bio); background: rgba(5, 150, 105, 0.05); border-color: rgba(5, 150, 105, 0.2); }
+    .blob-1 { background: var(--color-ai); width: 60vw; height: 60vw; top: -20%; left: -10%; }
+    .blob-2 { background: var(--color-purple); width: 50vw; height: 50vw; top: 30%; right: -20%; animation-delay: -5s; opacity: 0.3;}
+    .blob-3 { background: var(--color-bio); width: 55vw; height: 55vw; bottom: -20%; left: 10%; animation-delay: -10s; }
+    .blob-4 { background: var(--color-mgt); width: 40vw; height: 40vw; top: 40%; left: 30%; animation-delay: -15s; opacity: 0.25;}
+
+    @keyframes drift { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(5vw, -5vh) scale(1.1); } }
+    .noise { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.03; mix-blend-mode: multiply; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
 
     /* ==========================================================================
-       3. NAVIGATION
+       3. NAVIGATION "FLOATING PILL"
        ========================================================================== */
     nav {
-      position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center;
-      background: rgba(244, 243, 240, 0.9); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border-color); z-index: 1000;
+      position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 1000;
+      background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.9);
+      padding: 0.8rem 2rem; border-radius: 100px; display: flex; gap: 3rem; align-items: center;
+      box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
     }
-    .logo { font-family: var(--font-serif); font-size: 2rem; font-style: italic; color: var(--text-dark); text-decoration: none; line-height: 1; }
-    .nav-links { display: flex; gap: 2rem; }
-    .nav-links a { color: var(--text-dark); text-decoration: none; font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
-    .nav-links a:hover { color: var(--accent-ai); }
+    .logo { font-size: 1.3rem; font-weight: 800; color: var(--text-main); text-decoration: none; letter-spacing: -0.5px; }
+    .nav-links { display: flex; gap: 2rem; align-items: center; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: color 0.3s; }
+    .nav-links a:hover, .nav-links a.active { color: var(--color-ai); }
 
     /* ==========================================================================
-       4. STRUCTURE GLOBALE
+       4. TYPOGRAPHIE & UTILITAIRES
        ========================================================================== */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
-    section { padding: 120px 0; border-bottom: 1px solid var(--border-color); }
+    h1, h2, h3, h4 { line-height: 1.1; letter-spacing: -0.02em; }
+    
+    .text-gradient { background: linear-gradient(135deg, var(--color-ai), var(--color-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .text-gradient-bio { background: linear-gradient(135deg, var(--color-bio), #047857); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .text-gradient-mgt { background: linear-gradient(135deg, var(--color-mgt), var(--color-gold)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .tag-container { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+    .tag {
+      padding: 0.5rem 1.2rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); color: var(--text-main);
+    }
+    .tag.blue { color: var(--color-ai); background: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); }
+    .tag.green { color: var(--color-bio); background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); }
+    .tag.orange { color: var(--color-mgt); background: rgba(244, 63, 94, 0.1); border-color: rgba(244, 63, 94, 0.2); }
+
+    .hero-pre { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 3px; margin-bottom: 1.5rem; display: block;}
 
     /* ==========================================================================
        5. HERO SECTION
        ========================================================================== */
-    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding-top: 80px; }
-    .hero-title { font-size: clamp(3rem, 7vw, 7rem); font-weight: 800; letter-spacing: -0.03em; margin-bottom: 2rem; }
-    .hero-desc { font-size: 1.2rem; color: var(--text-muted); max-width: 700px; margin-bottom: 3rem; }
-    .hero-desc strong { color: var(--text-dark); font-weight: 700; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
+    
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding-top: 80px;}
+    .hero-title { font-size: clamp(3.5rem, 8vw, 6.5rem); font-weight: 800; line-height: 1.05; margin-bottom: 2rem; color: var(--text-main); }
+    .hero-desc { font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.6; color: var(--text-muted); font-weight: 500; max-width: 750px; margin-bottom: 3rem;}
+    .hero-desc strong { color: var(--text-main); font-weight: 700; }
 
     /* ==========================================================================
-       6. PROJETS (FLEXBOX SIMPLE ET ROBUSTE)
+       6. SECTIONS PROJETS (GLASSMORPHISM ROBUSTE)
        ========================================================================== */
-    .project-card { display: flex; gap: 4rem; align-items: center; margin-bottom: 6rem; }
-    .project-card.reverse { flex-direction: row-reverse; }
-    .project-text { flex: 1; }
-    .project-visual { flex: 1; width: 100%; }
+    .project-section { padding: 80px 0; }
+    
+    .glass-card {
+      display: flex; gap: 4rem; align-items: center;
+      background: var(--glass-bg); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
+      border: 1px solid var(--glass-border); border-radius: 32px;
+      padding: 4rem; box-shadow: var(--glass-shadow); margin-bottom: 4rem;
+    }
+    .glass-card.reverse { flex-direction: row-reverse; }
+    
+    .proj-text { flex: 1; }
+    .proj-visual { flex: 1; width: 100%; }
 
-    .proj-title { font-size: clamp(2rem, 4vw, 3.5rem); font-weight: 800; letter-spacing: -0.02em; margin-bottom: 1.5rem; }
-    .proj-desc { color: var(--text-muted); font-size: 1.05rem; margin-bottom: 1rem; }
+    .proj-title { font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 800; margin-bottom: 1.5rem;}
+    .proj-desc { font-size: 1.05rem; line-height: 1.7; color: var(--text-muted); font-weight: 500; margin-bottom: 1rem; }
 
     /* ==========================================================================
-       7. UI COMPONENTS (DASHBOARDS STABLES)
+       7. COMPOSANTS UI / DASHBOARDS INTERACTIFS
        ========================================================================== */
-    .ui-box { background: var(--bg-white); border: 1px solid var(--border-color); border-radius: 16px; padding: 2.5rem; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
-    .ui-header { font-family: var(--font-mono); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 2rem; border-bottom: 1px solid var(--border-color); padding-bottom: 1rem; display: flex; justify-content: space-between;}
+    .ui-showcase { background: rgba(255,255,255,0.7); border: 1px solid rgba(255,255,255,0.9); border-radius: 24px; padding: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.02); position: relative;}
+    .ui-header { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-bottom: 1.5rem; display: flex; justify-content: space-between; align-items: center;}
 
-    /* Terminal Astroly */
-    .code-block { background: #111; color: #E5E7EB; padding: 1.5rem; border-radius: 8px; font-family: var(--font-mono); font-size: 0.85rem; line-height: 1.6; border-left: 4px solid var(--accent-ai); }
-    .code-highlight { color: #60A5FA; font-weight: 700; }
-    .code-string { color: #34D399; }
+    /* UI Astroly (Terminal Code) */
+    .code-block { background: #0F172A; color: #E2E8F0; padding: 1.5rem; border-radius: 16px; font-family: monospace; font-size: 0.85rem; line-height: 1.6; box-shadow: 0 10px 25px rgba(15, 23, 42, 0.1); position: relative; overflow: hidden;}
+    .code-block::before { content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%; background: var(--color-ai); }
+    .code-highlight { color: #38BDF8; font-weight: 700;}
+    .code-string { color: #A7F3D0; }
 
-    /* Jauges CPAM */
-    .kpi-row { margin-bottom: 1.5rem; }
-    .kpi-row:last-child { margin-bottom: 0; }
-    .kpi-meta { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem; }
-    .kpi-track { width: 100%; height: 6px; background: #F3F4F6; border-radius: 10px; }
-    .kpi-fill { height: 100%; background: var(--accent-mgt); border-radius: 10px; width: 0; transition: width 1.5s ease-out; }
+    /* UI CPAM (Jauges) */
+    .kpi-row { background: #fff; padding: 1.2rem; border-radius: 16px; border: 1px solid rgba(244, 63, 94, 0.1); margin-bottom: 1rem; box-shadow: 0 5px 15px rgba(244, 63, 94, 0.05); transition: transform 0.3s;}
+    .kpi-row:hover { transform: scale(1.02); }
+    .kpi-header { display: flex; justify-content: space-between; font-weight: 800; font-size: 0.9rem; margin-bottom: 0.8rem; color: var(--text-main);}
+    .kpi-track { width: 100%; height: 8px; background: #F1F5F9; border-radius: 10px; overflow: hidden; }
+    .kpi-fill { height: 100%; background: linear-gradient(90deg, var(--color-mgt), var(--color-gold)); border-radius: 10px; width: 0; transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
 
-    /* Boite de Petri CRRHAB */
+    /* UI CRRHAB (Boite de Petri Interactive) */
     .petri-container { display: flex; flex-direction: column; align-items: center; }
-    .petri-dish { width: 150px; height: 150px; margin-bottom: 1rem; }
-    .petri-dish svg { width: 100%; height: 100%; }
+    .petri-dish { width: 180px; height: 180px; margin: 0 auto 1.5rem; position: relative; display: flex; align-items: center; justify-content: center; }
+    .petri-dish svg { width: 100%; height: 100%; filter: drop-shadow(0 10px 20px rgba(16, 185, 129, 0.15)); }
 
     /* ==========================================================================
-       8. ARCHIVES (GRILLE CLASSIQUE)
+       8. GRILLE DES ARCHIVES
        ========================================================================== */
-    .archives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 2.5rem; margin-top: 4rem; }
-    .archive-card { background: var(--bg-white); border: 1px solid var(--border-color); border-radius: 16px; padding: 1.5rem; display: flex; flex-direction: column; text-decoration: none; color: inherit; transition: transform 0.3s, box-shadow 0.3s; }
-    .archive-card:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.05); }
+    .archives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2rem; margin-top: 3rem; }
     
-    .archive-card:hover .img-container img { transform: scale(1.05); }
+    .archive-card {
+      background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px;
+      padding: 1.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column;
+      transition: all 0.3s ease; box-shadow: 0 10px 20px rgba(0,0,0,0.02);
+    }
+    .archive-card:hover { transform: translateY(-8px); background: #fff; box-shadow: 0 20px 40px rgba(0,0,0,0.06); border-color: #fff;}
     
-    .arc-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 0.8rem; }
-    .arc-desc { font-size: 0.9rem; color: var(--text-muted); flex-grow: 1; margin-bottom: 1.5rem; }
-    .arc-link { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; color: var(--text-dark); display: flex; align-items: center; gap: 0.5rem;}
+    .arc-img-wrap { width: 100%; height: 220px; border-radius: 16px; overflow: hidden; margin-bottom: 1.5rem; position: relative; background: #fff;}
+    .archive-card:hover .arc-img-wrap img { transform: scale(1.05); }
+    .arc-img-wrap.contain img { object-fit: contain; padding: 1.5rem;}
+
+    .arc-meta { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem; }
+    .arc-title { font-size: 1.6rem; font-weight: 800; margin-bottom: 1rem; color: var(--text-main); line-height: 1.2;}
+    .arc-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; font-weight: 500; flex-grow: 1; margin-bottom: 1.5rem;}
+    
+    .action-link { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 0.5rem; color: var(--text-main);}
+    .action-link svg { width: 18px; height: 18px; transition: transform 0.3s; }
+    .archive-card:hover .action-link svg { transform: translateX(5px); }
 
     /* ==========================================================================
        9. CONTACT & BOUTONS
        ========================================================================== */
-    .contact-section { text-align: center; border-bottom: none; padding: 150px 0; }
-    .btn-wrap { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem; }
-    .btn { padding: 1rem 2.5rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; transition: 0.3s; }
-    .btn-solid { background: var(--text-dark); color: var(--bg-white); border: 2px solid var(--text-dark); }
-    .btn-solid:hover { background: transparent; color: var(--text-dark); }
-    .btn-outline { background: transparent; border: 2px solid var(--border-color); color: var(--text-dark); }
-    .btn-outline:hover { border-color: var(--text-dark); }
+    .contact-section { text-align: center; padding: 120px 0 80px; max-width: 800px; margin: 0 auto; }
+    
+    .btn-wrap { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem;}
+    .btn {
+      padding: 1.2rem 2.5rem; border-radius: 50px; font-size: 0.85rem; font-weight: 800;
+      text-transform: uppercase; letter-spacing: 1px; text-decoration: none;
+      display: inline-flex; align-items: center; gap: 0.8rem; transition: all 0.3s;
+    }
+    .btn-solid { background: var(--text-main); color: #fff; box-shadow: 0 10px 20px rgba(15, 23, 42, 0.1); }
+    .btn-solid:hover { background: var(--color-ai); transform: translateY(-3px); color: #fff;}
+    .btn-outline { background: rgba(255,255,255,0.8); color: var(--text-main); border: 2px solid rgba(15,23,42,0.1); }
+    .btn-outline:hover { background: #fff; border-color: var(--text-main); transform: translateY(-3px); box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05); }
 
     /* ==========================================================================
-       10. ANIMATIONS SIMPLES & RESPONSIVE
+       10. ANIMATIONS & RESPONSIVE
        ========================================================================== */
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1); }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
     .d-1 { transition-delay: 0.1s; } .d-2 { transition-delay: 0.2s; }
 
-    @media (max-width: 900px) {
-      .project-card { flex-direction: column; gap: 3rem; margin-bottom: 4rem; }
-      .project-card.reverse { flex-direction: column; }
-      nav { padding: 1.5rem 5%; }
+    @media (max-width: 1024px) {
+      .glass-card { flex-direction: column; gap: 3rem; padding: 3rem; }
+      .glass-card.reverse { flex-direction: column; }
+      .proj-visual { width: 100%; }
+    }
+    @media (max-width: 768px) {
+      nav { padding: 1rem 1.5rem; width: 90%; justify-content: center; top: 1rem;}
       .nav-links { display: none; }
-      .hero { padding-top: 100px; }
-      .btn-wrap { flex-direction: column; }
-      .btn { width: 100%; text-align: center; display: block;}
+      .hero { padding-top: 120px; }
+      .hero-title { font-size: 3rem; }
+      .glass-card { padding: 2rem; border-radius: 24px; }
+      .btn-wrap { flex-direction: column; width: 100%; }
+      .btn { width: 100%; justify-content: center; }
     }
   </style>
 </head>
 <body>
 
+  <div class="noise"></div>
+  <div class="mesh-bg">
+    <div class="mesh-blob blob-1"></div>
+    <div class="mesh-blob blob-2"></div>
+    <div class="mesh-blob blob-3"></div>
+  </div>
+
   <nav>
-    <a href="#hero" class="logo">Thalia<span class="serif">.B</span></a>
+    <a href="#hero" class="logo">Thalia.B</a>
     <div class="nav-links">
-      <a href="#projets">Projets</a>
-      <a href="#recherche">Recherche</a>
-      <a href="#archives">Parcours</a>
-      <a href="mailto:thaliapro26@gmail.com">Contact</a>
+      <a href="#projets" class="nav-item">Projets</a>
+      <a href="#recherche" class="nav-item">Recherche</a>
+      <a href="#archives" class="nav-item">Parcours</a>
     </div>
+    <a href="mailto:thaliapro26@gmail.com" style="text-decoration: none; font-size: 0.85rem; font-weight: 800; color: var(--text-main); text-transform: uppercase;">Contact ↗</a>
   </nav>
 
   <div class="container">
     
     <section class="hero" id="hero">
-      <span class="meta reveal is-visible">Portfolio 2026</span>
+      <span class="hero-pre reveal is-visible">Portfolio 2026</span>
       <h1 class="hero-title reveal d-1 is-visible">
-        Science, Management<br>& <span class="serif" style="color: var(--accent-ai);">Intelligence Artificielle.</span>
+        Science,<br>Management &<br><span class="text-gradient">Intelligence Artificielle.</span>
       </h1>
       <p class="hero-desc reveal d-2 is-visible">
         Manager de projets innovants. L'hybridation exigeante entre la rigueur analytique de la <strong>Science du Vivant</strong> et l'architecture des <strong>nouvelles technologies</strong>.
       </p>
-      <div class="tags reveal d-2 is-visible">
-        <span class="tag ai">M1 Management de l'Innovation</span>
-        <span class="tag bio">BUT Génie Biologique</span>
+      <div class="tag-container reveal d-2 is-visible" style="justify-content: center;">
+        <span class="tag blue">Master 1 Management de l'Innovation</span>
+        <span class="tag green">BUT Génie Biologique</span>
       </div>
     </section>
 
-    <section id="projets">
+    <section class="project-section" id="projets">
       
-      <div class="project-card reveal">
-        <div class="project-text">
-          <span class="meta" style="color: var(--accent-ai);">Capgemini x IAE Montpellier</span>
-          <h2 class="proj-title">Astroly,<br>L'Ère <span class="serif">Agentique.</span></h2>
+      <div class="glass-card reveal">
+        <div class="proj-text">
+          <span class="hero-pre" style="color: var(--color-ai);">M1 Management de l'Innovation</span>
+          <h2 class="proj-title">Astroly,<br>L'Ère <span class="text-gradient">Agentique</span>.</h2>
           <p class="proj-desc">
-            <strong>Le Défi :</strong> 49% des jeunes talents abandonnent face à un recrutement archaïque. L'objectif : stopper la déperdition des profils "Pépites" après les challenges innovation.
+            <strong>Le Défi :</strong> Capgemini x IAE. L'objectif était de stopper la déperdition des profils "Pépites" après les challenges innovation.
           </p>
           <p class="proj-desc">
             <strong>La Solution :</strong> Conception d'un écosystème de 6 agents IA (Copilot Studio). Astroly transforme le sourcing de masse en une expérience ultra-personnalisée : candidature en 5 min et scoring de compatibilité automatisé.
           </p>
-          <div class="tags">
-            <span class="tag ai">Architecture Multi-Agents</span>
-            <span class="tag ai">Copilot Studio</span>
+          <div class="tag-container" style="margin-top: 1.5rem;">
+            <span class="tag blue">Architecture Multi-Agents</span>
+            <span class="tag blue">Copilot Studio</span>
           </div>
         </div>
         
-        <div class="project-visual">
-          <div class="ui-box">
-            <div class="ui-header"><span>Extrait : Agent de Scoring</span> <span style="color: var(--accent-ai);">● Prompt</span></div>
+        <div class="proj-visual">
+          <div class="ui-showcase">
+            <div class="ui-header"><span>Extrait : Agent de Scoring</span> <span style="color: var(--color-ai);">● Prompt</span></div>
             <div class="code-block">
               <span class="code-highlight">Role:</span> <span class="code-string">"Tu es l'Expert Recrutement IA de Capgemini. Ton objectif est de transformer des réponses brutes de formulaires en dossiers de candidature à haute valeur ajoutée."</span><br><br>
               <span class="code-highlight">Action:</span> <span class="code-string">"Génération d'un CV uniformisé, avec forces et faiblesses et scoring général sur la compatibilité candidat/offre."</span>
@@ -217,139 +273,138 @@
         </div>
       </div>
 
-      <div class="project-card reverse reveal">
-        <div class="project-text">
-          <span class="meta" style="color: var(--accent-mgt);">Innovation Publique</span>
-          <h2 class="proj-title">Intelligence<br><span class="serif">Collective.</span></h2>
+      <div class="glass-card reverse reveal">
+        <div class="proj-text">
+          <span class="hero-pre" style="color: var(--color-mgt);">M1 Management de l'Innovation</span>
+          <h2 class="proj-title">Intelligence<br><span class="text-gradient-mgt">Collective</span>.</h2>
           <p class="proj-desc">
             <strong>Alternance (2 ans) - CPAM Hérault.</strong> La transformation d'une organisation ne se résout pas uniquement par la technologie, mais par l'encadrement humain.
           </p>
           <p class="proj-desc">
             En tant que Chef de projets innovants, je pilote les démarches d'idéation, la facilitation de groupes et je co-pilote une <strong>plateforme de remontée d'idées</strong> pour dynamiser l'Innovation Participative.
           </p>
-          <div class="tags">
-            <span class="tag mgt">Innovation Participative</span>
-            <span class="tag mgt">Facilitation</span>
+          <div class="tag-container" style="margin-top: 1.5rem;">
+            <span class="tag orange">Innovation Participative</span>
+            <span class="tag orange">Facilitation</span>
           </div>
         </div>
         
-        <div class="project-visual">
-          <div class="ui-box">
+        <div class="proj-visual">
+          <div class="ui-showcase">
             <div class="ui-header"><span>Matrice de Performance</span></div>
             <div class="kpi-row">
-              <div class="kpi-meta"><span>Plateforme Remontée d'Idées</span><span>100%</span></div>
+              <div class="kpi-header"><span>Plateforme Remontée d'Idées</span><span>100%</span></div>
               <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%"></div></div>
             </div>
             <div class="kpi-row">
-              <div class="kpi-meta"><span>Facilitation de Groupes</span><span>100%</span></div>
+              <div class="kpi-header"><span>Facilitation de Groupes</span><span>100%</span></div>
               <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%" style="transition-delay: 0.2s;"></div></div>
             </div>
             <div class="kpi-row">
-              <div class="kpi-meta"><span>Suivi KPI</span><span>100%</span></div>
+              <div class="kpi-header"><span>Suivi KPI</span><span>100%</span></div>
               <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%" style="transition-delay: 0.4s;"></div></div>
             </div>
           </div>
         </div>
       </div>
 
-      <div class="project-card reveal" id="recherche">
-        <div class="project-text">
-          <span class="meta" style="color: var(--accent-bio);">Laboratoire Phytopathologie</span>
-          <h2 class="proj-title">Science du<br><span class="serif">Vivant.</span></h2>
+      <div class="glass-card reveal" id="recherche">
+        <div class="proj-text">
+          <span class="hero-pre" style="color: var(--color-bio);">BUT Génie Biologique</span>
+          <h2 class="proj-title">Science du<br><span class="text-gradient-bio">Vivant</span>.</h2>
           <p class="proj-desc">
-            <strong>Le Défi :</strong> Explorer des alternatives viables aux pesticides chimiques en s'appuyant sur l'immunité naturelle des plantes.
+            <strong>Le Défi :</strong> Explorer des alternatives viables aux pesticides en s'appuyant sur l'immunité naturelle des plantes.
           </p>
           <p class="proj-desc">
-            <strong>La Méthodologie :</strong> Recherche au CRRHAB (Tunisie). Étude croisée sur 19 variétés de pommes de terre. Isolement de souches d'intérêt du microbiome (<em>Bacillus, Serratia</em>) et <strong>confrontation directe in vitro sur milieu gélosé PDA</strong> contre des champignons pathogènes majeurs (<em>Fusarium, Colletotrichum</em>).
+            <strong>La Méthodologie :</strong> Recherche au CRRHAB (Tunisie). Étude croisée sur 19 variétés de pommes de terre. Isolement de souches d'intérêt du microbiome (<em>Bacillus, Serratia</em>) et <strong>confrontation directe in vitro sur milieu gélosé PDA</strong> contre des champignons pathogènes majeurs (<em>Fusarium, Colletotrichum</em>). Calcul d'inhibition mycélienne.
           </p>
-          <div class="tags">
-            <span class="tag bio">Biocontrôle</span>
-            <span class="tag bio">Microbiologie</span>
+          <div class="tag-container" style="margin-top: 1.5rem;">
+            <span class="tag green">Biocontrôle</span>
+            <span class="tag green">Microbiologie</span>
           </div>
         </div>
         
-        <div class="project-visual">
-          <div class="ui-box petri-container">
+        <div class="proj-visual">
+          <div class="ui-showcase petri-container">
             <div class="ui-header" style="width: 100%;"><span>Modélisation : Antagonisme in vitro</span></div>
             <div class="petri-dish">
               <svg viewBox="0 0 100 100">
-                <circle cx="50" cy="50" r="48" fill="#F3F4F6" stroke="#059669" stroke-width="2" opacity="0.3"/>
+                <circle cx="50" cy="50" r="48" fill="#F8FAFC" stroke="#10B981" stroke-width="2" opacity="0.5"/>
                 <path d="M 25 50 Q 35 25 50 50 T 65 50" stroke="#64748B" stroke-width="12" stroke-linecap="round" opacity="0.6"/>
                 <circle cx="40" cy="45" r="15" fill="#64748B" opacity="0.4"/>
-                <circle cx="70" cy="50" r="4" fill="#059669"/>
-                <circle cx="68" cy="40" r="3" fill="#059669"/>
-                <circle cx="65" cy="60" r="3.5" fill="#059669"/>
+                <circle cx="70" cy="50" r="4" fill="var(--color-bio)"/>
+                <circle cx="68" cy="40" r="3" fill="var(--color-bio)"/>
+                <circle cx="65" cy="60" r="3.5" fill="var(--color-bio)"/>
               </svg>
             </div>
-            <div style="font-size: 0.8rem; font-weight: 700; color: var(--text-dark);">Zone d'inhibition observée</div>
-            <div style="font-size: 0.7rem; color: var(--accent-bio); margin-top: 0.3rem; font-weight: 600; text-transform: uppercase;">Données quantitatives sous NDA</div>
+            <div style="font-size: 0.8rem; font-weight: 800; color: var(--text-main);">Zone d'inhibition observée</div>
+            <div style="font-size: 0.7rem; color: var(--color-bio); margin-top: 0.3rem; font-weight: 700; text-transform: uppercase;">Données quantitatives sous NDA</div>
           </div>
         </div>
       </div>
 
     </section>
 
-    <section id="archives">
-      <span class="meta reveal" style="text-align: center;">Parcours</span>
-      <h2 class="hero-title reveal" style="font-size: clamp(2.5rem, 5vw, 4rem); text-align: center; margin-bottom: 1rem;">Expériences & <span class="serif">Empreintes.</span></h2>
+    <section id="archives" style="padding-bottom: 80px;">
+      <span class="hero-pre reveal" style="text-align: center;">Parcours</span>
+      <h2 class="hero-title reveal" style="font-size: clamp(2.5rem, 5vw, 4rem); text-align: center; margin-bottom: 3rem;">Empreintes & Expériences.</h2>
       
       <div class="archives-grid">
         
         <a href="#" class="archive-card reveal">
-          <div class="img-container">
-            <span>Aperçu Plateforme</span>
+          <div class="arc-img-wrap">
             <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Heron Exchange">
           </div>
-          <span class="meta" style="color: var(--accent-ai); margin-bottom: 0.5rem;">SaaS B2B · Incubateur INITIUM</span>
+          <span class="arc-meta" style="color: var(--color-ai);">Incubateur INITIUM · SaaS B2B</span>
           <h3 class="arc-title">Heron Exchange</h3>
           <p class="arc-desc">Plateforme luttant contre la fraude financière BEC. <strong>🏆 Prix du projet à plus fort potentiel.</strong> Diagnostic terrain et élaboration du modèle de revenus.</p>
-          <div class="arc-link">Découvrir →</div>
+          <div class="action-link">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
         </a>
 
         <a href="Soutenance de 2eme année.pdf" target="_blank" class="archive-card reveal d-1">
-          <div class="img-container contain">
-            <span>Aperçu Poster</span>
+          <div class="arc-img-wrap contain">
             <img src="Poster scientifique bleu et vert.png" alt="Poster Scientifique Unibio">
           </div>
-          <span class="meta" style="color: var(--accent-bio); margin-bottom: 0.5rem;">18 Mois · Alternance</span>
+          <span class="arc-meta" style="color: var(--color-bio);">BUT Génie Bio · Alternance (18 Mois)</span>
           <h3 class="arc-title">Unibio Medical</h3>
-          <p class="arc-desc">Manipulations en hématologie, hémostase et immunobiochimie. Rigueur analytique, contrôles qualité et validation de méthodes.</p>
-          <div class="arc-link" style="color: var(--accent-bio);">Ouvrir le PDF →</div>
+          <p class="arc-desc">Manipulations en hématologie, hémostase et immunobiochimie. Rigueur analytique, contrôles qualité rigoureux et validation de méthodes de diagnostic.</p>
+          <div class="action-link" style="color: var(--color-bio);">Ouvrir le Poster PDF <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg></div>
         </a>
 
         <a href="#" class="archive-card reveal">
-          <div class="img-container">
-            <span>Aperçu Laboratoire</span>
+          <div class="arc-img-wrap">
             <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Culture in vitro">
           </div>
-          <span class="meta" style="color: var(--accent-bio); margin-bottom: 0.5rem;">IUT Montpellier · 2022</span>
+          <span class="arc-meta" style="color: var(--color-bio);">BUT Génie Bio · IUT Montpellier</span>
           <h3 class="arc-title">Culture in vitro</h3>
-          <p class="arc-desc">Micropropagation du Vanillier (milieu MS). Maîtrise totale de la stérilité sous hotte à flux laminaire et processus d'acclimatation.</p>
-          <div class="arc-link">Découvrir →</div>
+          <p class="arc-desc">Projet sur la micropropagation du Vanillier (milieu MS). Maîtrise totale de la stérilité sous hotte à flux laminaire et processus d'acclimatation.</p>
+          <div class="action-link">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
         </a>
 
-        <a href="#" class="archive-card reveal d-1" style="background: var(--text-dark); color: #fff;">
+        <a href="#" class="archive-card reveal d-1" style="background: var(--text-main); color: #fff; border: none;">
           <div style="font-size: 3rem; margin-bottom: 1.5rem;">🏆</div>
-          <span class="meta" style="color: var(--text-muted); margin-bottom: 0.5rem;">Distinctions Nationales</span>
+          <span class="arc-meta" style="color: var(--text-muted);">Distinctions Nationales</span>
           <h3 class="arc-title" style="color: #fff;">Palmarès & Pitch</h3>
-          <p class="arc-desc" style="color: #A1A1AA;">Prix Coup de Pouce Créa'thlon (2025, Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min" (2021).</p>
-          <div class="arc-link" style="color: #fff;">Découvrir →</div>
+          <p class="arc-desc" style="color: #cbd5e1;">Prix Coup de Pouce Créa'thlon (2025, Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min" (2021) avec le projet Antibiorésistance.</p>
+          <div class="action-link" style="color: #fff;">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
         </a>
 
       </div>
     </section>
 
     <section class="contact-section" id="contact">
-      <h2 class="hero-title reveal">Travaillons <span class="serif">Ensemble.</span></h2>
+      <h2 class="hero-title reveal">Travaillons<br><span class="text-gradient-ai">Ensemble.</span></h2>
       <p class="hero-desc reveal d-1" style="margin: 0 auto 3rem;">Basée à Montpellier | Permis B, véhiculée.</p>
       
       <div class="btn-wrap reveal d-2">
         <a href="mailto:thaliapro26@gmail.com" class="btn btn-solid">Écrire un email</a>
         <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn btn-outline">LinkedIn</a>
-        <a href="CV.pdf" download target="_blank" class="btn btn-outline" style="border-color: var(--accent-bio); color: var(--accent-bio);">Télécharger CV</a>
+        <a href="CV.pdf" download target="_blank" class="btn btn-outline" style="border-color: var(--color-bio); color: var(--color-bio);">Télécharger CV</a>
       </div>
 
-      <div class="meta" style="margin-top: 6rem; margin-bottom: 0;">© 2026 Thalia Barrahi — Portfolio Standard</div>
+      <div style="margin-top: 8rem; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px;">
+        © 2026 Thalia Barrahi — Design Studio
+      </div>
     </section>
 
   </div>
@@ -375,6 +430,25 @@
       }, { threshold: 0.1 });
 
       reveals.forEach(el => revealObserver.observe(el));
+
+      /* NAVIGATION ACTIVE */
+      const sections = document.querySelectorAll('section[id], div[id]');
+      const navLinks = document.querySelectorAll('.nav-item');
+
+      window.addEventListener('scroll', () => {
+        let current = '';
+        sections.forEach(section => {
+          const sectionTop = section.offsetTop;
+          if (pageYOffset >= sectionTop - 200) { current = section.getAttribute('id'); }
+        });
+
+        navLinks.forEach(link => {
+          link.classList.remove('active');
+          if (link.getAttribute('href').substring(1) === current) {
+            link.classList.add('active');
+          }
+        });
+      });
     });
   </script>
 </body>
