@@ -16,19 +16,19 @@
        1. VARIABLES : FINITION NACRÉE
        ========================================================================== */
     :root {
-      --bg-pearl: #fdfdfd;
+      --bg-pearl: #f8fafc;
       --txt-dark: #0B132B; 
-      --txt-mut: #586572;
+      --txt-mut: #64748B;
       
-      /* Couleurs Vibrantes (Tes images) */
+      /* Couleurs Vibrantes */
       --ai-cyan: #00D2FF;    
       --bio-green: #00FF95;  
       --virus-pink: #FF006E; 
       --spore-gold: #FFB300; 
       --art-purple: #8338EC; 
       
-      --glass: rgba(255, 255, 255, 0.4);
-      --glass-border: rgba(255, 255, 255, 0.8);
+      --glass: rgba(255, 255, 255, 0.7);
+      --glass-border: rgba(255, 255, 255, 1);
       
       --font-title: 'Syne', sans-serif;
       --font-body: 'Plus Jakarta Sans', sans-serif;
@@ -38,34 +38,383 @@
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; background: var(--bg-pearl); font-size: 16px; overflow-x: hidden; }
-    body { color: var(--txt-dark); font-family: var(--font-body); line-height: 1.4; -webkit-font-smoothing: antialiased; }
+    body { color: var(--txt-dark); font-family: var(--font-body); line-height: 1.6; -webkit-font-smoothing: antialiased; }
 
     /* ==========================================================================
-       2. FOND : EFFET PERLE DYNAMIQUE & WEBGL
+       2. FOND & WEBGL
        ========================================================================== */
-    .pearl-canvas { position: fixed; inset: 0; z-index: -3; pointer-events: none; background: #fff; }
-    
-    /* Dégradés mouvants pour l'effet irisé */
     .pearl-overlay {
       position: fixed; inset: 0; z-index: -2; pointer-events: none;
       background: 
-        radial-gradient(circle at 20% 30%, rgba(252, 231, 243, 0.8) 0%, transparent 40%),
-        radial-gradient(circle at 80% 70%, rgba(207, 250, 254, 0.8) 0%, transparent 40%),
-        radial-gradient(circle at 50% 50%, rgba(209, 250, 229, 0.5) 0%, transparent 60%);
-      filter: blur(40px);
-      animation: pearlShift 20s infinite alternate ease-in-out;
-    }
-    @keyframes pearlShift {
-      0% { transform: scale(1) translate(0, 0); }
-      100% { transform: scale(1.1) translate(2%, 2%); }
+        radial-gradient(circle at 20% 30%, rgba(252, 231, 243, 0.5) 0%, transparent 50%),
+        radial-gradient(circle at 80% 70%, rgba(207, 250, 254, 0.5) 0%, transparent 50%);
+      filter: blur(60px);
     }
 
-    #webgl-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; }
+    #webgl-canvas { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -1; pointer-events: none; opacity: 0.8; }
 
     /* ==========================================================================
        3. NAVIGATION
        ========================================================================== */
-    nav { position: fixed; top: 0; left: 0; width: 100%; padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; z-index: 1000; mix-blend-mode: multiply; }
+    nav { position: fixed; top: 0; left: 0; width: 100%; padding: 1.5rem 5%; display: flex; justify-content: space-between; align-items: center; z-index: 1000; background: linear-gradient(to bottom, rgba(248,250,252,0.9), transparent); }
+    .logo { font-family: var(--font-title); font-size: 1.8rem; font-weight: 800; color: var(--txt-dark); text-decoration: none; letter-spacing: -1px; }
+    .nav-right { display: flex; gap: 3rem; align-items: center; }
+    .nav-link { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; color: var(--txt-dark); }
+    .nav-link:hover { color: var(--art-purple); }
+
+    /* ==========================================================================
+       4. HERO SECTION
+       ========================================================================== */
+    .section { position: relative; min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 5%; z-index: 10; max-width: 1400px; margin: 0 auto;}
+    
+    .huge-title { font-family: var(--font-title); font-size: clamp(3rem, 8vw, 6.5rem); font-weight: 800; line-height: 1.1; letter-spacing: -0.02em; color: var(--txt-dark); margin-bottom: 2rem; }
+    .outline { color: transparent; -webkit-text-stroke: 2px var(--txt-dark); }
+    .grad { background: linear-gradient(135deg, var(--art-purple), var(--ai-cyan)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    .hero-desc { font-size: clamp(1.1rem, 2vw, 1.4rem); font-weight: 400; color: var(--txt-mut); margin-bottom: 2rem; max-width: 800px; }
+    .hero-desc strong { color: var(--txt-dark); font-weight: 800; }
+
+    .handwritten { font-family: var(--font-art); font-size: 2rem; color: var(--art-purple); transform: rotate(-5deg); margin-bottom: 1rem; display: block; }
+    
+    .badge-row { display: flex; gap: 1rem; flex-wrap: wrap; margin-top: 1rem; }
+    .diploma-badge { font-family: var(--font-code); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 0.5rem 1.2rem; border-radius: 50px; background: rgba(255,255,255,0.8); border: 1px solid rgba(0,0,0,0.1); box-shadow: 0 4px 10px rgba(0,0,0,0.02); }
+
+    /* ==========================================================================
+       5. PROJETS (VERRE DÉPOLI POUR LISIBILITÉ)
+       ========================================================================== */
+    .project-section { padding: 15vh 5vw; max-width: 1400px; margin: 0 auto; z-index: 10; position: relative;}
+    .project-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; margin-bottom: 15vh; background: var(--glass); backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px); border: 1px solid var(--glass-border); padding: 4rem; border-radius: 40px; box-shadow: 0 20px 50px rgba(0,0,0,0.03); }
+    .project-grid.rev { direction: rtl; } .project-grid.rev > * { direction: ltr; }
+
+    .p-tag { font-family: var(--font-code); font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--txt-mut); margin-bottom: 1rem; display: block; letter-spacing: 2px; }
+    .p-title { font-family: var(--font-title); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.02em; }
+    .p-desc { font-size: 1.1rem; color: var(--txt-mut); margin-bottom: 1.5rem; }
+
+    /* UI PANELS */
+    .ui-box { background: rgba(255,255,255,0.9); border: 1px solid rgba(0,0,0,0.05); border-radius: 24px; padding: 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+    
+    .terminal { background: #0B132B; border-radius: 16px; padding: 2rem; font-family: var(--font-code); font-size: 0.85rem; line-height: 1.7; color: #E2E8F0; }
+    .t-cyan { color: #38BDF8; font-weight: 700; }
+    .t-pink { color: #f9a8d4; }
+
+    .kpi-item { margin-bottom: 1.5rem; }
+    .kpi-head { display: flex; justify-content: space-between; font-weight: 800; font-size: 0.9rem; margin-bottom: 0.6rem; }
+    .bar-bg { height: 10px; background: #F1F5F9; border-radius: 20px; overflow: hidden; border: 1px solid rgba(0,0,0,0.02);}
+    .bar-fill { height: 100%; width: 0; background: var(--txt-dark); transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+
+    /* Pétri Stylisée (Corrigée pour ne pas être toute noire) */
+    .petri-wrap { text-align: center; }
+    .petri-dish { width: 220px; height: 220px; margin: 0 auto; background: #1E293B; border-radius: 50%; border: 4px solid rgba(16,185,129,0.3); box-shadow: inset 0 0 30px #000, 0 20px 40px rgba(16,185,129,0.2); position: relative; overflow: hidden; }
+    .mycelium { position: absolute; inset: 10%; background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, transparent 70%); filter: blur(10px); }
+    .bacteria-dot { position: absolute; width: 10px; height: 10px; background: var(--bio-green); border-radius: 50%; box-shadow: 0 0 10px var(--bio-green); }
+
+    /* ==========================================================================
+       6. ARCHIVES (Grid Solide avec Fallback Images)
+       ========================================================================== */
+    .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; margin-top: 3rem; }
+    
+    .b-card { background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); border-radius: 24px; padding: 2.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.3s; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+    .b-card:hover { transform: translateY(-5px); box-shadow: 0 20px 50px rgba(0,0,0,0.06); background: #fff;}
+    
+    .col-7 { grid-column: span 7; } .col-5 { grid-column: span 5; } .col-12 { grid-column: span 12; }
+    
+    /* Remplacement visuel si l'image casse (fallback) */
+    .b-img { width: 100%; height: 220px; background: linear-gradient(135deg, #E2E8F0, #CBD5E1); border-radius: 12px; margin-bottom: 1.5rem; overflow: hidden; display: flex; align-items: center; justify-content: center;}
+    .b-img img { width: 100%; height: 100%; object-fit: cover; }
+    .b-img.contain img { object-fit: contain; padding: 1rem; }
+    
+    .b-title { font-family: var(--font-title); font-size: 1.8rem; font-weight: 800; line-height: 1.1; margin-bottom: 0.8rem; }
+    .b-desc { font-size: 0.95rem; color: var(--txt-mut); flex-grow: 1; }
+
+    /* ==========================================================================
+       7. CONTACT & FOOTER (Tailles Sécurisées)
+       ========================================================================== */
+    .footer { padding: 15vh 5vw; text-align: center; border-top: 1px solid rgba(0,0,0,0.05); }
+    
+    /* Email sécurisé pour ne pas déborder */
+    .email-link { display: inline-block; font-family: var(--font-title); font-size: clamp(2rem, 5vw, 4rem); font-weight: 800; color: var(--txt-dark); text-decoration: none; word-break: break-all; margin-bottom: 2rem; transition: color 0.3s; }
+    .email-link:hover { color: var(--art-purple); }
+    
+    .btn { display: inline-block; background: var(--txt-dark); color: #fff; padding: 1rem 2.5rem; border-radius: 50px; font-weight: 700; font-size: 0.85rem; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; box-shadow: 0 10px 20px rgba(0,0,0,0.1); margin: 0 0.5rem;}
+    .btn:hover { background: var(--ai-cyan); transform: translateY(-3px); }
+
+    /* Animations Scroll */
+    .reveal { opacity: 0; transform: translateY(40px); transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    .reveal.on { opacity: 1; transform: translateY(0); }
+
+    @media (max-width: 1024px) {
+      .project-grid { grid-template-columns: 1fr; gap: 4rem; padding: 3rem; } .project-grid.rev { direction: ltr; }
+      .col-7, .col-5 { grid-column: span 12; }
+      nav { padding: 1.5rem 5vw; } .nav-right { display: none; }
+    }
+    @media (max-width: 768px) {
+      .huge-title { font-size: 3rem; }
+      .project-grid { padding: 2rem; border-radius: 24px; }
+      .handwritten { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="pearl-overlay"></div>
+  <canvas id="webgl-canvas"></canvas>
+
+  <nav>
+    <a href="#hero" class="logo">Thalia.B</a>
+    <div class="nav-right">
+      <a href="#projets" class="nav-link">Projets</a>
+      <a href="#archives" class="nav-link">Archives</a>
+      <a href="mailto:thaliapro26@gmail.com" class="nav-link" style="color: var(--ai-cyan);">Contact</a>
+    </div>
+  </nav>
+
+  <section class="section" id="hero">
+    <div>
+      <span class="handwritten reveal on">Pensé hors de la boîte 💡</span>
+      <h1 class="huge-title reveal on" style="transition-delay: 0.1s;">
+        Science,<br>Management <span class="outline">&</span><br>
+        <span class="grad">Créativité.</span>
+      </h1>
+      <p class="hero-desc reveal on" style="transition-delay: 0.2s;">
+        Manager de projets innovants. J'hybride la <strong>rigueur analytique</strong> du laboratoire avec <strong>l'architecture de l'IA</strong> pour concevoir des solutions organiques et centrées sur l'humain.
+      </p>
+      <div class="badge-row reveal on" style="transition-delay: 0.3s;">
+        <div class="diploma-badge" style="color: var(--ai-cyan); border-color: rgba(0,210,255,0.3);">M1 Management de l'Innovation</div>
+        <div class="diploma-badge" style="color: var(--bio-green); border-color: rgba(0,255,149,0.3);">BUT Génie Biologique</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="project-section" id="projets">
+    
+    <div class="project-grid reveal">
+      <div>
+        <span class="p-tag" style="color: var(--ai-cyan);">// IA AGENTIQUE</span>
+        <h2 class="p-title">Astroly,<br>L'Ère Agentique.</h2>
+        <p class="p-desc">
+          <strong>Le Défi :</strong> Capgemini x IAE. 49% des jeunes talents abandonnent face à un recrutement archaïque. L'objectif : stopper la déperdition des profils "Pépites".
+        </p>
+        <p class="p-desc">
+          <strong>La Solution :</strong> Architecture de <strong>6 agents IA</strong>. Candidature sans CV en 5 min et scoring automatisé.
+        </p>
+        <div class="badge-row">
+          <span class="diploma-badge">Copilot Studio</span>
+          <span class="diploma-badge">Multi-Agents</span>
+        </div>
+      </div>
+      <div class="ui-box">
+        <div class="terminal">
+          <span class="t-cyan">Instruction:</span> <span class="t-pink">"Tu es l'Expert Recrutement IA de Capgemini. Ton objectif est de transformer des réponses brutes en dossiers de candidature à haute valeur ajoutée."</span><br><br>
+          <span class="t-cyan">Action:</span> "Analyse des forces, faiblesses et scoring d'adéquation candidat/poste."
+        </div>
+      </div>
+    </div>
+
+    <div class="project-grid rev reveal">
+      <div>
+        <span class="p-tag" style="color: var(--virus-pink);">// INNOVATION PARTICIPATIVE</span>
+        <h2 class="p-title">Intelligence<br>Collective.</h2>
+        <p class="p-desc">
+          <strong>Alternance (2 ans) - CPAM Hérault.</strong> Pilotage de la transformation organisationnelle par le prisme de l'humain et de la méthodologie.
+        </p>
+        <p class="p-desc">
+          Co-pilotage de la plateforme de remontée d'idées, facilitation de groupes d'idéation (Design Thinking) et structuration des KPIs.
+        </p>
+      </div>
+      <div class="ui-box">
+        <div class="kpi-item">
+          <div class="kpi-head"><span>Adoption Plateforme</span><span>100%</span></div>
+          <div class="bar-bg"><div class="bar-fill kpi-anim" data-w="100%" style="background: var(--virus-pink);"></div></div>
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-head"><span>Ateliers Facilités</span><span>100%</span></div>
+          <div class="bar-bg"><div class="bar-fill kpi-anim" data-w="100%" style="transition-delay: 0.2s; background: var(--spore-gold);"></div></div>
+        </div>
+        <div class="kpi-item">
+          <div class="kpi-head"><span>Suivi KPI Stratégiques</span><span>100%</span></div>
+          <div class="bar"><div class="bar-fill kpi-anim" data-w="100%" style="transition-delay: 0.4s; background: var(--txt-dark);"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-grid reveal">
+      <div>
+        <span class="p-tag" style="color: var(--bio-green);">// RECHERCHE SCIENTIFIQUE</span>
+        <h2 class="p-title">Science du<br>Vivant.</h2>
+        <p class="p-desc">
+          <strong>Le Défi :</strong> Alternatives aux pesticides au CRRHAB (Tunisie) via l'immunité naturelle des plantes.
+        </p>
+        <p class="p-desc">
+          Étude croisée sur 19 variétés. Isolement de souches du microbiome et confrontation in vitro sur <strong>milieu gélosé PDA</strong> contre <em>Fusarium</em>.
+        </p>
+      </div>
+      <div class="ui-box petri-wrap">
+        <div class="petri-dish">
+          <div class="mycelium"></div>
+          <div class="bacteria-dot" style="top: 25%; left: 35%;"></div>
+          <div class="bacteria-dot" style="top: 65%; right: 25%;"></div>
+          <div class="bacteria-dot" style="bottom: 20%; left: 45%;"></div>
+        </div>
+        <p style="font-family: var(--font-code); font-size: 0.7rem; color: var(--bio-green); margin-top: 1.5rem; font-weight: 700;">HALO D'INHIBITION OBSERVÉ (NDA)</p>
+      </div>
+    </div>
+
+  </div>
+
+  <section class="section" id="archives" style="min-height: auto; padding-bottom: 10vh;">
+    <h2 class="huge-title reveal" style="text-align: center; font-size: clamp(3rem, 6vw, 5rem);">Archives <span class="outline">& Prix.</span></h2>
+    
+    <div class="bento">
+      
+      <a href="#" class="b-card col-7 reveal">
+        <div class="b-img"><img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Heron" onerror="this.style.display='none'"></div>
+        <span class="diploma-badge" style="color: var(--spore-gold);">🏆 PRIX INITIUM</span>
+        <h3 class="b-title">Heron Exchange</h3>
+        <p class="b-desc">Plateforme SaaS contre la fraude BEC (~7M de PME). Projet à plus fort potentiel. Diagnostic terrain et modèle de revenus.</p>
+      </a>
+
+      <a href="Soutenance de 2eme année.pdf" target="_blank" class="b-card col-5 reveal d-1">
+        <div class="b-img contain"><img src="Poster scientifique bleu et vert.png" alt="Unibio" onerror="this.style.display='none'"></div>
+        <span class="diploma-badge" style="color: var(--bio-green);">Alternance 18 Mois</span>
+        <h3 class="b-title">Unibio Medical</h3>
+        <p class="b-desc">Technicienne de labo (BUT Bio). Hématologie, hémostase, immunobiochimie. Rigueur et contrôles qualité.</p>
+      </a>
+
+      <div class="b-card col-7 reveal" style="background: var(--txt-dark); color: #fff;">
+        <div style="font-size: 4rem; margin-bottom: 1rem;">🥇</div>
+        <span class="diploma-badge" style="color: var(--spore-gold); background: rgba(255,255,255,0.1); border:none;">Éloquence</span>
+        <h3 class="b-title" style="color: var(--spore-gold);">Palmarès & Pitch</h3>
+        <p class="b-desc" style="color: #fff; opacity: 0.9;">Prix Coup de Pouce Créa'thlon (2025, Sun-charge) & 2e place nationale "Mon Projet en 4 min" (2021).</p>
+      </div>
+
+      <a href="#" class="b-card col-5 reveal d-1">
+        <div class="b-img"><img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Culture" onerror="this.style.display='none'"></div>
+        <span class="diploma-badge" style="color: var(--bio-green);">IUT Montpellier</span>
+        <h3 class="b-title">Culture in vitro</h3>
+        <p class="b-desc">Micropropagation du Vanillier (milieu MS). Maîtrise totale de la stérilité sous hotte à flux laminaire.</p>
+      </a>
+
+    </div>
+  </section>
+
+  <footer class="footer">
+    <a href="mailto:thaliapro26@gmail.com" class="email-link reveal">thaliapro26@gmail.com ↗</a>
+    
+    <div class="reveal d-1" style="margin-top: 2rem;">
+      <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn" style="background: transparent; color: var(--txt-dark); border: 2px solid rgba(0,0,0,0.1);">LinkedIn</a>
+      <a href="CV.pdf" download class="btn">Télécharger CV .PDF</a>
+    </div>
+    
+    <p style="margin-top: 5rem; font-family: var(--font-code); font-size: 0.75rem; color: var(--txt-mut); text-transform: uppercase; letter-spacing: 2px;">
+      © 2026 Thalia Barrahi — Design & Science Studio
+    </p>
+  </footer>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      
+      // Reveal Animations & Jauges
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+          if (e.isIntersecting) {
+            e.target.classList.add('on');
+            e.target.querySelectorAll('.bar-fill').forEach(f => f.style.width = f.getAttribute('data-w'));
+          }
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      // Moteur 3D Three.js
+      const canvas = document.getElementById('webgl-canvas');
+      const scene = new THREE.Scene();
+      const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+      
+      // On recule la caméra pour que la 3D soit bien en fond
+      camera.position.z = 80;
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+      scene.add(ambientLight);
+      const dirLight = new THREE.DirectionalLight(0xffffff, 1.2);
+      dirLight.position.set(20, 40, 30);
+      scene.add(dirLight);
+
+      const items = [];
+      
+      // Matériaux Solides (visibles mais lisses)
+      const matCyan = new THREE.MeshStandardMaterial({ color: 0x00D2FF, roughness: 0.2, metalness: 0.3 });
+      const matPink = new THREE.MeshStandardMaterial({ color: 0xFF006E, roughness: 0.2, metalness: 0.3 });
+      const matGreen = new THREE.MeshStandardMaterial({ color: 0x00FF95, roughness: 0.4 });
+
+      // ADN
+      for(let j=0; j<3; j++) {
+        const dna = new THREE.Group();
+        for(let i=0; i<12; i++) {
+          const angle = i * 0.5;
+          const y = (i - 6) * 3;
+          const s1 = new THREE.Mesh(new THREE.SphereGeometry(1.5, 16, 16), matCyan);
+          s1.position.set(Math.cos(angle)*6, y, Math.sin(angle)*6);
+          const s2 = new THREE.Mesh(new THREE.SphereGeometry(1.5, 16, 16), matPink);
+          s2.position.set(-Math.cos(angle)*6, y, -Math.sin(angle)*6);
+          const link = new THREE.Mesh(new THREE.CylinderGeometry(0.3, 0.3, 12), new THREE.MeshStandardMaterial({color:0xffffff}));
+          link.position.set(0, y, 0);
+          link.rotation.x = Math.PI / 2;
+          link.rotation.z = -angle;
+          dna.add(s1); dna.add(s2); dna.add(link);
+        }
+        
+        // On pousse les éléments sur les bords pour dégager le centre
+        const side = j % 2 === 0 ? 1 : -1;
+        dna.position.set(side * (50 + Math.random()*30), (Math.random()-0.5)*80, (Math.random()-0.5)*40 - 20);
+        dna.rotation.set(Math.random()*Math.PI, Math.random()*Math.PI, 0);
+        items.push({ mesh: dna, rotX: 0.005, rotY: 0.005 });
+        scene.add(dna);
+      }
+
+      // Cellules
+      for(let i=0; i<15; i++) {
+        const mesh = new THREE.Mesh(new THREE.IcosahedronGeometry(3, 0), Math.random() > 0.5 ? matPink : matGreen);
+        
+        // Dispersion large
+        mesh.position.set((Math.random()-0.5)*200, (Math.random()-0.5)*150, (Math.random()-0.5)*40 - 30);
+        items.push({ mesh: mesh, rotX: 0.01, rotY: 0.01 });
+        scene.add(mesh);
+      }
+
+      let mouseX = 0, mouseY = 0;
+      document.addEventListener('mousemove', (e) => {
+        mouseX = (e.clientX - window.innerWidth/2) * 0.02;
+        mouseY = (e.clientY - window.innerHeight/2) * 0.02;
+      });
+
+      function animate() {
+        requestAnimationFrame(animate);
+        items.forEach((item, index) => {
+          item.mesh.rotation.x += item.rotX;
+          item.mesh.rotation.y += item.rotY;
+          item.mesh.position.y += Math.sin(Date.now() * 0.001 + index) * 0.02;
+        });
+        
+        camera.position.x += (mouseX - camera.position.x) * 0.05;
+        camera.position.y += (-mouseY - camera.position.y) * 0.05;
+        camera.lookAt(scene.position);
+        
+        renderer.render(scene, camera);
+      }
+      animate();
+
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
+    });
+  </script>
+</body>
+</html>    nav { position: fixed; top: 0; left: 0; width: 100%; padding: 2.5rem 4rem; display: flex; justify-content: space-between; align-items: center; z-index: 1000; mix-blend-mode: multiply; }
     .logo { font-family: var(--font-title); font-size: 2rem; font-weight: 800; color: var(--txt-dark); text-decoration: none; letter-spacing: -2px; }
     .nav-right { display: flex; gap: 3rem; align-items: center; }
     .nav-link { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; text-decoration: none; color: var(--txt-dark); position: relative; }
