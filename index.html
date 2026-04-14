@@ -59,7 +59,8 @@
     .nav-links { display: flex; gap: 2.5rem; }
     .nav-links a { color: var(--txt-mut); text-decoration: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
     .nav-links a:hover { color: var(--txt-main); }
-    .contact-link { font-size: 0.75rem; font-weight: 800; color: var(--txt-main); text-transform: uppercase; text-decoration: none; letter-spacing: 1px; }
+    .contact-link { font-size: 0.75rem; font-weight: 800; color: var(--txt-main); text-transform: uppercase; text-decoration: none; letter-spacing: 1px; transition: color 0.3s;}
+    .contact-link:hover { color: var(--ai-blue); }
 
     /* ==========================================================================
        4. HERO SECTION
@@ -171,7 +172,7 @@
       <a href="#recherche">Recherche</a>
       <a href="#parcours">Parcours</a>
     </div>
-    <a href="mailto:thaliapro26@gmail.com" class="contact-link">Contact ↗</a>
+    <a href="#contact" class="contact-link">Contact ↓</a>
   </nav>
 
   <section class="hero" id="hero">
@@ -297,7 +298,7 @@
           <p class="b-desc">Technicienne de labo. Hématologie, hémostase, immunobiochimie. Rigueur analytique et validation de méthodes.</p>
         </a>
 
-        <div class="b-card col-12 reveal" style="background: var(--txt-dark); color: #fff;">
+        <div class="b-card col-12 reveal" style="background: var(--txt-main); color: #fff;">
           <div style="font-size: 3rem; margin-bottom: 1rem;">🥇</div>
           <span class="p-tag" style="color: var(--gold);">Éloquence & Vulgarisation</span>
           <h3 class="b-title" style="color: #fff;">Palmarès & Pitch</h3>
