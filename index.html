@@ -3,365 +3,253 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thalia Barrahi | Créativité, Science & IA</title>
+  <title>Thalia Barrahi | Expérience DeepTech & Science</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Plus+Jakarta+Sans:wght@300;400;600;700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&family=Syne:wght@700;800&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
 
   <style>
     /* ==========================================================================
-       1. VARIABLES & FONDAMENTAUX
+       VARIABLES & RESET
        ========================================================================== */
     :root {
-      --bg: #F8FAFC; --txt: #0F172A; --mut: #64748B;
-      --ai: #3B82F6; --bio: #10B981; --mgt: #F43F5E; --art: #6366F1; --gold: #F59E0B;
-      --font-tech: 'Plus Jakarta Sans', sans-serif; --font-art: 'Caveat', cursive; --font-code: 'JetBrains Mono', monospace;
+      --bg: #030407;
+      --txt: #F8FAFC;
+      --mut: #94A3B8;
+      --ai: #3B82F6;     /* Bleu IA */
+      --bio: #10B981;    /* Vert Bio */
+      --mgt: #F43F5E;    /* Corail Mgt */
+      --gold: #F59E0B;
+      
+      --font-display: 'Syne', sans-serif;
+      --font-body: 'Plus Jakarta Sans', sans-serif;
+      --font-code: 'JetBrains Mono', monospace;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html { scroll-behavior: smooth; background: var(--bg); font-size: 16px; }
-    body { color: var(--txt); font-family: var(--font-tech); line-height: 1.6; overflow-x: hidden; -webkit-font-smoothing: antialiased; perspective: 1000px; }
-    
-    img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    body { color: var(--txt); font-family: var(--font-body); overflow-x: hidden; -webkit-font-smoothing: antialiased; line-height: 1.6; }
 
     /* ==========================================================================
-       2. FOND AURORA & TEXTURES
+       CANVAS 3D BACKGROUND
        ========================================================================== */
-    .aurora { position: fixed; inset: 0; z-index: -3; pointer-events: none; }
-    .blob { position: absolute; border-radius: 50%; opacity: 0.5; animation: float 20s infinite alternate ease-in-out; }
-    .b1 { background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, transparent 65%); width: 80vw; height: 80vw; top: -20%; left: -20%; }
-    .b2 { background: radial-gradient(circle, rgba(244,63,94,0.12) 0%, transparent 65%); width: 70vw; height: 70vw; top: 10%; right: -20%; animation-delay: -5s; }
-    .b3 { background: radial-gradient(circle, rgba(16,185,129,0.15) 0%, transparent 65%); width: 75vw; height: 75vw; bottom: -30%; left: 10%; animation-delay: -10s; }
-    @keyframes float { to { transform: translate(5vw, 5vh) scale(1.1); } }
-
-    .grid-bg { position: fixed; inset: 0; z-index: -2; pointer-events: none; background-image: linear-gradient(rgba(15, 23, 42, 0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(15, 23, 42, 0.03) 1px, transparent 1px); background-size: 40px 40px; mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent); -webkit-mask-image: linear-gradient(to bottom, transparent, black 10%, black 90%, transparent); }
-
-    /* ==========================================================================
-       3. NAVIGATION FLOTTANTE
-       ========================================================================== */
-    nav { position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 1000; background: rgba(255,255,255,0.8); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.9); padding: 0.8rem 2.5rem; border-radius: 100px; display: flex; gap: 3rem; align-items: center; box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
-    .logo { font-weight: 800; font-size: 1.3rem; color: var(--txt); text-decoration: none; letter-spacing: -1px; }
-    .links { display: flex; gap: 2rem; }
-    .links a { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--mut); text-decoration: none; transition: 0.3s; letter-spacing: 1px; }
-    .links a:hover { color: var(--ai); transform: translateY(-2px); }
-
-    /* ==========================================================================
-       4. TYPO & ÉLÉMENTS GRAPHIQUES (JEUX DE TAILLES)
-       ========================================================================== */
-    .container { max-width: 1300px; margin: 0 auto; padding: 0 5%; position: relative; }
-    
-    .massive-title { font-size: clamp(4rem, 10vw, 8rem); font-weight: 800; line-height: 0.9; letter-spacing: -0.04em; margin-bottom: 2rem; position: relative; z-index: 2; }
-    .grad-text { background: linear-gradient(135deg, var(--ai), var(--art)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-    
-    .handwritten { font-family: var(--font-art); font-size: clamp(1.5rem, 3vw, 2.5rem); color: var(--art); transform: rotate(-5deg); position: absolute; z-index: 10; pointer-events: none; }
-    
-    .pill { font-family: var(--font-code); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 0.5rem 1.2rem; border-radius: 50px; background: rgba(255,255,255,0.9); border: 1px solid rgba(0,0,0,0.05); display: inline-flex; align-items: center; box-shadow: 0 5px 15px rgba(0,0,0,0.02); margin-bottom: 1rem;}
-
-    /* ==========================================================================
-       5. HERO SECTION
-       ========================================================================== */
-    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-top: 80px; position: relative; }
-    .h-desc { font-size: clamp(1.1rem, 2.5vw, 1.5rem); color: var(--mut); max-width: 700px; margin-bottom: 3rem; line-height: 1.5; font-weight: 400; }
-    .h-desc strong { color: var(--txt); font-weight: 800; }
-
-    /* ==========================================================================
-       6. CARTES DE PROJETS (VOLUMES ET 3D)
-       ========================================================================== */
-    /* La zone de perspective */
-    .card-wrapper { perspective: 2000px; margin-bottom: 8rem; }
-    
-    /* La carte qui tourne en 3D */
-    .card-3d {
-      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
-      background: rgba(255,255,255,0.6); backdrop-filter: blur(30px);
-      border: 1px solid rgba(255,255,255,0.9); border-radius: 40px; padding: 5rem;
-      box-shadow: 0 30px 60px rgba(0,0,0,0.03), inset 0 0 0 1px rgba(255,255,255,0.5);
-      transform-style: preserve-3d; transition: transform 0.1s; will-change: transform;
+    #webgl-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: -5;
+      pointer-events: none; /* Laisse passer les clics vers le site */
     }
-    .card-3d.rev { direction: rtl; } .card-3d.rev > * { direction: ltr; }
-    
-    /* Les éléments à l'intérieur qui "sortent" de la carte (Volumes) */
-    .card-content { transform: translateZ(50px); }
-    .card-visual { transform: translateZ(80px); position: relative; }
 
-    .c-title { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -0.02em;}
-    .c-desc { font-size: 1.1rem; color: var(--mut); margin-bottom: 1.5rem; }
-    .tags { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-    .tag { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; padding: 0.4rem 1rem; border-radius: 8px; background: #fff; border: 1px solid rgba(0,0,0,0.05); }
+    /* Voile d'assombrissement pour que le texte reste lisible */
+    .overlay {
+      position: fixed; inset: 0; z-index: -4;
+      background: radial-gradient(circle at center, transparent 0%, rgba(3,4,7,0.8) 100%);
+      pointer-events: none;
+    }
 
     /* ==========================================================================
-       7. UI INTERACTIVES (ANIMATIONS FLOTTANTES)
+       INTERFACE UTILISATEUR (UI OVERLAY)
        ========================================================================== */
-    .ui-box { background: rgba(255,255,255,0.9); border: 1px solid #fff; border-radius: 24px; padding: 2.5rem; box-shadow: 0 20px 50px rgba(0,0,0,0.05); animation: levitate 6s infinite alternate ease-in-out; }
-    @keyframes levitate { 0% { transform: translateY(0); } 100% { transform: translateY(-15px); } }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; position: relative; z-index: 10; }
     
-    .ui-head { font-family: var(--font-code); font-size: 0.75rem; font-weight: 700; color: var(--mut); text-transform: uppercase; letter-spacing: 1px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 1rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; }
+    /* Navigation */
+    nav {
+      position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 1000;
+      background: rgba(10, 15, 30, 0.4); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(255,255,255,0.1); padding: 0.8rem 2.5rem; border-radius: 100px;
+      display: flex; gap: 3rem; align-items: center;
+    }
+    .logo { font-family: var(--font-display); font-weight: 800; font-size: 1.2rem; color: #fff; text-decoration: none; letter-spacing: -1px; }
+    .links { display: flex; gap: 2rem; }
+    .links a { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--mut); text-decoration: none; transition: 0.3s; letter-spacing: 1px; }
+    .links a:hover { color: #fff; }
 
-    /* Terminal (Astroly) */
-    .terminal { background: #0F172A; border-radius: 16px; padding: 2rem; font-family: var(--font-code); font-size: 0.85rem; line-height: 1.7; color: #E2E8F0; border-left: 4px solid var(--ai); position: relative; overflow: hidden;}
-    .term-key { color: #38BDF8; font-weight: 700; } .term-str { color: #A7F3D0; }
+    /* Typographie */
+    .title-xl { font-family: var(--font-display); font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 800; line-height: 1; letter-spacing: -0.04em; margin-bottom: 2rem; }
+    .grad-text { background: linear-gradient(135deg, #fff, rgba(255,255,255,0.3)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .badge { font-family: var(--font-code); font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 0.4rem 1rem; border-radius: 4px; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); display: inline-flex; margin-bottom: 1rem; }
 
-    /* Jauges (CPAM) */
-    .kpi { background: #fff; padding: 1.5rem; border-radius: 16px; border: 1px solid rgba(244,63,94,0.1); margin-bottom: 1rem; box-shadow: 0 10px 20px rgba(244,63,94,0.03); transition: 0.4s;}
-    .kpi:hover { transform: scale(1.03) translateX(10px); border-color: var(--mgt); }
-    .kpi-h { display: flex; justify-content: space-between; font-size: 0.9rem; font-weight: 800; margin-bottom: 0.8rem; }
-    .bar { height: 10px; background: #F1F5F9; border-radius: 10px; overflow: hidden; }
-    .fill { height: 100%; width: 0; background: linear-gradient(90deg, var(--mgt), var(--gold)); transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
+    /* Hero Section */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: flex-start; padding-top: 80px; }
+    .hero p { font-size: clamp(1.1rem, 2vw, 1.4rem); color: rgba(255,255,255,0.7); max-width: 650px; margin-bottom: 3rem; }
+    .hero p strong { color: #fff; }
 
-    /* Pétri (CRRHAB) - Organique */
-    .petri-box { display: flex; flex-direction: column; align-items: center; justify-content: center; }
-    .petri { width: 220px; height: 220px; position: relative; cursor: crosshair; }
-    .petri svg { width: 100%; height: 100%; filter: drop-shadow(0 20px 30px rgba(16,185,129,0.15)); transition: 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-    .petri:hover svg { transform: scale(1.1) rotate(15deg); }
-    .halo { opacity: 0; transition: 0.6s; transform: scale(0.8); transform-origin: center; }
-    .petri:hover .halo { opacity: 1; transform: scale(1); }
+    /* Glass Cards (Projets) */
+    .card {
+      display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 4rem; align-items: center;
+      background: rgba(15, 20, 35, 0.3); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
+      border: 1px solid rgba(255,255,255,0.08); border-radius: 32px; padding: 4rem; margin-bottom: 8rem;
+      box-shadow: 0 30px 60px rgba(0,0,0,0.5); transition: border-color 0.4s;
+    }
+    .card:hover { border-color: rgba(255,255,255,0.2); }
+    .card.rev { direction: rtl; } .card.rev > * { direction: ltr; }
+    
+    .c-title { font-family: var(--font-display); font-size: 3rem; font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
+    .c-desc { font-size: 1.05rem; color: var(--mut); margin-bottom: 1.5rem; }
+    
+    /* UI Panels (Dans les cartes) */
+    .ui-panel { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.05); border-radius: 16px; padding: 2rem; width: 100%; box-shadow: inset 0 0 20px rgba(0,0,0,0.5); }
+    .ui-head { font-family: var(--font-code); font-size: 0.7rem; color: var(--mut); text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.05); padding-bottom: 1rem; margin-bottom: 1.5rem; display: flex; justify-content: space-between; }
+    
+    .terminal { font-family: var(--font-code); font-size: 0.8rem; color: #CBD5E1; line-height: 1.7; }
+    .t-key { color: var(--ai); font-weight: 700; } .t-str { color: #A7F3D0; }
 
-    /* ==========================================================================
-       8. PARCOURS (FORMATS ASYMÉTRIQUES)
-       ========================================================================== */
-    .bento { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; margin-top: 4rem; }
-    .b-card { background: rgba(255,255,255,0.7); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.9); border-radius: 32px; padding: 3rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.5s cubic-bezier(0.2, 0.8, 0.2, 1); position: relative; overflow: hidden;}
-    .b-card:hover { transform: translateY(-10px); background: #fff; box-shadow: 0 30px 60px rgba(0,0,0,0.06); border-color: #fff; }
+    /* Bento Grid (Parcours) */
+    .bento { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 4rem; }
+    .b-card { background: rgba(15, 20, 35, 0.3); backdrop-filter: blur(15px); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; padding: 2.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column; transition: 0.4s; }
+    .b-card:hover { transform: translateY(-10px); background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.2); }
+    .b-title { font-family: var(--font-display); font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; }
+    .b-desc { font-size: 0.95rem; color: var(--mut); flex-grow: 1; margin-bottom: 2rem; }
     
-    .col-7 { grid-column: span 7; } .col-5 { grid-column: span 5; } .col-12 { grid-column: span 12; }
-    
-    .b-img { height: 250px; border-radius: 20px; margin-bottom: 2rem; overflow: hidden; border: 1px solid rgba(0,0,0,0.05); background: #fff; }
-    .b-img.contain img { object-fit: contain; padding: 2rem; }
-    .b-card:hover .b-img img { transform: scale(1.08); }
-    
-    .b-title { font-size: 2rem; font-weight: 800; margin-bottom: 1rem; line-height: 1.1;}
-    .b-desc { font-size: 1.05rem; color: var(--mut); flex-grow: 1; margin-bottom: 2rem; }
-    
-    /* ==========================================================================
-       9. CONTACT & ANIMATIONS
-       ========================================================================== */
+    .btn { display: inline-flex; padding: 1.2rem 3rem; border-radius: 50px; font-weight: 800; text-transform: uppercase; text-decoration: none; transition: 0.4s; letter-spacing: 1px; font-size: 0.8rem; }
+    .btn-glow { background: #fff; color: #000; box-shadow: 0 0 20px rgba(255,255,255,0.2); }
+    .btn-glow:hover { background: var(--bio); color: #fff; box-shadow: 0 0 30px rgba(16, 185, 129, 0.4); border-color: transparent;}
+
+    /* Animations JS Hook */
     .reveal { opacity: 0; transform: translateY(50px); transition: 1s cubic-bezier(0.2, 0.8, 0.2, 1); }
     .reveal.on { opacity: 1; transform: translateY(0); }
-    .d-1 { transition-delay: 0.1s; } .d-2 { transition-delay: 0.2s; }
 
-    .contact { padding: 150px 0; text-align: center; }
-    .btn-wrap { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 4rem; }
-    .btn { padding: 1.2rem 3rem; border-radius: 50px; font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; text-decoration: none; transition: 0.4s cubic-bezier(0.2, 0.8, 0.2, 1); display: inline-flex; align-items: center; gap: 0.5rem;}
-    .btn-solid { background: var(--txt); color: #fff; box-shadow: 0 15px 30px rgba(0,0,0,0.1); }
-    .btn-solid:hover { background: var(--ai); transform: translateY(-5px); box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2); }
-    .btn-out { background: transparent; border: 2px solid rgba(0,0,0,0.1); color: var(--txt); }
-    .btn-out:hover { background: #fff; border-color: var(--txt); transform: translateY(-5px); box-shadow: 0 15px 30px rgba(0,0,0,0.05); }
-
-    @media (max-width: 1024px) { 
-      .card-3d { grid-template-columns: 1fr; padding: 3rem; gap: 4rem; } .card-3d.rev { direction: ltr; } 
-      .col-7, .col-5 { grid-column: span 12; }
-    }
-    @media (max-width: 768px) { 
-      nav { width: 90%; top: 1rem; } .links { display: none; } 
-      .hero { align-items: center; text-align: center; padding-top: 120px; } .massive-title { font-size: 3.5rem; } 
-      .handwritten { display: none; } 
-      .card-3d { padding: 2rem; border-radius: 24px; } .btn-wrap { flex-direction: column; width: 100%; } .btn { width: 100%; justify-content: center; } 
-    }
+    @media (max-width: 1024px) { .card { grid-template-columns: 1fr; padding: 3rem; gap: 3rem; } .card.rev { direction: ltr; } }
+    @media (max-width: 768px) { nav { width: 90%; } .links { display: none; } .title-xl { font-size: 3.5rem; } .card { padding: 2rem; } }
   </style>
 </head>
 <body>
 
-  <div class="grid-bg"></div>
-  <div class="aurora">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="blob b3"></div>
-  </div>
+  <canvas id="webgl-canvas"></canvas>
+  <div class="overlay"></div>
 
   <nav>
-    <a href="#hero" class="logo">Thalia.B</a>
+    <a href="#hero" class="logo">T.B</a>
     <div class="links">
       <a href="#projets">Projets</a>
-      <a href="#recherche">Recherche</a>
-      <a href="#parcours">Parcours</a>
+      <a href="#parcours">Parcours & Prix</a>
     </div>
-    <a href="mailto:thaliapro26@gmail.com" style="font-size: 0.8rem; font-weight: 800; color: var(--txt); text-transform: uppercase; text-decoration: none; border-bottom: 2px solid var(--txt); padding-bottom: 2px;">Contact</a>
+    <a href="mailto:thaliapro26@gmail.com" style="color:#fff; text-decoration:none; font-size:0.75rem; font-weight:800; text-transform:uppercase;">Contact</a>
   </nav>
 
   <div class="container">
     
     <section class="hero" id="hero">
-      
-      <div class="handwritten reveal on" style="top: 15%; right: 5%;">
-        L'art de concevoir l'avenir... 💡
-      </div>
-
-      <span class="pill reveal on" style="color: var(--gold); border-color: rgba(245, 158, 11, 0.3);">Portfolio Édition 2026</span>
-      
-      <h1 class="massive-title reveal d-1 on">
-        Science,<br>Management &<br><span class="grad-text">Créativité.</span>
+      <span class="badge reveal on" style="color: var(--gold); border-color: rgba(245,158,11,0.3);">Portfolio DeepTech 2026</span>
+      <h1 class="title-xl reveal on" style="transition-delay: 0.1s;">
+        L'Architecture du Vivant,<br><span class="grad-text">Le Management de l'IA.</span>
       </h1>
-      
-      <p class="h-desc reveal d-2 on">
-        Manager de projets innovants. J'hybride la <strong>rigueur analytique</strong> du laboratoire, l'architecture de <strong>l'IA Agentique</strong>, et <strong>l'œil d'une artiste</strong> pour créer des solutions qui ont du sens.
+      <p class="reveal on" style="transition-delay: 0.2s;">
+        Double expertise en <strong>Génie Biologique</strong> et <strong>Management de l'Innovation</strong>. Je modélise des solutions hybrides (Multi-Agents, Biocontrôle, Data) pour transformer les organisations. (Bougez votre souris pour explorer la scène 3D).
       </p>
-      
-      <div class="tags reveal d-2 on">
-        <span class="tag" style="color: var(--ai);">🎓 Master 1 Management de l'Innovation</span>
-        <span class="tag" style="color: var(--bio);">🎓 BUT Génie Biologique</span>
+      <div style="display: flex; gap: 1rem;" class="reveal on" style="transition-delay: 0.3s;">
+        <span class="badge" style="color: var(--ai); border-color: rgba(59,130,246,0.3);">Master 1 MGT Innovation</span>
+        <span class="badge" style="color: var(--bio); border-color: rgba(16,185,129,0.3);">BUT Génie Biologique</span>
       </div>
     </section>
 
-    <section id="projets" style="padding-bottom: 100px;">
+    <section id="projets" style="padding: 100px 0;">
       
-      <div class="card-wrapper reveal">
-        <div class="card-3d tilt-card">
-          <div class="handwritten" style="top: -30px; left: -10px; color: var(--ai);">Design UX avant tout !</div>
-          <div class="card-content">
-            <span class="pill" style="color: var(--ai); border-color: rgba(59, 130, 246, 0.3);">M1 Management de l'Innovation</span>
-            <h2 class="c-title">Astroly,<br>L'Ère Agentique.</h2>
-            <p class="c-desc">
-              <strong>Le Défi :</strong> Capgemini x IAE. 49% des jeunes talents abandonnent face à un recrutement archaïque. L'objectif était de stopper la déperdition des profils "Pépites" après les challenges.
-            </p>
-            <p class="c-desc">
-              <strong>La Solution :</strong> Conception d'une architecture modulaire de <strong>6 agents IA</strong> (Copilot Studio). Candidature sans CV en 5 min via mobile et scoring de compatibilité automatisé.
-            </p>
-            <div class="tags">
-              <span class="tag">Multi-Agents</span><span class="tag">Copilot Studio</span><span class="tag">UX Candidat</span>
-            </div>
+      <div class="card reveal">
+        <div>
+          <span class="badge" style="color: var(--ai);">M1 Management de l'Innovation</span>
+          <h2 class="c-title">Astroly,<br>IA Agentique.</h2>
+          <p class="c-desc"><strong>Le Défi :</strong> Capgemini x IAE. 49% des jeunes talents abandonnent face à un recrutement archaïque. L'objectif : stopper la déperdition des profils "Pépites".</p>
+          <p class="c-desc"><strong>La Solution :</strong> Architecture modulaire de <strong>6 agents IA</strong> (Copilot Studio). Passage d'un sourcing de masse à une expérience "mobile-first" : candidature sans CV en 5 min et scoring de compatibilité.</p>
+          <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-top:1.5rem;">
+            <span class="badge" style="background:rgba(59,130,246,0.1); border-color:transparent; color:var(--ai);">Microsoft 365</span>
+            <span class="badge" style="background:rgba(59,130,246,0.1); border-color:transparent; color:var(--ai);">Multi-Agents</span>
           </div>
-          
-          <div class="card-visual">
-            <div class="ui-box">
-              <div class="ui-head"><span>Prompt System</span> <span style="color: var(--ai);">● Agent_Scoring.exe</span></div>
-              <div class="terminal">
-                <span class="term-key">Role:</span> <span class="term-str">"Tu es l'Expert Recrutement IA de Capgemini. Ton objectif est de transformer des réponses brutes de formulaires en dossiers de candidature à haute valeur ajoutée."</span><br><br>
-                <span class="term-key">Action:</span> <span class="term-str">"Génération d'un CV uniformisé, analyse des forces et faiblesses, et scoring d'adéquation candidat/offre."</span>
-              </div>
-            </div>
+        </div>
+        <div class="ui-panel">
+          <div class="ui-head"><span>Prompt System</span> <span style="color: var(--ai);">● Agent_Scoring.exe</span></div>
+          <div class="terminal">
+            <span class="t-key">Role:</span> <span class="t-str">"Tu es l'Expert Recrutement IA de Capgemini. Ton objectif est de transformer des réponses brutes de formulaires en dossiers de candidature à haute valeur ajoutée."</span><br><br>
+            <span class="t-key">Action:</span> <span class="t-str">"Génération d'un CV uniformisé, analyse des forces et faiblesses, et scoring d'adéquation candidat/offre."</span>
           </div>
         </div>
       </div>
 
-      <div class="card-wrapper reveal">
-        <div class="card-3d rev tilt-card">
-          <div class="handwritten" style="bottom: -20px; right: -30px; color: var(--mgt);">2 ans d'alternance passionnants ✨</div>
-          <div class="card-content">
-            <span class="pill" style="color: var(--mgt); border-color: rgba(244, 63, 94, 0.3);">Alternance 2 ans · M1 Innovation</span>
-            <h2 class="c-title">Intelligence<br>Collective.</h2>
-            <p class="c-desc">
-              Au sein de la <strong>CPAM Hérault</strong>, j'accompagne la transformation de l'organisation par le prisme de l'humain et de l'encadrement méthodologique.
-            </p>
-            <p class="c-desc">
-              En tant que Chef de projets innovants, je pilote l'<strong>Innovation Participative</strong> : co-pilotage de la plateforme de remontée d'idées, facilitation d'ateliers d'idéation et structuration des KPIs.
-            </p>
-            <div class="tags">
-              <span class="tag">Facilitation</span><span class="tag">Plateforme d'Idées</span><span class="tag">Suivi KPI</span>
-            </div>
-          </div>
-          
-          <div class="card-visual">
-            <div class="ui-box">
-              <div class="ui-head"><span>Dashboard : Adoption & Facilitation</span></div>
-              <div class="kpi">
-                <div class="kpi-h"><span>Adoption Plateforme Collaborateurs</span><span>100%</span></div>
-                <div class="bar"><div class="fill kpi-anim" data-target="100%"></div></div>
-              </div>
-              <div class="kpi">
-                <div class="kpi-h"><span>Facilitation Groupes d'Idéation</span><span>100%</span></div>
-                <div class="bar"><div class="fill kpi-anim" data-target="100%" style="transition-delay: 0.2s;"></div></div>
-              </div>
-              <div class="kpi">
-                <div class="kpi-h"><span>Structuration des KPIs Stratégiques</span><span>100%</span></div>
-                <div class="bar"><div class="fill kpi-anim" data-target="100%" style="transition-delay: 0.4s;"></div></div>
-              </div>
-            </div>
+      <div class="card rev reveal">
+        <div>
+          <span class="badge" style="color: var(--bio);">BUT Génie Biologique</span>
+          <h2 class="c-title">Science du<br>Vivant.</h2>
+          <p class="c-desc"><strong>Le Défi :</strong> Explorer des alternatives durables aux pesticides chimiques au CRRHAB (Tunisie) en s'appuyant sur l'immunité naturelle des plantes.</p>
+          <p class="c-desc"><strong>Méthodologie :</strong> Étude croisée sur 19 variétés de pommes de terre. Isolement de souches d'intérêt du microbiome (<em>Bacillus, Serratia</em>) et <strong>confrontation directe in vitro sur milieu gélosé PDA</strong> contre des moisissures pathogènes (<em>Fusarium</em>).</p>
+        </div>
+        <div class="ui-panel">
+          <div class="ui-head"><span>Analyse in vitro (Milieu PDA)</span></div>
+          <div class="terminal" style="border-left-color: var(--bio);">
+            <span style="color:var(--bio); font-weight:700;">> INIT_CULTURE_PROTOCOL</span><br>
+            [+] Souche ciblée : Fusarium oxysporum<br>
+            [+] Antagonistes : Isolats Bacillus spp.<br>
+            [+] Incubation : 25°C<br>
+            <span style="color:var(--gold);">> OBSERVATION :</span> Inhibition mycélienne mesurable (Données brutes sous NDA). Approche de biocontrôle validée.
           </div>
         </div>
       </div>
 
-      <div class="card-wrapper reveal" id="recherche">
-        <div class="card-3d tilt-card">
-          <div class="handwritten" style="top: -30px; left: 40%; color: var(--bio);">Mes premières amours 🌿</div>
-          <div class="card-content">
-            <span class="pill" style="color: var(--bio); border-color: rgba(16, 185, 129, 0.3);">BUT Génie Biologique</span>
-            <h2 class="c-title">Science du<br>Vivant.</h2>
-            <p class="c-desc">
-              <strong>Le Défi :</strong> Explorer des alternatives durables aux pesticides chimiques au CRRHAB (Tunisie) en s'appuyant sur l'immunité naturelle des plantes.
-            </p>
-            <p class="c-desc">
-              <strong>Méthodologie :</strong> Étude croisée sur 19 variétés de pommes de terre. Isolement de souches du microbiome (<em>Bacillus, Serratia</em>) et <strong>confrontation in vitro sur milieu gélosé PDA</strong> contre des pathogènes (<em>Fusarium</em>).
-            </p>
-            <div class="tags">
-              <span class="tag">Biocontrôle</span><span class="tag">Microbiologie</span><span class="tag">In Vitro (PDA)</span>
-            </div>
-          </div>
+      <div class="card reveal">
+        <div>
+          <span class="badge" style="color: var(--mgt);">Alternance 2 ans · M1 Innovation</span>
+          <h2 class="c-title">Intelligence<br>Collective.</h2>
+          <p class="c-desc">Au sein de la <strong>CPAM Hérault</strong>, j'accompagne la transformation de l'organisation par le prisme de l'humain et de l'encadrement méthodologique.</p>
+          <p class="c-desc">En tant que Chef de projets innovants, je pilote l'<strong>Innovation Participative</strong> : co-pilotage de la plateforme de remontée d'idées, facilitation d'ateliers d'idéation et structuration des KPIs.</p>
+        </div>
+        <div class="ui-panel">
+          <div class="ui-head"><span>Plateforme d'Idées (Adoption)</span></div>
+          <div style="display:flex; justify-content:space-between; font-family:var(--font-code); font-size:0.7rem; color:#fff; margin-bottom:0.5rem;"><span>COLLABORATEURS ONBOARDÉS</span><span>100%</span></div>
+          <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:10px; margin-bottom:1.5rem;"><div style="width:100%; height:100%; background:var(--mgt); border-radius:10px;"></div></div>
           
-          <div class="card-visual">
-            <div class="ui-box petri-box">
-              <div class="ui-head" style="width: 100%;"><span>Croquis Interactif (Survolez)</span></div>
-              <div class="petri">
-                <svg viewBox="0 0 100 100">
-                  <circle cx="50" cy="50" r="48" fill="rgba(255,255,255,0.6)" stroke="#10B981" stroke-width="2" stroke-dasharray="4 2"/>
-                  <path d="M 20 50 Q 30 20 50 50 T 65 50" stroke="#64748B" stroke-width="12" stroke-linecap="round" fill="none" opacity="0.6"/>
-                  <circle cx="45" cy="45" r="15" fill="#64748B" opacity="0.3"/>
-                  
-                  <circle class="halo" cx="72" cy="50" r="26" fill="rgba(16, 185, 129, 0.2)"/>
-                  
-                  <circle cx="75" cy="50" r="4" fill="var(--bio)"/>
-                  <circle cx="70" cy="40" r="3" fill="var(--bio)"/>
-                  <circle cx="68" cy="60" r="3.5" fill="var(--bio)"/>
-                  <circle cx="82" cy="45" r="2" fill="var(--bio)"/>
-                </svg>
-              </div>
-              <div style="font-size: 0.8rem; font-weight: 800; color: var(--txt); text-transform: uppercase;">Zone d'inhibition mycélienne</div>
-              <div style="font-family: var(--font-code); font-size: 0.65rem; color: var(--bio); margin-top: 0.3rem; font-weight: 700;">DONNÉES QUANTITATIVES SOUS NDA</div>
-            </div>
-          </div>
+          <div style="display:flex; justify-content:space-between; font-family:var(--font-code); font-size:0.7rem; color:#fff; margin-bottom:0.5rem;"><span>ATELIERS DE FACILITATION</span><span>100%</span></div>
+          <div style="height:6px; background:rgba(255,255,255,0.1); border-radius:10px;"><div style="width:100%; height:100%; background:var(--gold); border-radius:10px;"></div></div>
         </div>
       </div>
 
     </section>
 
-    <section id="parcours">
-      <h2 class="massive-title reveal" style="text-align: center; font-size: clamp(3rem, 6vw, 5rem); margin-bottom: 4rem;">Expériences & <br><span class="grad-text">Archives.</span></h2>
-      
+    <section id="parcours" style="padding-bottom: 100px;">
+      <h2 class="title-xl reveal" style="text-align: center; margin-bottom: 4rem;">Expériences & <span class="grad-text">Archives.</span></h2>
       <div class="bento">
         
-        <a href="#" class="b-card col-7 reveal">
-          <div class="b-img"><img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Heron Exchange"></div>
-          <span class="pill" style="color: var(--gold); border-color: rgba(245, 158, 11, 0.3); margin-bottom: 1rem;">🏆 PRIX INITIUM : PLUS FORT POTENTIEL</span>
+        <a href="#" class="b-card reveal">
+          <span class="badge" style="color: var(--gold);">🏆 Prix INITIUM</span>
           <h3 class="b-title">Heron Exchange</h3>
-          <p class="b-desc">SaaS B2B luttant contre la fraude financière BEC (~7M de PME). Accompagnement stratégique, diagnostic terrain et élaboration du modèle de revenus.</p>
+          <p class="b-desc"><strong>Prix du projet à plus fort potentiel.</strong> SaaS B2B luttant contre la fraude financière BEC (~7M PME). Diagnostic terrain et élaboration du modèle de revenus (M1 Innovation).</p>
         </a>
 
-        <a href="Soutenance de 2eme année.pdf" target="_blank" class="b-card col-5 reveal d-1">
-          <div class="b-img contain"><img src="Poster scientifique bleu et vert.png" alt="Poster Unibio"></div>
-          <span class="pill" style="color: var(--bio); border-color: rgba(16, 185, 129, 0.3); margin-bottom: 1rem;">Alternance 18 Mois · BUT Bio</span>
+        <a href="Soutenance de 2eme année.pdf" target="_blank" class="b-card reveal" style="transition-delay: 0.1s;">
+          <span class="badge" style="color: var(--bio);">Alternance 18 Mois</span>
           <h3 class="b-title">Unibio Medical</h3>
-          <p class="b-desc">Technicienne de laboratoire. <strong>Skills:</strong> Hématologie, hémostase, immunobiochimie. Rigueur analytique et validation de méthodes.</p>
+          <p class="b-desc">Technicienne de labo (BUT Bio). <strong>Skills :</strong> Hématologie, hémostase, immunobiochimie. Rigueur analytique, contrôles qualité et validation de méthodes.</p>
         </a>
 
-        <div class="b-card col-7 reveal" style="background: linear-gradient(135deg, rgba(245, 158, 11, 0.1), rgba(244, 63, 94, 0.05)); border-color: rgba(245, 158, 11, 0.3);">
-          <div style="font-size: 4rem; margin-bottom: 1rem;">🥇</div>
-          <span class="pill" style="color: var(--gold); border-color: rgba(245, 158, 11, 0.3); margin-bottom: 1rem;">Éloquence & Vulgarisation</span>
-          <h3 class="b-title" style="color: var(--gold);">Palmarès & Pitch</h3>
-          <p class="b-desc" style="color: var(--txt); font-weight: 600;">Prix Coup de Pouce Créa'thlon (2025, Projet Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min" (2021) pour la vulgarisation de l'antibiorésistance.</p>
-        </div>
-
-        <a href="#" class="b-card col-5 reveal d-1">
-          <div class="b-img"><img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Culture in vitro"></div>
-          <span class="pill" style="color: var(--bio); border-color: rgba(16, 185, 129, 0.3); margin-bottom: 1rem;">IUT Montpellier · BUT Bio</span>
+        <a href="#" class="b-card reveal" style="transition-delay: 0.2s;">
+          <span class="badge" style="color: var(--bio);">IUT Montpellier</span>
           <h3 class="b-title">Culture in vitro</h3>
-          <p class="b-desc">Projet sur la micropropagation du Vanillier (milieu MS). <strong>Skills:</strong> Maîtrise totale de la stérilité sous hotte et acclimatation en serre.</p>
+          <p class="b-desc">Projet sur la micropropagation du Vanillier (milieu MS). <strong>Skills :</strong> Maîtrise totale de la stérilité sous hotte à flux laminaire et processus d'acclimatation en serre.</p>
         </a>
+
+        <div class="b-card reveal" style="background: rgba(245, 158, 11, 0.1); border-color: rgba(245, 158, 11, 0.3); transition-delay: 0.3s;">
+          <span class="badge" style="color: var(--gold); border-color: rgba(245, 158, 11, 0.3);">Éloquence</span>
+          <h3 class="b-title" style="color: var(--gold);">Palmarès & Pitch</h3>
+          <p class="b-desc" style="color: #fff;">Prix Coup de Pouce Créa'thlon (2025, Projet Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min" (2021) pour la vulgarisation scientifique.</p>
+        </div>
 
       </div>
     </section>
 
-    <section class="contact" id="contact">
-      <h2 class="massive-title reveal" style="font-size: clamp(3rem, 7vw, 6rem);">Travaillons <br><span class="grad-text">Ensemble.</span></h2>
-      <p class="reveal d-1" style="color: var(--mut); margin-top: 1rem; font-size: 1.2rem;">Basée à Montpellier | Permis B, véhiculée.</p>
-      
-      <div class="btn-wrap reveal d-2">
-        <a href="mailto:thaliapro26@gmail.com" class="btn btn-solid">Écrire un email</a>
-        <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn btn-out">LinkedIn</a>
-        <a href="CV.pdf" download class="btn btn-out" style="border-color: var(--bio); color: var(--bio);">Télécharger CV</a>
+    <section style="text-align: center; padding: 150px 0; border-top: 1px solid rgba(255,255,255,0.05);">
+      <h2 class="title-xl reveal">Travaillons <span class="grad-text">Ensemble.</span></h2>
+      <p class="reveal" style="color: var(--mut); margin-bottom: 3rem;">Basée à Montpellier | Permis B, véhiculée.</p>
+      <div style="display:flex; justify-content:center; gap: 1.5rem; flex-wrap:wrap;" class="reveal">
+        <a href="mailto:thaliapro26@gmail.com" class="btn btn-glow">Écrire un email</a>
+        <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn" style="border: 1px solid var(--mut); color:#fff;">LinkedIn</a>
+        <a href="CV.pdf" download class="btn" style="border: 1px solid var(--bio); color:var(--bio);">Télécharger CV</a>
       </div>
-      
-      <p style="margin-top: 8rem; font-family: var(--font-code); font-size: 0.75rem; color: var(--mut); text-transform: uppercase; letter-spacing: 2px;">
-        © 2026 Thalia Barrahi — Design & Innovation Studio
+      <p style="margin-top: 8rem; font-family: var(--font-code); font-size: 0.7rem; color: var(--mut); text-transform: uppercase; letter-spacing: 2px;">
+        © 2026 Thalia Barrahi — WebGL & DeepTech Design
       </p>
     </section>
 
@@ -370,56 +258,189 @@
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       
-      /* --- 1. MOTEUR 3D POUR LES CARTES (Parallaxe) --- */
-      const cards = document.querySelectorAll('.tilt-card');
-      
-      cards.forEach(card => {
-        card.addEventListener('mousemove', e => {
-          const rect = card.getBoundingClientRect();
-          const x = e.clientX - rect.left; // Position X de la souris dans la carte
-          const y = e.clientY - rect.top;  // Position Y de la souris dans la carte
-          
-          const centerX = rect.width / 2;
-          const centerY = rect.height / 2;
-          
-          // Calcul de la rotation (plus on est loin du centre, plus ça tourne)
-          const rotateX = ((y - centerY) / centerY) * -5; // Max 5 degrés
-          const rotateY = ((x - centerX) / centerX) * 5;  // Max 5 degrés
-          
-          card.style.transform = `perspective(2000px) rotateX(${rotateX}deg) rotateY(${rotateY}deg) scale3d(1.02, 1.02, 1.02)`;
-        });
-        
-        card.addEventListener('mouseleave', () => {
-          // Retour à la position initiale
-          card.style.transform = `perspective(2000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
-          card.style.transition = 'transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1)';
-        });
-        
-        card.addEventListener('mouseenter', () => {
-          // Supprimer la transition pour un suivi immédiat de la souris
-          card.style.transition = 'none';
-        });
-      });
-
-      /* --- 2. RÉVÉLATION AU SCROLL ET ANIMATION DES JAUGES --- */
+      /* --- 1. REVEAL ANIMATIONS ON SCROLL --- */
       const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('on');
-            
-            // Animation des KPIs
-            const fills = entry.target.querySelectorAll('.kpi-anim');
-            fills.forEach(fill => {
-              fill.style.width = fill.getAttribute('data-target');
-            });
-            
-            observer.unobserve(entry.target);
-          }
+        entries.forEach(e => {
+          if (e.isIntersecting) { e.target.classList.add('on'); observer.unobserve(e.target); }
         });
-      }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
-
+      }, { threshold: 0.1 });
       document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
+      /* --- 2. THREE.JS 3D ENGINE --- */
+      // Initialisation de la scène, de la caméra et du rendu
+      const canvas = document.getElementById('webgl-canvas');
+      const scene = new THREE.Scene();
+      
+      // On ajoute un léger brouillard pour la profondeur
+      scene.fog = new THREE.FogExp2(0x030407, 0.015);
+
+      const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+      camera.position.z = 30;
+
+      const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+
+      // --- LUMIÈRES ---
+      const ambientLight = new THREE.AmbientLight(0xffffff, 0.2);
+      scene.add(ambientLight);
+
+      const pointLight1 = new THREE.PointLight(0x3B82F6, 2, 100); // Bleu IA
+      pointLight1.position.set(20, 20, 10);
+      scene.add(pointLight1);
+
+      const pointLight2 = new THREE.PointLight(0x10B981, 2, 100); // Vert Bio
+      pointLight2.position.set(-20, -20, 10);
+      scene.add(pointLight2);
+
+      const pointLight3 = new THREE.PointLight(0xF43F5E, 1.5, 100); // Corail Mgt
+      pointLight3.position.set(0, 0, -20);
+      scene.add(pointLight3);
+
+      // --- OBJET 1 : HÉLICE D'ADN 3D (Science) ---
+      const dnaGroup = new THREE.Group();
+      const dnaMat1 = new THREE.MeshStandardMaterial({ color: 0x10B981, emissive: 0x064e3b, roughness: 0.2, metalness: 0.8 });
+      const dnaMat2 = new THREE.MeshStandardMaterial({ color: 0x3B82F6, emissive: 0x1e3a8a, roughness: 0.2, metalness: 0.8 });
+      const linkMat = new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.2 });
+
+      for(let i = 0; i < 40; i++) {
+        const angle = i * 0.4;
+        const y = (i - 20) * 1.2;
+        const x = Math.cos(angle) * 4;
+        const z = Math.sin(angle) * 4;
+
+        // Sphère brin gauche
+        const sphere1 = new THREE.Mesh(new THREE.SphereGeometry(0.6, 16, 16), dnaMat1);
+        sphere1.position.set(x, y, z);
+        dnaGroup.add(sphere1);
+
+        // Sphère brin droit
+        const sphere2 = new THREE.Mesh(new THREE.SphereGeometry(0.6, 16, 16), dnaMat2);
+        sphere2.position.set(-x, y, -z);
+        dnaGroup.add(sphere2);
+
+        // Liaison hydrogène (cylindre)
+        const link = new THREE.Mesh(new THREE.CylinderGeometry(0.1, 0.1, 8), linkMat);
+        link.position.set(0, y, 0);
+        link.rotation.x = Math.PI / 2;
+        link.rotation.z = -angle;
+        dnaGroup.add(link);
+      }
+      // Positionner l'ADN sur le côté gauche, légèrement en arrière
+      dnaGroup.position.set(-25, 0, -15);
+      dnaGroup.rotation.z = 0.2;
+      scene.add(dnaGroup);
+
+      // --- OBJET 2 : CHAMPIGNONS ABSTRAITS / SPORES (CRRHAB) ---
+      const sporeGroup = new THREE.Group();
+      const sporeGeo = new THREE.DodecahedronGeometry(0.4, 0); // Forme organique
+      const sporeMat = new THREE.MeshStandardMaterial({ color: 0x10B981, emissive: 0x10B981, emissiveIntensity: 0.5, wireframe: true });
+      
+      const spores = [];
+      for(let i = 0; i < 50; i++) {
+        const spore = new THREE.Mesh(sporeGeo, sporeMat);
+        // Dispersion aléatoire dans l'espace
+        spore.position.x = (Math.random() - 0.5) * 80;
+        spore.position.y = (Math.random() - 0.5) * 80;
+        spore.position.z = (Math.random() - 0.5) * 40 - 20;
+        
+        // Tailles aléatoires
+        const scale = Math.random() * 1.5 + 0.5;
+        spore.scale.set(scale, scale, scale);
+        
+        // Vitesses de flottaison
+        spore.userData = {
+          speedX: (Math.random() - 0.5) * 0.02,
+          speedY: (Math.random() - 0.5) * 0.02,
+          speedZ: (Math.random() - 0.5) * 0.02,
+          rotSpeed: (Math.random() - 0.5) * 0.05
+        };
+        
+        spores.push(spore);
+        sporeGroup.add(spore);
+      }
+      scene.add(sporeGroup);
+
+      // --- OBJET 3 : RÉSEAU DE NEURONES / DATA (IA Astroly) ---
+      const techGroup = new THREE.Group();
+      const particleGeo = new THREE.BufferGeometry();
+      const particleCount = 150;
+      const posArray = new Float32Array(particleCount * 3);
+      
+      for(let i = 0; i < particleCount * 3; i++) {
+        // Étendre les particules sur la droite
+        if(i%3 === 0) posArray[i] = (Math.random() * 40) + 10; // X (côté droit)
+        else posArray[i] = (Math.random() - 0.5) * 60; // Y, Z
+      }
+      particleGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+      const particleMat = new THREE.PointsMaterial({ size: 0.3, color: 0x3B82F6, transparent: true, opacity: 0.8 });
+      const particles = new THREE.Points(particleGeo, particleMat);
+      techGroup.add(particles);
+      techGroup.position.set(0, 0, -10);
+      scene.add(techGroup);
+
+      // --- INTERACTIVITÉ SOURIS (Parallaxe) ---
+      let mouseX = 0;
+      let mouseY = 0;
+      let targetX = 0;
+      let targetY = 0;
+
+      const windowHalfX = window.innerWidth / 2;
+      const windowHalfY = window.innerHeight / 2;
+
+      document.addEventListener('mousemove', (event) => {
+        mouseX = (event.clientX - windowHalfX);
+        mouseY = (event.clientY - windowHalfY);
+      });
+
+      // --- BOUCLE D'ANIMATION ---
+      const clock = new THREE.Clock();
+
+      function animate() {
+        requestAnimationFrame(animate);
+        const elapsedTime = clock.getElapsedTime();
+
+        // 1. Rotation de l'ADN
+        dnaGroup.rotation.y = elapsedTime * 0.2;
+        dnaGroup.position.y = Math.sin(elapsedTime * 0.5) * 2; // Léger flottement
+
+        // 2. Mouvement des spores (Champignons CRRHAB)
+        spores.forEach(spore => {
+          spore.position.x += spore.userData.speedX;
+          spore.position.y += spore.userData.speedY;
+          spore.position.z += spore.userData.speedZ;
+          spore.rotation.x += spore.userData.rotSpeed;
+          spore.rotation.y += spore.userData.rotSpeed;
+          
+          // Rebondir doucement aux limites
+          if(Math.abs(spore.position.x) > 50) spore.userData.speedX *= -1;
+          if(Math.abs(spore.position.y) > 50) spore.userData.speedY *= -1;
+          if(spore.position.z > 10 || spore.position.z < -50) spore.userData.speedZ *= -1;
+        });
+
+        // 3. Rotation du réseau de neurones
+        techGroup.rotation.y = elapsedTime * 0.05;
+        techGroup.rotation.x = Math.sin(elapsedTime * 0.1) * 0.1;
+
+        // 4. Effet Parallaxe avec la Caméra
+        targetX = mouseX * 0.005;
+        targetY = mouseY * 0.005;
+        
+        camera.position.x += (targetX - camera.position.x) * 0.05;
+        camera.position.y += (-targetY - camera.position.y) * 0.05;
+        camera.lookAt(scene.position);
+
+        renderer.render(scene, camera);
+      }
+
+      animate();
+
+      // --- RESIZE WINDOW ---
+      window.addEventListener('resize', () => {
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+      });
     });
   </script>
 </body>
