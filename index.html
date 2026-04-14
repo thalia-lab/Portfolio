@@ -11,21 +11,19 @@
 
   <style>
     /* ==========================================================================
-       1. VARIABLES ET DESIGN SYSTEM "MODERN TECH"
+       1. DESIGN SYSTEM & COULEURS "AURORA"
        ========================================================================== */
     :root {
       --bg-base: #F8FAFC; 
       --text-main: #0F172A;
       --text-muted: #64748B;
       
-      /* Couleurs vibrantes "Aurora" */
+      /* Palette Aurora */
       --color-ai: #3B82F6;    /* Bleu Royal */
-      --color-purple: #8B5CF6;/* Violet Tech */
-      --color-mgt: #F43F5E;   /* Corail / Terracotta */
+      --color-mgt: #F43F5E;   /* Corail */
       --color-bio: #10B981;   /* Vert Émeraude */
-      --color-gold: #F59E0B;  /* Ambre */
+      --color-purple: #8B5CF6;/* Violet Tech */
       
-      /* Verre Dépoli (Glassmorphism Infaillible) */
       --glass-bg: rgba(255, 255, 255, 0.7);
       --glass-border: rgba(255, 255, 255, 0.9);
       --glass-shadow: 0 20px 40px rgba(15, 23, 42, 0.05);
@@ -37,21 +35,15 @@
     html { scroll-behavior: smooth; font-size: 16px; background-color: var(--bg-base); }
     body { color: var(--text-main); font-family: var(--font-main); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
-    /* Sécurité Images (Évite l'icône bleue si l'image est manquante) */
-    img { position: relative; width: 100%; height: 100%; object-fit: cover; display: block; background: #E2E8F0; border-radius: inherit; transition: transform 0.6s ease;}
-    img::after {
-      content: "Aperçu Visuel"; position: absolute; inset: 0; background: #E2E8F0;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 0.8rem; color: var(--text-muted); font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
-    }
+    /* Fix Images */
+    img { position: relative; width: 100%; height: 100%; object-fit: cover; display: block; background: #E2E8F0; border-radius: inherit;}
 
     /* ==========================================================================
-       2. FOND "AURORA" VIBRANT & ANIMÉ
+       2. FOND VIBRANT (ANIMÉ)
        ========================================================================== */
-    .aurora-bg { position: fixed; inset: 0; z-index: -2; overflow: hidden; pointer-events: none; background: var(--bg-base); }
-    .aurora-blob { position: absolute; filter: blur(120px); border-radius: 50%; opacity: 0.4; animation: drift 20s infinite alternate ease-in-out; }
-    
-    .blob-1 { background: var(--color-ai); width: 60vw; height: 60vw; top: -20%; left: -10%; }
+    .aurora-bg { position: fixed; inset: 0; z-index: -2; overflow: hidden; background: var(--bg-base); pointer-events: none;}
+    .aurora-blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.4; animation: drift 20s infinite alternate ease-in-out; }
+    .blob-1 { background: var(--color-ai); width: 60vw; height: 60vw; top: -10%; left: -10%; }
     .blob-2 { background: var(--color-purple); width: 50vw; height: 50vw; top: 30%; right: -20%; animation-delay: -5s; opacity: 0.3;}
     .blob-3 { background: var(--color-bio); width: 55vw; height: 55vw; bottom: -20%; left: 10%; animation-delay: -10s; }
     .blob-4 { background: var(--color-mgt); width: 40vw; height: 40vw; top: 40%; left: 30%; animation-delay: -15s; opacity: 0.25;}
@@ -60,12 +52,263 @@
     .noise { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.03; mix-blend-mode: multiply; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
 
     /* ==========================================================================
-       3. NAVIGATION "FLOATING PILL"
+       3. NAVIGATION
        ========================================================================== */
     nav {
       position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 1000;
       background: rgba(255, 255, 255, 0.85); backdrop-filter: blur(16px); border: 1px solid rgba(255,255,255,0.9);
-      padding: 0.8rem 2rem; border-radius: 100px; display: flex; gap: 3rem; align-items: center;
+      padding: 0.8rem 2rem; border-radius: 100px; display: flex; gap: 3rem; align-items: center; box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
+    }
+    .logo { font-size: 1.3rem; font-weight: 800; color: var(--text-main); text-decoration: none; letter-spacing: -0.5px; }
+    .nav-links { display: flex; gap: 2rem; }
+    .nav-links a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+    .nav-links a:hover { color: var(--color-ai); }
+
+    /* ==========================================================================
+       4. HERO SECTION
+       ========================================================================== */
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; padding: 0 5%; }
+    .hero-title { font-size: clamp(3.5rem, 8vw, 6.5rem); font-weight: 800; line-height: 1.05; margin-bottom: 2rem; }
+    .hero-desc { font-size: clamp(1.1rem, 2vw, 1.3rem); line-height: 1.6; color: var(--text-muted); font-weight: 500; max-width: 800px; margin-bottom: 3rem;}
+    .hero-desc strong { color: var(--text-main); font-weight: 700; }
+    .text-gradient { background: linear-gradient(135deg, var(--color-ai), var(--color-purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+    /* ==========================================================================
+       5. PROJETS (GRID ROBUSTE)
+       ========================================================================== */
+    .container { max-width: 1300px; margin: 0 auto; padding: 100px 5%; }
+    .project-card {
+      display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 4rem; align-items: center;
+      background: var(--glass-bg); backdrop-filter: blur(24px); border: 1px solid var(--glass-border); border-radius: 32px;
+      padding: 4rem; box-shadow: var(--glass-shadow); margin-bottom: 4rem;
+    }
+    .project-card.reverse { direction: rtl; }
+    .project-card.reverse > * { direction: ltr; }
+
+    .proj-title { font-size: clamp(2rem, 4vw, 3rem); font-weight: 800; line-height: 1.1; margin-bottom: 1.5rem; }
+    .proj-desc { font-size: 1.05rem; line-height: 1.7; color: var(--text-muted); font-weight: 500; margin-bottom: 1.5rem; }
+    .label-badge { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; color: var(--text-muted); display: block; margin-bottom: 1rem;}
+
+    .tag-container { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1.5rem;}
+    .tag { padding: 0.5rem 1rem; border-radius: 50px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; background: rgba(255,255,255,0.7); border: 1px solid rgba(0,0,0,0.05); }
+
+    /* UI DASHBOARDS */
+    .ui-showcase { background: #fff; border-radius: 24px; padding: 2rem; border: 1px solid rgba(0,0,0,0.03); box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+    
+    /* Code Block Astroly */
+    .code-block { background: #0F172A; color: #E2E8F0; padding: 1.5rem; border-radius: 16px; font-family: monospace; font-size: 0.8rem; line-height: 1.6; border-left: 4px solid var(--color-ai); }
+    .code-highlight { color: #38BDF8; font-weight: 700;}
+
+    /* Jauges CPAM */
+    .kpi-row { margin-bottom: 1.2rem; }
+    .kpi-header { display: flex; justify-content: space-between; font-weight: 800; font-size: 0.85rem; margin-bottom: 0.5rem; color: var(--text-main);}
+    .kpi-track { width: 100%; height: 8px; background: #F1F5F9; border-radius: 10px; overflow: hidden; }
+    .kpi-fill { height: 100%; background: linear-gradient(90deg, var(--color-mgt), var(--color-gold)); border-radius: 10px; width: 0; transition: width 1.5s ease-out; }
+
+    /* Boite de Petri CRRHAB */
+    .petri-dish { width: 160px; height: 160px; margin: 0 auto; display: flex; align-items: center; justify-content: center; }
+    .petri-dish svg { width: 100%; height: 100%; filter: drop-shadow(0 10px 20px rgba(16, 185, 129, 0.15)); }
+
+    /* ==========================================================================
+       6. ARCHIVES
+       ========================================================================== */
+    .archives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
+    .arc-card { background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px; padding: 1.5rem; text-decoration: none; color: inherit; transition: 0.3s; }
+    .arc-card:hover { transform: translateY(-8px); background: #fff; }
+    .arc-img { width: 100%; height: 200px; border-radius: 16px; overflow: hidden; margin-bottom: 1.5rem; border: 1px solid rgba(0,0,0,0.05); background: #fff; display: flex; align-items: center; justify-content: center; }
+    .arc-img.contain img { object-fit: contain; padding: 1.5rem; }
+    .arc-title { font-size: 1.5rem; font-weight: 800; margin-bottom: 0.8rem; color: var(--text-main); }
+    .arc-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; flex-grow: 1; }
+
+    /* ==========================================================================
+       7. CONTACT & RESPONSIVE
+       ========================================================================== */
+    .contact { text-align: center; padding: 120px 5%; }
+    .btn-wrap { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem; }
+    .btn { padding: 1rem 2.5rem; border-radius: 50px; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; text-decoration: none; transition: 0.3s; }
+    .btn-solid { background: var(--text-main); color: #fff; }
+    .btn-solid:hover { background: var(--color-ai); }
+    .btn-outline { border: 2px solid rgba(0,0,0,0.1); color: var(--text-main); }
+
+    @media (max-width: 1024px) { .project-card { grid-template-columns: 1fr; padding: 3rem; } .project-card.reverse { direction: ltr; } }
+    @media (max-width: 768px) { nav { width: 90%; } .nav-links { display: none; } .hero-title { font-size: 3rem; } .project-card { padding: 2rem; } }
+  </style>
+</head>
+<body>
+
+  <div class="noise"></div>
+  <div class="aurora-bg">
+    <div class="aurora-blob blob-1"></div>
+    <div class="aurora-blob blob-2"></div>
+    <div class="aurora-blob blob-3"></div>
+    <div class="aurora-blob blob-4"></div>
+  </div>
+
+  <nav>
+    <a href="#hero" class="logo">Thalia.B</a>
+    <div class="nav-links">
+      <a href="#projets">Projets</a>
+      <a href="#recherche">Recherche</a>
+      <a href="#parcours">Parcours</a>
+    </div>
+    <a href="mailto:thaliapro26@gmail.com" style="text-decoration: none; font-size: 0.85rem; font-weight: 800; color: var(--text-main); text-transform: uppercase;">Contact ↗</a>
+  </nav>
+
+  <div class="container">
+    
+    <section class="hero" id="hero">
+      <span class="hero-pre" style="color: var(--color-gold);">Portfolio 2026</span>
+      <h1 class="hero-title">
+        Science, Management<br>& <span class="text-gradient">Innovation.</span>
+      </h1>
+      <p class="hero-desc">
+        Manager de projets innovants. L'hybridation exigeante entre la rigueur de la <strong>Science du Vivant</strong> et l'architecture des <strong>nouvelles technologies</strong>.
+      </p>
+      <div class="tag-container">
+        <span class="tag" style="color: var(--color-ai); border-color: var(--color-ai);">M1 Management de l'Innovation</span>
+        <span class="tag" style="color: var(--color-bio); border-color: var(--color-bio);">BUT Génie Biologique</span>
+      </div>
+    </section>
+
+    <div class="project-card" id="projets">
+      <div>
+        <span class="label-badge" style="color: var(--color-ai);">M1 Management de l'Innovation</span>
+        <h2 class="proj-title">Astroly,<br>L'Ère Agentique.</h2>
+        <p class="proj-desc">
+          <strong>Le Défi :</strong> Capgemini x IAE. Stopper la déperdition des profils "Pépites" après les challenges. 49% des jeunes talents abandonnent face à un recrutement archaïque[cite: 10, 42].
+        </p>
+        <p class="proj-desc">
+          <strong>La Solution :</strong> Architecture de 6 agents IA (Copilot Studio)[cite: 7]. Passage du sourcing de masse à une expérience ultra-personnalisée : candidature sans CV en 5 min et scoring d'adéquation automatisé[cite: 720, 723].
+        </p>
+        <div class="tag-container">
+          <span class="tag">Architecture Multi-Agents</span>
+          <span class="tag">UX Candidat</span>
+        </div>
+      </div>
+      <div class="ui-showcase">
+        <span class="label-badge">Extrait : System Prompt [cite: 173]</span>
+        <div class="code-block">
+          <span class="code-highlight">Role:</span> Expert Recrutement IA Capgemini.<br>
+          <span class="code-highlight">Mission:</span> Transformer des réponses brutes en dossiers à haute valeur ajoutée.<br>
+          <span class="code-highlight">Action:</span> Scoring neutre et uniformisé. [cite: 173, 174]
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card reverse">
+      <div>
+        <span class="label-badge" style="color: var(--color-mgt);">M1 Management de l'Innovation</span>
+        <h2 class="proj-title">Intelligence<br>Collective.</h2>
+        <p class="proj-desc">
+          <strong>Alternance (2 ans) - CPAM Hérault.</strong> Accompagnement de la transformation organisationnelle par le prisme humain.
+        </p>
+        <p class="proj-desc">
+          Pilotage de l'<strong>Innovation Participative</strong> : co-pilotage de la plateforme de remontée d'idées, facilitation de groupes d'idéation et structuration des indicateurs de performance (KPI).
+        </p>
+        <div class="tag-container">
+          <span class="tag">Facilitation</span>
+          <span class="tag">Pilotage KPI</span>
+        </div>
+      </div>
+      <div class="ui-showcase">
+        <span class="label-badge">Matrice de Transformation</span>
+        <div class="kpi-row">
+          <div class="kpi-header"><span>Plateforme d'Idées</span><span>100%</span></div>
+          <div class="kpi-track"><div class="kpi-fill" style="width: 100%;"></div></div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi-header"><span>Facilitation</span><span>100%</span></div>
+          <div class="kpi-track"><div class="kpi-fill" style="width: 100%; transition-delay: 0.2s;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="project-card" id="recherche">
+      <div>
+        <span class="label-badge" style="color: var(--color-bio);">BUT Génie Biologique</span>
+        <h2 class="proj-title">Science du<br><span class="text-gradient-bio">Vivant</span>.</h2>
+        <p class="proj-desc">
+          <strong>Le Défi :</strong> Explorer des alternatives aux pesticides chimiques au CRRHAB (Tunisie) via l'immunité naturelle des plantes.
+        </p>
+        <p class="proj-desc">
+          <strong>Méthodologie :</strong> Étude sur 19 variétés de pommes de terre. Isolement de souches du microbiome (<em>Bacillus, Serratia</em>) et confrontation in vitro sur <strong>milieu gélosé PDA</strong> contre des pathogènes fongiques (<em>Fusarium</em>).
+        </p>
+        <div class="tag-container">
+          <span class="tag">Biocontrôle</span>
+          <span class="tag">Microbiologie</span>
+        </div>
+      </div>
+      <div class="ui-showcase" style="text-align: center;">
+        <span class="label-badge">Inhibition in vitro</span>
+        <div class="petri-dish">
+          <svg viewBox="0 0 100 100">
+            <circle cx="50" cy="50" r="48" fill="#fff" stroke="#10B981" stroke-width="2" opacity="0.5"/>
+            <path d="M 25 50 Q 35 25 50 50 T 65 50" stroke="#64748B" stroke-width="12" stroke-linecap="round" opacity="0.6"/>
+            <circle cx="75" cy="50" r="5" fill="#10B981" opacity="0.8"/>
+            <circle cx="70" cy="40" r="3" fill="#10B981" opacity="0.6"/>
+          </svg>
+        </div>
+        <p style="font-size: 0.7rem; font-weight: 700; color: var(--color-bio); margin-top: 1rem; text-transform: uppercase;">Zone d'inhibition observée (NDA)</p>
+      </div>
+    </div>
+
+    <div style="margin-top: 150px;" id="parcours">
+      <h2 class="hero-title" style="font-size: 3.5rem; text-align: center; margin-bottom: 3rem;">Empreintes & Expériences.</h2>
+      <div class="archives-grid">
+        
+        <div class="arc-card">
+          <div class="arc-img"><img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Heron"></div>
+          <span class="label-badge" style="color: var(--color-ai);">INITIUM : Prix plus fort potentiel</span>
+          <h3 class="arc-title">Heron Exchange</h3>
+          <p class="arc-desc">Accompagnement stratégique sur une plateforme SaaS B2B luttant contre la fraude financière BEC (~7M de PME cibles).</p>
+        </div>
+
+        <a href="Soutenance de 2eme année.pdf" target="_blank" class="arc-card">
+          <div class="arc-img contain"><img src="Poster scientifique bleu et vert.png" alt="Unibio"></div>
+          <span class="label-badge" style="color: var(--color-bio);">Alternance 18 Mois · BUT Bio</span>
+          <h3 class="arc-title">Unibio Medical</h3>
+          <p class="arc-desc">Technicienne de laboratoire : hématologie et immunobiochimie. Rigueur analytique et contrôles qualité rigoureux.</p>
+        </a>
+
+        <div class="arc-card">
+          <div class="arc-img"><img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Vanillier"></div>
+          <span class="label-badge" style="color: var(--color-bio);">BUT Génie Biologique</span>
+          <h3 class="arc-title">Culture in vitro</h3>
+          <p class="arc-desc">Projet sur la micropropagation du Vanillier (milieu MS). Maîtrise de la stérilité sous hotte à flux laminaire.</p>
+        </div>
+
+      </div>
+    </div>
+
+    <section class="contact">
+      <h2 class="hero-title">Travaillons ensemble.</h2>
+      <div class="btn-wrap">
+        <a href="mailto:thaliapro26@gmail.com" class="btn btn-solid">Écrire un email</a>
+        <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn btn-outline">LinkedIn</a>
+        <a href="CV.pdf" download target="_blank" class="btn btn-outline" style="border-color: var(--color-bio);">Télécharger CV</a>
+      </div>
+      <p style="margin-top: 8rem; font-size: 0.75rem; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px;">
+        © 2026 Thalia Barrahi — Design Studio
+      </p>
+    </section>
+
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const fills = entry.target.querySelectorAll('.kpi-fill');
+            fills.forEach(fill => fill.style.width = fill.parentElement.previousElementSibling.lastElementChild.textContent);
+          }
+        });
+      }, { threshold: 0.5 });
+      document.querySelectorAll('.ui-showcase').forEach(s => observer.observe(s));
+    });
+  </script>
+</body>
+</html>      padding: 0.8rem 2rem; border-radius: 100px; display: flex; gap: 3rem; align-items: center;
       box-shadow: 0 10px 30px rgba(15, 23, 42, 0.05);
     }
     .logo { font-size: 1.3rem; font-weight: 800; color: var(--text-main); text-decoration: none; letter-spacing: -0.5px; }
