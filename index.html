@@ -3,489 +3,378 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Thalia Barrahi | Innovation & Science</title>
+  <title>Thalia Barrahi | Portfolio</title>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Syne:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     /* ==========================================================================
-       1. VARIABLES ET DESIGN SYSTEM "CREATIVE STUDIO"
+       1. VARIABLES & COULEURS
        ========================================================================== */
     :root {
-      /* Fond sombre ultra premium */
-      --bg-base: #09090b; 
-      --bg-card: #18181b;
+      --bg-light: #F7F7F5;
+      --text-dark: #121212;
+      --text-muted: #6B7280;
       
-      --text-main: #f8fafc;
-      --text-muted: #94a3b8;
+      /* Couleurs Vibrantes (Mesh) */
+      --ai-blue: #2563EB;
+      --bio-green: #059669;
+      --mgt-coral: #F43F5E;
+      --gold-accent: #D97706;
       
-      /* Mesh Gradients / Couleurs Vibrantes */
-      --accent-ai: #3b82f6;      /* Bleu Azure */
-      --accent-bio: #10b981;     /* Vert Émeraude */
-      --accent-mgt: #f43f5e;     /* Corail */
-      --accent-gold: #f59e0b;    /* Ambre */
-      
-      --glass-border: rgba(255, 255, 255, 0.1);
-      --glass-bg: rgba(24, 24, 27, 0.6);
-      
-      --font-title: 'Syne', sans-serif;
-      --font-body: 'Inter', sans-serif;
+      /* Typographie */
+      --font-serif: 'Instrument Serif', serif;
+      --font-sans: 'Outfit', sans-serif;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; font-size: 16px; background-color: var(--bg-base); }
-    body {
-      color: var(--text-main); font-family: var(--font-body);
-      overflow-x: hidden; cursor: none;
-      -webkit-font-smoothing: antialiased;
-    }
-
-    /* Bruit de fond (Texture) */
-    .texture-overlay {
-      position: fixed; inset: 0; z-index: 9999; pointer-events: none; opacity: 0.03; mix-blend-mode: screen;
-      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
-    }
-
-    /* Gestion Robuste des Images */
-    .img-wrapper {
-      position: relative; width: 100%; height: 100%; min-height: 250px; background: var(--bg-card); 
-      border-radius: 12px; overflow: hidden; display: flex; align-items: center; justify-content: center;
-    }
-    .img-wrapper::before {
-      content: attr(data-title); position: absolute; inset: 0; display: flex; align-items: center; justify-content: center;
-      color: var(--text-muted); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 2px; text-align: center; padding: 1rem; z-index: 1;
-    }
-    .img-wrapper img {
-      position: relative; z-index: 2; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease;
-    }
-    .img-wrapper.contain img { object-fit: contain; background: #fff; padding: 1rem;}
+    html { scroll-behavior: smooth; font-size: 16px; }
+    body { background-color: var(--bg-light); color: var(--text-dark); font-family: var(--font-sans); overflow-x: hidden; -webkit-font-smoothing: antialiased; }
 
     /* ==========================================================================
-       2. ARRIÈRE-PLAN VIBRANT (MESH GRADIENTS)
+       2. MESH GRADIENT VIBRANT (FOND)
        ========================================================================== */
-    .mesh-bg { position: fixed; inset: 0; z-index: -1; overflow: hidden; }
-    .mesh-blob { position: absolute; border-radius: 50%; filter: blur(100px); opacity: 0.3; animation: float 20s infinite alternate ease-in-out; }
+    .mesh-bg { position: fixed; inset: 0; z-index: -2; overflow: hidden; background: var(--bg-light); }
+    .mesh-blob { position: absolute; border-radius: 50%; filter: blur(120px); opacity: 0.4; animation: drift 20s infinite alternate ease-in-out; }
     
-    .blob-1 { background: var(--accent-ai); width: 50vw; height: 50vw; top: -10%; left: -10%; }
-    .blob-2 { background: var(--accent-mgt); width: 60vw; height: 60vw; top: 40%; right: -20%; animation-delay: -5s; }
-    .blob-3 { background: var(--accent-bio); width: 55vw; height: 55vw; bottom: -20%; left: 10%; animation-delay: -10s; }
+    .blob-1 { background: var(--ai-blue); width: 60vw; height: 60vw; top: -20%; left: -10%; }
+    .blob-2 { background: var(--mgt-coral); width: 50vw; height: 50vw; top: 30%; right: -20%; animation-delay: -5s; }
+    .blob-3 { background: var(--bio-green); width: 55vw; height: 55vw; bottom: -20%; left: 10%; animation-delay: -10s; }
+    .blob-4 { background: var(--gold-accent); width: 40vw; height: 40vw; top: 20%; left: 40%; animation-delay: -15s; opacity: 0.3;}
 
-    @keyframes float { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(5vw, 10vh) scale(1.1); } }
+    @keyframes drift { 0% { transform: translate(0, 0) scale(1); } 100% { transform: translate(5vw, 5vh) scale(1.1); } }
 
-    /* ==========================================================================
-       3. CURSEUR MAGNÉTIQUE
-       ========================================================================== */
-    .cursor-dot {
-      position: fixed; width: 8px; height: 8px; background: #fff;
-      border-radius: 50%; pointer-events: none; z-index: 10000;
-      transform: translate(-50%, -50%); transition: opacity 0.3s;
-    }
-    .cursor-ring {
-      position: fixed; width: 45px; height: 45px; border: 1px solid rgba(255, 255, 255, 0.4);
-      border-radius: 50%; pointer-events: none; z-index: 9999;
-      transform: translate(-50%, -50%); transition: width 0.3s, height 0.3s, border-color 0.3s, background 0.3s;
-    }
-    body.cursor-hover .cursor-ring {
-      width: 70px; height: 70px; border-color: transparent; background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(4px);
-    }
-    body.cursor-hover .cursor-dot { opacity: 0; }
+    /* Grain Noise subtil */
+    .noise { position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0.04; mix-blend-mode: multiply; background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E"); }
 
     /* ==========================================================================
-       4. NAVIGATION
+       3. NAVIGATION
        ========================================================================== */
     nav {
-      position: fixed; top: 1.5rem; left: 50%; transform: translateX(-50%); z-index: 1000;
-      background: rgba(24, 24, 27, 0.7); backdrop-filter: blur(16px); border: 1px solid var(--glass-border);
-      padding: 0.8rem 2rem; border-radius: 100px; display: flex; gap: 3rem; align-items: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+      position: fixed; top: 0; width: 100%; padding: 2rem 5vw; display: flex; justify-content: space-between; align-items: center; z-index: 1000;
+      background: linear-gradient(to bottom, rgba(247,247,245,0.9) 0%, rgba(247,247,245,0) 100%);
     }
-    .logo { font-family: var(--font-title); font-weight: 800; font-size: 1.2rem; color: #fff; text-decoration: none; letter-spacing: -0.5px; }
-    .nav-links { display: flex; gap: 2rem; }
-    .nav-links a { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); text-decoration: none; transition: 0.3s; }
-    .nav-links a:hover, .nav-links a.active { color: #fff; }
+    .logo { font-family: var(--font-sans); font-weight: 800; font-size: 1.5rem; color: var(--text-dark); text-decoration: none; letter-spacing: -1px; }
+    .logo span { font-family: var(--font-serif); font-style: italic; font-size: 1.8rem; font-weight: 400;}
+    .nav-links { display: flex; gap: 3rem; }
+    .nav-links a { color: var(--text-dark); text-decoration: none; font-size: 0.85rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; transition: 0.3s; }
+    .nav-links a:hover { opacity: 0.5; }
 
     /* ==========================================================================
-       5. TYPOGRAPHIE & UTILITAIRES
+       4. HERO SECTION : TYPOGRAPHIE MASSIVE
        ========================================================================== */
-    h1, h2, h3 { font-family: var(--font-title); line-height: 1.1; letter-spacing: -0.02em; }
+    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; padding: 0 5vw; position: relative; }
+    .hero-meta { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 4px; color: var(--text-muted); margin-bottom: 2rem; display: flex; align-items: center; gap: 1rem;}
+    .hero-meta::before { content: ''; width: 40px; height: 2px; background: var(--text-muted); }
     
-    .text-gradient { background: linear-gradient(135deg, #fff, #94a3b8); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    .hero-title { font-family: var(--font-sans); font-size: clamp(4rem, 10vw, 9rem); font-weight: 800; line-height: 0.85; letter-spacing: -0.04em; margin-bottom: 2rem; }
+    .hero-title .serif { font-family: var(--font-serif); font-weight: 400; font-style: italic; letter-spacing: 0; }
     
-    .badge-wrap { display: flex; flex-wrap: wrap; gap: 0.6rem; }
-    .badge {
-      padding: 0.4rem 1rem; border-radius: 50px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
-      border: 1px solid var(--glass-border); background: rgba(255,255,255,0.05); color: #fff;
+    .hero-desc { font-size: clamp(1.1rem, 2vw, 1.4rem); line-height: 1.6; color: var(--text-muted); font-weight: 400; max-width: 600px; margin-left: 10vw; border-left: 2px solid var(--text-dark); padding-left: 2rem;}
+    .hero-desc strong { color: var(--text-dark); font-weight: 600; }
+
+    /* ==========================================================================
+       5. STACKING CARDS (LA DISPOSITION MAGIQUE)
+       ========================================================================== */
+    .projects-container { position: relative; padding: 10vh 5vw 20vh; display: flex; flex-direction: column; gap: 0; }
+    
+    .stack-card {
+      position: sticky; height: 80vh; min-height: 600px; width: 100%;
+      background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+      border: 1px solid rgba(255, 255, 255, 0.8); border-radius: 40px;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.05);
+      padding: 4rem; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center;
+      overflow: hidden;
     }
-    .badge.ai { color: #60A5FA; border-color: rgba(59, 130, 246, 0.3); background: rgba(59, 130, 246, 0.1); }
-    .badge.mgt { color: #FB7185; border-color: rgba(244, 63, 94, 0.3); background: rgba(244, 63, 94, 0.1); }
-    .badge.bio { color: #34D399; border-color: rgba(16, 185, 129, 0.3); background: rgba(16, 185, 129, 0.1); }
+    
+    /* C'est ici que la magie de l'empilement se fait : des "top" différents */
+    .stack-card:nth-child(1) { top: 10vh; }
+    .stack-card:nth-child(2) { top: 13vh; }
+    .stack-card:nth-child(3) { top: 16vh; }
+
+    .card-content { display: flex; flex-direction: column; height: 100%; justify-content: center; }
+    .card-num { font-family: var(--font-serif); font-size: 5rem; line-height: 1; color: var(--text-muted); font-style: italic; margin-bottom: 1rem; opacity: 0.5;}
+    .card-title { font-family: var(--font-sans); font-size: 3.5rem; font-weight: 800; line-height: 1; margin-bottom: 1.5rem; letter-spacing: -0.02em;}
+    .card-desc { font-size: 1.1rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 2rem; max-width: 90%; }
+    
+    .tags { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+    .tag { padding: 0.5rem 1.2rem; border-radius: 50px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; background: rgba(255,255,255,0.8); border: 1px solid rgba(0,0,0,0.1); }
 
     /* ==========================================================================
-       6. HERO SECTION
+       6. COMPOSANTS UI INTÉGRÉS
        ========================================================================== */
-    .container { max-width: 1200px; margin: 0 auto; padding: 0 5%; }
-    
-    .hero { min-height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center; position: relative; padding-top: 80px;}
-    .hero-pre { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 4px; color: var(--text-muted); margin-bottom: 1.5rem; }
-    .hero-title { font-size: clamp(3.5rem, 8vw, 7rem); font-weight: 800; margin-bottom: 2rem; }
-    .hero-desc { font-size: clamp(1.1rem, 2vw, 1.4rem); line-height: 1.6; color: var(--text-muted); font-weight: 400; max-width: 750px; margin-bottom: 3rem;}
-    .hero-desc strong { color: #fff; font-weight: 600; }
+    .ui-box { background: rgba(255, 255, 255, 0.9); border-radius: 24px; padding: 2.5rem; box-shadow: 0 20px 40px rgba(0,0,0,0.03); width: 100%; border: 1px solid rgba(0,0,0,0.05);}
+    .ui-title { font-family: var(--font-sans); font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 2rem; color: var(--text-muted);}
+
+    /* UI Astroly */
+    .agent-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .agent-pill { background: var(--bg-light); padding: 1rem; border-radius: 12px; display: flex; align-items: center; gap: 1rem; font-weight: 600; font-size: 0.9rem; transition: 0.3s; border: 1px solid transparent;}
+    .agent-pill:hover { border-color: var(--ai-blue); transform: translateY(-3px); }
+    .agent-icon { background: #fff; width: 32px; height: 32px; border-radius: 8px; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);}
+
+    /* UI CPAM */
+    .kpi-row { margin-bottom: 1.5rem; }
+    .kpi-row:last-child { margin-bottom: 0; }
+    .kpi-head { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.9rem; margin-bottom: 0.5rem;}
+    .kpi-track { width: 100%; height: 8px; background: var(--bg-light); border-radius: 10px; overflow: hidden; }
+    .kpi-fill { height: 100%; background: var(--mgt-coral); width: 0; transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); border-radius: 10px;}
+
+    /* UI CRRHAB (NDA) */
+    .nda-blur-area { filter: blur(6px); opacity: 0.3; user-select: none; pointer-events: none;}
+    .nda-bar { height: 40px; background: var(--bg-light); border-radius: 8px; margin-bottom: 1rem; width: 100%; }
+    .nda-bar:nth-child(2) { width: 80%; } .nda-bar:nth-child(3) { width: 90%; margin-bottom: 0;}
+    .nda-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(255,255,255,0.4); border-radius: 24px;}
+    .nda-badge { background: #fff; padding: 2rem; border-radius: 20px; text-align: center; box-shadow: 0 20px 40px rgba(5, 150, 105, 0.15); border: 1px solid rgba(5, 150, 105, 0.2);}
+    .nda-badge h4 { font-family: var(--font-sans); font-weight: 800; font-size: 1.2rem; color: var(--bio-green); margin-top: 1rem;}
 
     /* ==========================================================================
-       7. CARTES PROJETS (FLEXBOX ROBUSTE)
+       7. ARCHIVES (BENTO MAGAZINE)
        ========================================================================== */
-    .project-section { padding: 80px 0; }
+    .archives-section { padding: 5vh 5vw 15vh; }
+    .arch-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 4rem; }
+    .arch-title { font-family: var(--font-sans); font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; letter-spacing: -0.03em;}
     
-    .glass-card {
-      background: var(--glass-bg); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-      border: 1px solid var(--glass-border); border-radius: 32px;
-      padding: 3rem; box-shadow: 0 20px 40px rgba(0,0,0,0.3);
-      display: flex; gap: 4rem; align-items: center;
-      margin-bottom: 4rem; transition: transform 0.4s; position: relative;
+    .bento-grid { display: grid; grid-template-columns: repeat(12, 1fr); gap: 2rem; }
+    
+    .arc-card {
+      background: rgba(255, 255, 255, 0.6); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.8);
+      border-radius: 30px; padding: 2.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
     }
-    .glass-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.2);}
-    .glass-card.reverse { flex-direction: row-reverse; }
+    .arc-card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px rgba(0,0,0,0.05); background: #fff;}
     
-    .proj-text { flex: 1; }
-    .proj-visual { flex: 1; width: 100%; }
+    /* Tailles dans la grille */
+    .col-8 { grid-column: span 8; }
+    .col-4 { grid-column: span 4; }
+    .col-6 { grid-column: span 6; }
 
-    .proj-title { font-size: clamp(2.5rem, 4vw, 3.5rem); margin-bottom: 1.5rem; color: #fff;}
-    .proj-desc { font-size: 1.05rem; line-height: 1.7; color: var(--text-muted); margin-bottom: 2rem;}
+    .arc-img-wrap { width: 100%; height: 250px; border-radius: 16px; overflow: hidden; margin-bottom: 2rem; position: relative; background: var(--bg-light);}
+    .arc-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
+    .arc-img-wrap.contain img { object-fit: contain; padding: 1rem;}
+    .arc-card:hover .arc-img-wrap img { transform: scale(1.05); }
+
+    .arc-meta { font-family: var(--font-serif); font-size: 1.2rem; font-style: italic; color: var(--text-muted); margin-bottom: 0.5rem;}
+    .arc-name { font-size: 1.8rem; font-weight: 800; margin-bottom: 1rem; letter-spacing: -0.02em;}
+    .arc-desc { font-size: 0.95rem; color: var(--text-muted); line-height: 1.6; }
 
     /* ==========================================================================
-       8. COMPOSANTS UI / DASHBOARDS (PROPRES ET FIXES)
+       8. CONTACT & FOOTER
        ========================================================================== */
-    .ui-showcase { background: rgba(0,0,0,0.3); border: 1px solid var(--glass-border); border-radius: 20px; padding: 2rem; width: 100%;}
-    .ui-header { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 1.5rem; display: flex; justify-content: space-between; }
-
-    /* UI Astroly (Agents) */
-    .agent-list { display: flex; flex-direction: column; gap: 0.8rem; }
-    .agent-item { background: rgba(255,255,255,0.05); padding: 1rem 1.5rem; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; border: 1px solid transparent; transition: 0.3s;}
-    .agent-item:hover { border-color: var(--accent-ai); background: rgba(59, 130, 246, 0.1); transform: translateX(5px);}
-    .agent-info { font-weight: 600; font-size: 0.9rem; color: #fff;}
-    .agent-status { width: 8px; height: 8px; background: var(--accent-bio); border-radius: 50%; box-shadow: 0 0 10px var(--accent-bio);}
-
-    /* UI CPAM (Jauges) */
-    .kpi-wrapper { display: flex; flex-direction: column; gap: 1.2rem; }
-    .kpi-row { background: rgba(255,255,255,0.05); padding: 1.2rem; border-radius: 12px; border: 1px solid rgba(244, 63, 94, 0.1);}
-    .kpi-header { display: flex; justify-content: space-between; font-weight: 700; font-size: 0.85rem; margin-bottom: 0.8rem; color: #fff;}
-    .kpi-track { width: 100%; height: 6px; background: rgba(255,255,255,0.1); border-radius: 10px; overflow: hidden; }
-    .kpi-fill { height: 100%; background: linear-gradient(90deg, var(--accent-mgt), var(--accent-gold)); border-radius: 10px; width: 0; transition: width 1.5s cubic-bezier(0.2, 0.8, 0.2, 1); }
-
-    /* UI CRRHAB (NDA Lock) */
-    .bio-data-list { display: flex; flex-direction: column; gap: 1rem; filter: blur(6px); opacity: 0.3; user-select: none; }
-    .bio-data-item { height: 35px; background: rgba(255,255,255,0.8); border-radius: 8px; width: 100%; }
-    .bio-data-item:nth-child(2) { width: 80%; } .bio-data-item:nth-child(3) { width: 90%; }
+    .contact-section { text-align: center; padding: 15vh 5vw; border-top: 1px solid rgba(0,0,0,0.05); }
+    .contact-title { font-family: var(--font-serif); font-size: clamp(4rem, 10vw, 8rem); font-style: italic; margin-bottom: 3rem; line-height: 1;}
     
-    .nda-overlay { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; background: rgba(9, 9, 11, 0.6); border-radius: 20px;}
-    .nda-badge { background: #fff; padding: 1.5rem 2rem; border-radius: 16px; text-align: center; border: 1px solid var(--accent-bio); box-shadow: 0 10px 30px rgba(16, 185, 129, 0.2);}
-    .nda-icon { font-size: 2rem; margin-bottom: 0.5rem; color: var(--accent-bio); }
-    .nda-title { font-weight: 800; font-size: 1rem; color: #000; text-transform: uppercase;}
-    .nda-desc { font-size: 0.7rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-top: 0.3rem;}
-
-    /* ==========================================================================
-       9. ARCHIVES (GRILLE CSS ROBUSTE)
-       ========================================================================== */
-    .archives-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; margin-top: 3rem; }
-    
-    .archive-card {
-      background: var(--glass-bg); border: 1px solid var(--glass-border); border-radius: 24px;
-      padding: 1.5rem; text-decoration: none; color: inherit; display: flex; flex-direction: column;
-      transition: transform 0.3s;
-    }
-    .archive-card:hover { transform: translateY(-5px); border-color: rgba(255,255,255,0.3);}
-    .archive-card:hover .img-wrapper img { transform: scale(1.05); }
-
-    .arc-meta { font-size: 0.75rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.8rem;}
-    .arc-title { font-size: 1.5rem; font-weight: 700; margin-bottom: 1rem; color: #fff;}
-    .arc-desc { font-size: 0.9rem; color: var(--text-muted); line-height: 1.6; margin-bottom: 1.5rem; flex-grow: 1; }
-
-    .action-link { font-size: 0.8rem; font-weight: 700; color: #fff; display: flex; align-items: center; gap: 0.5rem; text-transform: uppercase; letter-spacing: 1px;}
-    .action-link svg { width: 16px; height: 16px; transition: transform 0.3s; }
-    .archive-card:hover .action-link svg { transform: translateX(5px); }
-
-    /* ==========================================================================
-       10. CONTACT & BOUTONS
-       ========================================================================== */
-    .contact-section { text-align: center; padding: 120px 0 80px; max-width: 800px; margin: 0 auto; }
-    .contact-title { font-size: clamp(3rem, 6vw, 5rem); font-weight: 800; line-height: 1; margin-bottom: 1.5rem; }
-    
-    .btn-wrap { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; margin-top: 3rem;}
+    .btn-wrap { display: flex; justify-content: center; gap: 1.5rem; flex-wrap: wrap; }
     .btn {
-      padding: 1.2rem 2.5rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700;
-      text-transform: uppercase; letter-spacing: 1px; text-decoration: none;
-      display: inline-flex; align-items: center; gap: 0.8rem; transition: all 0.3s;
+      padding: 1.2rem 3rem; border-radius: 50px; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px;
+      text-decoration: none; transition: all 0.3s; display: inline-flex; align-items: center; gap: 0.8rem;
     }
-    .btn-solid { background: #fff; color: var(--bg-base); box-shadow: 0 10px 30px rgba(255,255,255,0.1); }
-    .btn-solid:hover { background: var(--accent-ai); color: #fff; transform: translateY(-3px); }
-    .btn-outline { background: rgba(255,255,255,0.05); color: #fff; border: 1px solid rgba(255,255,255,0.2); }
-    .btn-outline:hover { background: rgba(255,255,255,0.1); border-color: #fff; transform: translateY(-3px); }
+    .btn-dark { background: var(--text-dark); color: #fff; }
+    .btn-dark:hover { background: var(--ai-blue); transform: translateY(-3px); }
+    .btn-outline { background: rgba(255,255,255,0.5); border: 1px solid rgba(0,0,0,0.1); color: var(--text-dark); }
+    .btn-outline:hover { background: #fff; border-color: var(--text-dark); transform: translateY(-3px); }
 
     /* ==========================================================================
-       11. ANIMATIONS & RESPONSIVE
+       9. ANIMATIONS & RESPONSIVE
        ========================================================================== */
-    .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+    .reveal { opacity: 0; transform: translateY(40px); transition: all 1s cubic-bezier(0.25, 1, 0.5, 1); }
     .reveal.is-visible { opacity: 1; transform: translateY(0); }
     .d-1 { transition-delay: 0.1s; } .d-2 { transition-delay: 0.2s; }
 
     @media (max-width: 1024px) {
-      .glass-card { flex-direction: column; gap: 3rem; padding: 2.5rem; }
-      .glass-card.reverse { flex-direction: column; }
-      .proj-visual { width: 100%; }
-    }
-    @media (max-width: 768px) {
-      nav { padding: 0.8rem 1.5rem; width: 90%; justify-content: center;}
+      .col-8, .col-4, .col-6 { grid-column: span 12; }
+      .stack-card { grid-template-columns: 1fr; padding: 3rem; height: auto; min-height: auto; position: relative; top: 0 !important; margin-bottom: 2rem;}
+      .projects-container { padding-top: 5vh; }
+      nav { padding: 1.5rem; }
       .nav-links { display: none; }
-      .hero { padding-top: 150px; }
-      .hero-title { font-size: 3rem; }
-      .glass-card { padding: 2rem; border-radius: 20px; }
+      .hero-desc { margin-left: 0; border-left: none; padding-left: 0; }
       .btn-wrap { flex-direction: column; width: 100%; }
       .btn { width: 100%; justify-content: center; }
-      .cursor-dot, .cursor-ring { display: none; }
-      body { cursor: auto; }
     }
   </style>
 </head>
 <body>
 
-  <div class="texture-overlay"></div>
+  <div class="noise"></div>
   <div class="mesh-bg">
     <div class="mesh-blob blob-1"></div>
     <div class="mesh-blob blob-2"></div>
     <div class="mesh-blob blob-3"></div>
+    <div class="mesh-blob blob-4"></div>
   </div>
-
-  <div class="cursor-dot"></div>
-  <div class="cursor-ring"></div>
 
   <nav>
-    <a href="#hero" class="logo interactive">Thalia.B</a>
+    <a href="#hero" class="logo">Thalia<span>.B</span></a>
     <div class="nav-links">
-      <a href="#projets" class="interactive nav-item">Projets</a>
-      <a href="#recherche" class="interactive nav-item">Recherche</a>
-      <a href="#archives" class="interactive nav-item">Parcours</a>
+      <a href="#projets">Projets</a>
+      <a href="#recherche">Recherche</a>
+      <a href="#archives">Parcours</a>
     </div>
+    <a href="mailto:thaliapro26@gmail.com" style="text-decoration: none; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; color: var(--text-dark); border-bottom: 2px solid var(--text-dark);">Contact</a>
   </nav>
 
-  <div class="container">
-    
-    <section class="hero" id="hero">
-      <div class="hero-pre reveal is-visible">Portfolio 2026</div>
-      <h1 class="hero-title reveal d-1 is-visible">
-        Science,<br>Management &<br><span class="text-gradient">Intelligence Artificielle.</span>
-      </h1>
-      <p class="hero-desc reveal d-2 is-visible">
-        Manager de projets innovants. L'hybridation exigeante entre la rigueur analytique de la <strong>Science du Vivant</strong> et l'architecture des <strong>nouvelles technologies</strong>.
-      </p>
-      <div class="badge-wrap reveal d-2 is-visible" style="justify-content: center; margin-top: 1rem;">
-        <span class="badge ai">Master 1 Management de l'Innovation</span>
-        <span class="badge bio">BUT Génie Biologique</span>
-      </div>
-    </section>
+  <section class="hero" id="hero">
+    <div class="hero-meta reveal is-visible">Portfolio 2026</div>
+    <h1 class="hero-title reveal d-1 is-visible">
+      Science,<br>Management &<br><span class="serif">Intelligence Artificielle.</span>
+    </h1>
+    <p class="hero-desc reveal d-2 is-visible">
+      L'hybridation exigeante entre la rigueur analytique du laboratoire et l'architecture des nouvelles technologies.
+    </p>
+  </section>
 
-    <section class="project-section" id="projets">
-      
-      <div class="glass-card reveal">
-        <div class="proj-text">
-          <div class="hero-pre" style="color: var(--accent-ai);">Digital Student Challenge</div>
-          <h2 class="proj-title">Astroly,<br>L'Ère <span class="text-gradient">Agentique</span>.</h2>
-          <p class="proj-desc">
-            Capgemini x IAE Montpellier. Développement d'une architecture modulaire de <strong>6 agents IA</strong> sur Microsoft 365. Objectif : révolutionner l'attractivité des jeunes talents via l'automatisation du screening et l'expérience "mobile-first".
-          </p>
-          <div class="badge-wrap" style="margin-top: 2rem;">
-            <span class="badge ai">Copilot Studio</span>
-            <span class="badge ai">Architecture M365</span>
-          </div>
-        </div>
-        
-        <div class="proj-visual">
-          <div class="ui-showcase">
-            <div class="ui-header"><span>Écosystème d'Agents</span> <span style="color: var(--accent-ai);">● Actif</span></div>
-            <div class="agent-list">
-              <div class="agent-item"><div class="agent-info">💬 Assistant Orientation</div><div class="agent-status"></div></div>
-              <div class="agent-item"><div class="agent-info">🎯 Veille Opportunités</div><div class="agent-status"></div></div>
-              <div class="agent-item"><div class="agent-info">🏫 Prospection Écoles</div><div class="agent-status"></div></div>
-              <div class="agent-item"><div class="agent-info">📊 Scoring Profils</div><div class="agent-status"></div></div>
-            </div>
-          </div>
+  <div class="projects-container" id="projets">
+
+    <div class="stack-card">
+      <div class="card-content">
+        <div class="card-num">01</div>
+        <h2 class="card-title">Astroly</h2>
+        <p class="card-desc">Capgemini x IAE Montpellier. Développement d'une architecture modulaire de <strong>6 agents IA</strong> sur Microsoft 365. Un passage du recrutement volumétrique à une expérience pilotée par l'automatisation.</p>
+        <div class="tags">
+          <span class="tag">IA Agentique</span>
+          <span class="tag">Copilot Studio</span>
         </div>
       </div>
-
-      <div class="glass-card reverse reveal">
-        <div class="proj-text">
-          <div class="hero-pre" style="color: var(--accent-mgt);">Innovation Publique</div>
-          <h2 class="proj-title">Intelligence<br><span class="text-gradient">Collective</span>.</h2>
-          <p class="proj-desc">
-            Alternance CPAM Hérault (2025-2026). La transformation d'une organisation ne se résout pas par la technologie seule, mais par l'encadrement humain. Pilotage d'idéation, facilitation de groupes et structuration de la performance.
-          </p>
-          <div class="badge-wrap" style="margin-top: 2rem;">
-            <span class="badge mgt">Facilitation</span>
-            <span class="badge mgt">Pilotage KPI</span>
-          </div>
-        </div>
-        
-        <div class="proj-visual">
-          <div class="ui-showcase">
-            <div class="ui-header"><span>Suivi de Performance</span></div>
-            <div class="kpi-wrapper">
-              <div class="kpi-row">
-                <div class="kpi-header"><span>Innovation Participative</span><span>100%</span></div>
-                <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%"></div></div>
-              </div>
-              <div class="kpi-row">
-                <div class="kpi-header"><span>Facilitation de groupes</span><span>100%</span></div>
-                <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%" style="transition-delay: 0.2s;"></div></div>
-              </div>
-              <div class="kpi-row">
-                <div class="kpi-header"><span>Gestion de projets</span><span>100%</span></div>
-                <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%" style="transition-delay: 0.4s;"></div></div>
-              </div>
-            </div>
-          </div>
+      <div class="ui-box">
+        <div class="ui-title" style="color: var(--ai-blue);">Écosystème d'Agents Déployés</div>
+        <div class="agent-grid">
+          <div class="agent-pill"><div class="agent-icon">💬</div> Orientation</div>
+          <div class="agent-pill"><div class="agent-icon">🎯</div> Opportunités</div>
+          <div class="agent-pill"><div class="agent-icon">🏫</div> Écoles</div>
+          <div class="agent-pill"><div class="agent-icon">✉️</div> Newsletters</div>
+          <div class="agent-pill"><div class="agent-icon">📊</div> Scoring</div>
+          <div class="agent-pill"><div class="agent-icon">📈</div> Performance</div>
         </div>
       </div>
+    </div>
 
-      <div class="glass-card reveal" id="recherche">
-        <div class="proj-text">
-          <div class="hero-pre" style="color: var(--accent-bio);">Laboratoire Phytopathologie</div>
-          <h2 class="proj-title">Science du<br><span class="text-gradient">Vivant</span>.</h2>
-          <p class="proj-desc">
-            Recherche au CRRHAB (Tunisie). Rapport et soutenance : <em>"Test du comportement de 19 variétés de pomme de terre basé sur leurs paramètres agronomiques et microbiomes"</em>.<br><br>
-            Isolement de souches d'intérêt (Bacillus, Serratia) et tests d'antagonisme contre les maladies fongiques pour l'agronomie durable.
-          </p>
-          <div class="badge-wrap" style="margin-top: 2rem;">
-            <span class="badge bio">Biocontrôle</span>
-            <span class="badge bio">Agroécologie</span>
+    <div class="stack-card">
+      <div class="card-content">
+        <div class="card-num">02</div>
+        <h2 class="card-title">Intelligence Collective</h2>
+        <p class="card-desc">Alternance CPAM Hérault (2025-2026). La transformation d'une organisation ne se résout pas par la technologie seule, mais par l'encadrement humain. Pilotage d'idéation et structuration de la performance.</p>
+        <div class="tags">
+          <span class="tag">Facilitation</span>
+          <span class="tag">Pilotage KPI</span>
+        </div>
+      </div>
+      <div class="ui-box">
+        <div class="ui-title" style="color: var(--mgt-coral);">Indicateurs de Performance</div>
+        <div class="kpi-row">
+          <div class="kpi-head"><span>Innovation Participative</span><span>100%</span></div>
+          <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%"></div></div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi-head"><span>Facilitation d'équipes</span><span>100%</span></div>
+          <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%" style="transition-delay: 0.2s;"></div></div>
+        </div>
+        <div class="kpi-row">
+          <div class="kpi-head"><span>Gestion de projets</span><span>100%</span></div>
+          <div class="kpi-track"><div class="kpi-fill kpi-anim" data-target="100%" style="transition-delay: 0.4s;"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="stack-card" id="recherche">
+      <div class="card-content">
+        <div class="card-num">03</div>
+        <h2 class="card-title">Science du Vivant</h2>
+        <p class="card-desc">Laboratoire Phytopathologie (CRRHAB). Rapport et soutenance : <em>"Test du comportement de 19 variétés de pomme de terre basé sur leurs paramètres agronomiques et microbiomes"</em>. Isolement de souches d'intérêt pour l'agronomie durable.</p>
+        <div class="tags">
+          <span class="tag">Biocontrôle</span>
+          <span class="tag">Agroécologie</span>
+        </div>
+      </div>
+      <div class="ui-box" style="position: relative; padding: 0; overflow: hidden;">
+        <div style="padding: 2.5rem;">
+          <div class="ui-title" style="color: var(--bio-green);">Matrice d'Inhibition</div>
+          <div class="nda-blur-area">
+            <div class="nda-bar"></div><div class="nda-bar"></div><div class="nda-bar"></div>
           </div>
         </div>
-        
-        <div class="proj-visual">
-          <div class="ui-showcase" style="position: relative; overflow: hidden;">
-            <div class="ui-header"><span>Matrice d'Inhibition</span></div>
-            <div class="bio-data-list">
-              <div class="bio-data-item"></div><div class="bio-data-item"></div><div class="bio-data-item"></div>
-            </div>
-            <div class="nda-overlay">
-              <div class="nda-badge">
-                <div class="nda-icon">🔒</div>
-                <div class="nda-title">Données Sous NDA</div>
-                <div class="nda-desc">Accord de Confidentialité</div>
-              </div>
-            </div>
+        <div class="nda-overlay">
+          <div class="nda-badge">
+            <h4 style="font-family: var(--font-serif); font-style: italic; font-size: 2rem; color: var(--bio-green); font-weight: 400;">Données Sécurisées</h4>
+            <p style="font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); margin-top: 0.5rem;">Accord de Confidentialité</p>
           </div>
         </div>
       </div>
-
-    </section>
-
-    <section class="project-section" id="archives" style="padding-top: 0;">
-      <div class="hero-pre reveal" style="text-align: center;">Parcours</div>
-      <h2 class="hero-title reveal" style="font-size: clamp(2.5rem, 5vw, 4rem); text-align: center; margin-bottom: 2rem;">Empreintes & Expériences.</h2>
-      
-      <div class="archives-grid">
-        
-        <a href="#" class="archive-card interactive reveal">
-          <div class="img-wrapper" data-title="Heron Exchange SaaS">
-            <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="SaaS B2B">
-          </div>
-          <div class="arc-meta" style="color: var(--accent-ai);">SaaS B2B · Pépite LR</div>
-          <h3 class="arc-title">Heron Exchange</h3>
-          <p class="arc-desc">Accompagnement stratégique sur une plateforme luttant contre la fraude BEC (~7M de PME cibles). Diagnostic terrain et modèle de revenus.</p>
-          <div class="action-link">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-        </a>
-
-        <a href="Soutenance de 2eme année.pdf" target="_blank" class="archive-card interactive reveal d-1">
-          <div class="img-wrapper contain" data-title="Poster Scientifique">
-            <img src="Poster scientifique bleu et vert.png" alt="Poster Unibio">
-          </div>
-          <div class="arc-meta" style="color: var(--accent-bio);">18 Mois · Alternance</div>
-          <h3 class="arc-title">Unibio Medical</h3>
-          <p class="arc-desc">Technicienne de laboratoire. Hématologie, hémostase et immunobiochimie. Rigueur analytique et synthèse via un poster scientifique.</p>
-          <div class="action-link">Ouvrir le PDF <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="12" y1="18" x2="12" y2="12"></line><polyline points="9 15 12 18 15 15"></polyline></svg></div>
-        </a>
-
-        <a href="#" class="archive-card interactive reveal">
-          <div class="img-wrapper" data-title="Culture In Vitro">
-            <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Culture in vitro">
-          </div>
-          <div class="arc-meta" style="color: var(--accent-bio);">IUT Montpellier · 2022</div>
-          <h3 class="arc-title">Culture in vitro</h3>
-          <p class="arc-desc">Projet sur la micropropagation du Vanillier (milieu MS). Maîtrise de la stérilité sous hotte à flux laminaire et processus d'acclimatation.</p>
-          <div class="action-link">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-        </a>
-
-        <a href="#" class="archive-card interactive reveal d-1">
-          <div class="img-wrapper" style="background: linear-gradient(135deg, #f43f5e, #f59e0b);" data-title="">
-            <svg style="width: 80px; height: 80px; stroke: #fff; fill: none; stroke-width: 1.5;" viewBox="0 0 24 24"><circle cx="12" cy="8" r="7"></circle><polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"></polyline></svg>
-          </div>
-          <div class="arc-meta" style="color: var(--accent-mgt);">Distinctions Nationales</div>
-          <h3 class="arc-title">Palmarès & Pitch</h3>
-          <p class="arc-desc">Prix Coup de Pouce Créa'thlon (2025, Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min" (2021). L'éloquence au service de l'idée.</p>
-          <div class="action-link">Découvrir <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg></div>
-        </a>
-
-      </div>
-    </section>
-
-    <section class="contact-section" id="contact">
-      <h2 class="hero-title reveal">Let's <span class="text-gradient">Talk.</span></h2>
-      <p class="hero-desc reveal d-1" style="margin: 0 auto 3rem;">Basée à Montpellier | Permis B, véhiculée.</p>
-      
-      <div class="btn-wrap reveal d-2">
-        <a href="mailto:thaliapro26@gmail.com" class="btn btn-solid interactive">Écrire un email</a>
-        <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn btn-outline interactive">LinkedIn</a>
-        <a href="CV.pdf" download target="_blank" class="btn btn-outline interactive" style="border-color: var(--accent-bio); color: #fff;">Télécharger CV</a>
-      </div>
-
-      <div style="margin-top: 8rem; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px;">
-        © 2026 Thalia Barrahi — Design Studio
-      </div>
-    </section>
+    </div>
 
   </div>
+
+  <section class="archives-section" id="archives" style="padding: 5vh 5vw 15vh;">
+    <div class="arch-header reveal">
+      <div class="hero-meta" style="margin: 0;">Parcours</div>
+      <h2 class="hero-title" style="font-size: clamp(3rem, 6vw, 5rem); margin: 0;">Expériences.</h2>
+    </div>
+    
+    <div class="bento-grid">
+      
+      <a href="#" class="arc-card col-8 reveal">
+        <div class="arc-img-wrap">
+          <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="SaaS B2B">
+        </div>
+        <div class="arc-meta">SaaS B2B · Pépite LR</div>
+        <h3 class="arc-name">Heron Exchange</h3>
+        <p class="arc-desc">Accompagnement stratégique sur une plateforme luttant contre la fraude BEC (~7M de PME cibles). Diagnostic terrain et élaboration du modèle de revenus.</p>
+      </a>
+
+      <a href="Soutenance de 2eme année.pdf" target="_blank" class="arc-card col-4 reveal d-1" style="background: #fff;">
+        <div class="arc-img-wrap contain" style="background: transparent; border: 1px solid rgba(0,0,0,0.05);">
+          <img src="Poster scientifique bleu et vert.png" alt="Poster Scientifique">
+        </div>
+        <div class="arc-meta">18 Mois · Alternance</div>
+        <h3 class="arc-name">Unibio Medical</h3>
+        <p class="arc-desc">Technicienne de laboratoire. Hématologie, hémostase et immunobiochimie.</p>
+        <div style="margin-top: 1rem; font-size: 0.8rem; font-weight: 700; color: var(--ai-blue); text-transform: uppercase;">Ouvrir PDF ↗</div>
+      </a>
+
+      <a href="#" class="arc-card col-6 reveal">
+        <div class="arc-meta">IUT Montpellier · 2022</div>
+        <h3 class="arc-name">Culture in vitro</h3>
+        <p class="arc-desc">Projet sur la micropropagation du Vanillier (milieu MS). Maîtrise de la stérilité sous hotte à flux laminaire et processus d'acclimatation.</p>
+        <div class="arc-img-wrap" style="margin-bottom: 0; margin-top: 2rem;">
+          <img src="Capture d’écran 2024-08-30 à 21.28.09.jpg" alt="Culture in vitro">
+        </div>
+      </a>
+
+      <a href="#" class="arc-card col-6 reveal d-1" style="background: var(--text-dark); color: #fff;">
+        <div class="arc-meta" style="color: var(--text-muted);">Distinctions Nationales</div>
+        <h3 class="arc-name">Palmarès & Pitch</h3>
+        <p class="arc-desc" style="color: rgba(255,255,255,0.8);">Prix Coup de Pouce Créa'thlon (2025, Sun-charge) et 2e place nationale au concours "Mon Projet en 4 min" (2021). L'éloquence au service de l'idée.</p>
+        <div style="font-family: var(--font-serif); font-size: 8rem; font-style: italic; color: rgba(255,255,255,0.1); line-height: 1; margin-top: auto; text-align: right;">#02</div>
+      </a>
+
+    </div>
+  </section>
+
+  <section class="contact-section" id="contact">
+    <h2 class="hero-title reveal" style="font-size: clamp(4rem, 8vw, 8rem);">Let's <span class="serif" style="color: var(--ai-blue);">Talk.</span></h2>
+    
+    <div class="btn-wrap reveal d-1">
+      <a href="mailto:thaliapro26@gmail.com" class="btn btn-solid">Écrire un email</a>
+      <a href="https://www.linkedin.com/in/thalia-barrahi-b0a0131b9/" target="_blank" class="btn btn-outline">LinkedIn</a>
+      <a href="CV.pdf" download target="_blank" class="btn btn-outline" style="border-color: var(--bio-green); color: var(--bio-green);">Télécharger CV</a>
+    </div>
+
+    <div style="margin-top: 8rem; font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px;">
+      © 2026 Thalia Barrahi — Design Éditorial Tech
+    </div>
+  </section>
 
   <script>
     document.addEventListener("DOMContentLoaded", () => {
       
-      /* --- CURSEUR MAGNÉTIQUE --- */
-      const dot = document.querySelector('.cursor-dot');
-      const ring = document.querySelector('.cursor-ring');
-      
-      if (window.innerWidth > 900) {
-        let mouseX = window.innerWidth / 2, mouseY = window.innerHeight / 2;
-        let ringX = mouseX, ringY = mouseY;
-
-        window.addEventListener('mousemove', (e) => {
-          mouseX = e.clientX; mouseY = e.clientY;
-          dot.style.left = `${mouseX}px`; dot.style.top = `${mouseY}px`;
-        });
-
-        const animateCursor = () => {
-          ringX += (mouseX - ringX) * 0.15;
-          ringY += (mouseY - ringY) * 0.15;
-          ring.style.left = `${ringX}px`; ring.style.top = `${ringY}px`;
-          requestAnimationFrame(animateCursor);
-        };
-        animateCursor();
-
-        document.querySelectorAll('a, .interactive').forEach(el => {
-          el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
-          el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
-        });
-      } else {
-        dot.style.display = 'none'; ring.style.display = 'none';
-      }
-
-      /* --- RÉVÉLATION AU SCROLL --- */
+      /* RÉVÉLATION AU SCROLL */
       const reveals = document.querySelectorAll('.reveal');
       const revealObserver = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) {
             entry.target.classList.add('is-visible');
             
-            // Lancer les animations KPI une fois visible
+            // Animation des jauges KPI quand la carte est visible
             const kpiFills = entry.target.querySelectorAll('.kpi-anim');
             kpiFills.forEach(fill => {
               fill.style.width = fill.getAttribute('data-target');
@@ -497,25 +386,6 @@
       }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
 
       reveals.forEach(el => revealObserver.observe(el));
-
-      /* --- NAVIGATION ACTIVE --- */
-      const sections = document.querySelectorAll('section[id], div[id]');
-      const navLinks = document.querySelectorAll('.nav-item');
-
-      window.addEventListener('scroll', () => {
-        let current = '';
-        sections.forEach(section => {
-          const sectionTop = section.offsetTop;
-          if (pageYOffset >= sectionTop - 200) { current = section.getAttribute('id'); }
-        });
-
-        navLinks.forEach(link => {
-          link.classList.remove('active');
-          if (link.getAttribute('href').substring(1) === current) {
-            link.classList.add('active');
-          }
-        });
-      });
 
     });
   </script>
